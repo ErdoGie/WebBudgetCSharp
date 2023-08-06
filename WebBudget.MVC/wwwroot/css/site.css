@@ -19,17 +19,23 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-color: blue;
+    background-image: url("https://www.investopedia.com/thmb/0YIEW5uwAAgQOcWA9WQI346XfuU=/2119x1414/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1028974962-7014e08cf72b4b828d55a7c77705da39.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 footer {
+    padding: 15px;
     text-align: center;
+    background-color: white;
+    border: 4px dashed;
 }
 
-.To_do_footer {
-    border: 4px dashed ;
-    padding: 20px;
+.footer_color {
+    color: black;
 }
+
 
 
 .To_dash {
@@ -38,15 +44,12 @@ footer {
 }
 
 .HomeContainer {
-
-
-    border: dashed 3px black;
+    border: 3px black dashed;
     border-radius: 25px;
-
-    position:relative;
+    position: relative;
     transform: translateY(30%);
+    padding: 2%;
     width: 50%;
     height: 50vh;
-    padding-top: 1%
-
+    background-color: rgba(255, 255, 255, 0.7);
 }
