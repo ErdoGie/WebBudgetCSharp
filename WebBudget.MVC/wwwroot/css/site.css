@@ -1,22 +1,133 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
+}
+h1,h4 {
+    color: black;
+    font-family: 'Victor Mono', monospace;
+}
+
+header{
+    padding-top: 20px;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+.WebBudget {
+    font-family: 'Edu SA Beginner', cursive;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+  
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-image: url("https://www.investopedia.com/thmb/0YIEW5uwAAgQOcWA9WQI346XfuU=/2119x1414/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1028974962-7014e08cf72b4b828d55a7c77705da39.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
+
+footer {
+   
+    padding: 15px;
+    text-align: center;
+    background-color: black;
+  
+}
+
+.footer_color {
+    color: black;
+}
+
+.custom-navbar {
+
+    border: none; 
+    background-color: transparent; 
+    box-shadow: none; 
+    
+}
+
+.background-container {
+    position: relative;
+    height: 70vh; 
+    background-image: url("https://www.investopedia.com/thmb/0YIEW5uwAAgQOcWA9WQI346XfuU=/2119x1414/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1028974962-7014e08cf72b4b828d55a7c77705da39.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center ;
+}
+
+.centered-container {
+    color: black;
+    position: absolute;
+    top: -50%; 
+    left: 50%;
+    transform: translate(-50%, -55%);
+    padding: 20px;
+    height: 60vh;
+    width: 120vh;
+    background-color: rgba(255, 255, 255, 0.88);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 80%;
+    text-align: center;
+    animation: slideDown 3s forwards;
+}
+
+/*photos*/
+.C_Image{
+
+    height: 20vh;
+    width: 40vh;
+    margin-bottom: 10px;
+
+}
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.grid-item {
+    flex: 1 0 calc(33.33% - 20px); 
+    text-align: center;
+}
+
+
+/*animations*/
+
+@keyframes slideDown {
+    0% {
+        top: -100%;
+    }
+
+    100% {
+        top: 50%;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+}
+
