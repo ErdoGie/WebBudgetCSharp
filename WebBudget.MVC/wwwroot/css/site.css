@@ -60,7 +60,7 @@ footer {
 
 .background-container {
     position: relative;
-    height: 70vh; /* Ustaw wysokoœæ na 100% wysokoœci widoku */
+    height: 70vh; 
     background-image: url("https://www.investopedia.com/thmb/0YIEW5uwAAgQOcWA9WQI346XfuU=/2119x1414/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1028974962-7014e08cf72b4b828d55a7c77705da39.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -70,7 +70,7 @@ footer {
 .centered-container {
     color: black;
     position: absolute;
-    top: -50%; /* Pocz¹tkowa pozycja poza obszarem widocznoœci */
+    top: -50%; 
     left: 50%;
     transform: translate(-50%, -60%);
     padding: 20px;
@@ -83,6 +83,30 @@ footer {
     text-align: center;
     animation: slideDown 2s forwards;
 }
+
+/*photos*/
+.C_Image{
+
+    height: 20vh;
+    width: 40vh;
+    margin-bottom: 10px;
+
+}
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.grid-item {
+    flex: 1 0 calc(33.33% - 20px); 
+    text-align: center;
+}
+
+
 
 @keyframes slideDown {
     0% {

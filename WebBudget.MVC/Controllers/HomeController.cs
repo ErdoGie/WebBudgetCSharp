@@ -18,7 +18,7 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult DidYouKnow()
+    public IActionResult About()
     {
         return View();
     }
