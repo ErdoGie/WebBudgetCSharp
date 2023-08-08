@@ -7,7 +7,7 @@ html {
         font-size: 16px;
     }
 }
-h1 {
+h1,h4 {
     color: black;
     font-family: 'Victor Mono', monospace;
 }
@@ -26,6 +26,7 @@ header{
 html {
     position: relative;
     min-height: 100%;
+  
 }
 
 body {
@@ -56,15 +57,13 @@ footer {
     
 }
 
-
-
 .background-container {
     position: relative;
     height: 70vh; 
     background-image: url("https://www.investopedia.com/thmb/0YIEW5uwAAgQOcWA9WQI346XfuU=/2119x1414/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1028974962-7014e08cf72b4b828d55a7c77705da39.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center ;
 }
 
 .centered-container {
@@ -72,16 +71,16 @@ footer {
     position: absolute;
     top: -50%; 
     left: 50%;
-    transform: translate(-50%, -60%);
+    transform: translate(-50%, -55%);
     padding: 20px;
-    height: 55vh;
+    height: 60vh;
     width: 120vh;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.88);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     max-width: 80%;
     text-align: center;
-    animation: slideDown 2s forwards;
+    animation: slideDown 3s forwards;
 }
 
 /*photos*/
@@ -107,6 +106,7 @@ footer {
 }
 
 
+/*animations*/
 
 @keyframes slideDown {
     0% {
@@ -118,4 +118,16 @@ footer {
     }
 }
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+}
 
