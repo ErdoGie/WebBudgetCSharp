@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebBudget.Infrastructure.Persistance;
+using WebBudget.Infrastructure.Seeders;
 
 namespace WebBudget.Infrastructure.Extensions
 {
@@ -16,6 +17,8 @@ namespace WebBudget.Infrastructure.Extensions
 		{
 
 			services.AddDbContext<WebBudgetDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("WebBudget")));
+
+			services.AddScoped<WebBudgetSeeder>();
 		}
 
 	}

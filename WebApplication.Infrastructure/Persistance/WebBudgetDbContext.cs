@@ -18,17 +18,9 @@ namespace WebBudget.Infrastructure.Persistance
 
         public DbSet <Domain.Entities.WebBudget> WebBudgets { get; set; }
 
-
-		//konfiguracja do bazy danych, oraz do jakiego providera się będę łączyć.
-		/*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			// parametrem przekazywanym jest connection string.
-			optionsBuilder.UseSqlServer("Server=RdoG;Database=WebBudgetDB;Trusted_Connection=true;trustServerCertificate=true;");
-
-		}*/
-
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			//tworze obie encje za jednym zamachem 
 			modelBuilder.Entity<Domain.Entities.WebBudget>(entity =>
 			{
 				entity.OwnsOne(w => w.BudgetIncome, income =>

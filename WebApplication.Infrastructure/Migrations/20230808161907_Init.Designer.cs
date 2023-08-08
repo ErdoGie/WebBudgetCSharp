@@ -12,7 +12,7 @@ using WebBudget.Infrastructure.Persistance;
 namespace WebBudget.Infrastructure.Migrations
 {
     [DbContext(typeof(WebBudgetDbContext))]
-    [Migration("20230808152903_Init")]
+    [Migration("20230808161907_Init")]
     partial class Init
     {
         /// <inheritdoc />
