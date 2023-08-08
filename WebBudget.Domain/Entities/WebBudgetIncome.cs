@@ -11,8 +11,6 @@ namespace WebBudget.Domain.Entities
 
 		public string IncomeType { get; set; } = default!;
 
-
-
 		public DateTime IncomeDate { get; set; }
 
 		public float IncomeValue { get; set; }

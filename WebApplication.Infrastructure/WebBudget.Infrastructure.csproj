@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebBudget.Application\WebBudget.Application.csproj" />
     <ProjectReference Include="..\WebBudget.Domain\WebBudget.Domain.csproj" />
   </ItemGroup>
 

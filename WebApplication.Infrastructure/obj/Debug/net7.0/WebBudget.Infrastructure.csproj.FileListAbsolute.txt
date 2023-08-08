@@ -15,3 +15,5 @@ C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplicati
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.pdb
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.genruntimeconfig.cache
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\ref\WebBudget.Infrastructure.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\WebBudget.Application.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\WebBudget.Application.pdb

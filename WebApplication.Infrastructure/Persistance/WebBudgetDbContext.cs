@@ -10,17 +10,22 @@ namespace WebBudget.Infrastructure.Persistance
 {
 	public class WebBudgetDbContext : DbContext
 	{
+        public WebBudgetDbContext(DbContextOptions<WebBudgetDbContext> options ) :base(options)
+        {
+            
+        }
 
-		public DbSet <Domain.Entities.WebBudget> WebBudgets { get; set; }
+
+        public DbSet <Domain.Entities.WebBudget> WebBudgets { get; set; }
 
 
 		//konfiguracja do bazy danych, oraz do jakiego providera się będę łączyć.
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		/*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			// parametrem przekazywanym jest connection string.
 			optionsBuilder.UseSqlServer("Server=RdoG;Database=WebBudgetDB;Trusted_Connection=true;trustServerCertificate=true;");
 
-		}
+		}*/
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -37,8 +42,5 @@ namespace WebBudget.Infrastructure.Persistance
 				});
 			});
 		}
-
-
-
 	}
 }

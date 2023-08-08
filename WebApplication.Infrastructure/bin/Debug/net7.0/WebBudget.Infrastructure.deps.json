@@ -10,6 +10,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.10",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.10",
+          "WebBudget.Application": "1.0.0",
           "WebBudget.Domain": "1.0.0"
         },
         "runtime": {
@@ -670,6 +671,14 @@
           }
         }
       },
+      "WebBudget.Application/1.0.0": {
+        "dependencies": {
+          "WebBudget.Domain": "1.0.0"
+        },
+        "runtime": {
+          "WebBudget.Application.dll": {}
+        }
+      },
       "WebBudget.Domain/1.0.0": {
         "runtime": {
           "WebBudget.Domain.dll": {}
@@ -1151,6 +1160,11 @@
       "sha512": "sha512-c1ho9WU9ZxMZawML+ssPKZfdnrg/OjR3pe0m9v8230z3acqphwvPJqzAkH54xRYm5ntZHGG1EPP3sux9H3qSPg==",
       "path": "system.windows.extensions/5.0.0",
       "hashPath": "system.windows.extensions.5.0.0.nupkg.sha512"
+    },
+    "WebBudget.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "WebBudget.Domain/1.0.0": {
       "type": "project",

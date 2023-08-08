@@ -1133,6 +1133,19 @@
           }
         }
       },
+      "WebBudget.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "WebBudget.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WebBudget.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WebBudget.Application.dll": {}
+        }
+      },
       "WebBudget.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -3463,6 +3476,11 @@
         "version.txt"
       ]
     },
+    "WebBudget.Application/1.0.0": {
+      "type": "project",
+      "path": "../WebBudget.Application/WebBudget.Application.csproj",
+      "msbuildProject": "../WebBudget.Application/WebBudget.Application.csproj"
+    },
     "WebBudget.Domain/1.0.0": {
       "type": "project",
       "path": "../WebBudget.Domain/WebBudget.Domain.csproj",
@@ -3473,6 +3491,7 @@
     "net7.0": [
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.10",
+      "WebBudget.Application >= 1.0.0",
       "WebBudget.Domain >= 1.0.0"
     ]
   },
@@ -3503,6 +3522,9 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
+            "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.Application\\WebBudget.Application.csproj": {
+              "projectPath": "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.Application\\WebBudget.Application.csproj"
+            },
             "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.Domain\\WebBudget.Domain.csproj": {
               "projectPath": "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.Domain\\WebBudget.Domain.csproj"
             }
