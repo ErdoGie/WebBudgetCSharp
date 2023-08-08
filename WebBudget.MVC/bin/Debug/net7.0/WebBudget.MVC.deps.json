@@ -7,14 +7,40 @@
   "targets": {
     ".NETCoreApp,Version=v7.0": {
       "WebBudget.MVC/1.0.0": {
+        "dependencies": {
+          "WebBudget.Application": "1.0.0"
+        },
         "runtime": {
           "WebBudget.MVC.dll": {}
+        }
+      },
+      "WebBudget.Application/1.0.0": {
+        "dependencies": {
+          "WebBudget.Domain": "1.0.0"
+        },
+        "runtime": {
+          "WebBudget.Application.dll": {}
+        }
+      },
+      "WebBudget.Domain/1.0.0": {
+        "runtime": {
+          "WebBudget.Domain.dll": {}
         }
       }
     }
   },
   "libraries": {
     "WebBudget.MVC/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WebBudget.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WebBudget.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

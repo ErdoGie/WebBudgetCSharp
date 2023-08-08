@@ -9,14 +9,11 @@ namespace WebBudget.Domain.Entities
 	public class WebBudgetExpense
 	{
 
-        public required int Id { get; set; }
-        public string ExpenseType { get; set; } = default!;
+		public string ExpenseType { get; set; } = default!;
 
-		public DateTime TodaysDate { get; set; } = DateTime.UtcNow;
+		public DateTime ExpenseDate { get; set; }
 
-		public DateTime ChosenDate { get; set; }
-
-		public decimal ExpenseValue { get; set; }
+		public float ExpenseValue { get; set; }
 
 
 

@@ -9,6 +9,7 @@ namespace WebBudget.Domain.Entities
 {
 	public class WebBudget
 	{
+		public required int Id { get; set; }
 		public WebBudgetIncome BudgetIncome { get; set; } = default!;
 
 		public WebBudgetExpense BudgetExpense { get; set; } = default!;
@@ -17,6 +18,7 @@ namespace WebBudget.Domain.Entities
 
 		public void EncodeIncomeName() => EncodedName = BudgetIncome.IncomeType.ToLower().Replace(" ", "-");
 		public void EncodeExpenseName() => EncodedName = BudgetExpense.ExpenseType.ToLower().Replace(" ", "-");
+
 
 	}
 

@@ -29,3 +29,8 @@ C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MV
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\obj\Debug\net7.0\WebBudget.MVC.pdb
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\obj\Debug\net7.0\WebBudget.MVC.genruntimeconfig.cache
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\obj\Debug\net7.0\ref\WebBudget.MVC.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\WebBudget.Application.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\WebBudget.Domain.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\WebBudget.Application.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\WebBudget.Domain.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\obj\Debug\net7.0\WebBudget.MVC.csproj.CopyComplete

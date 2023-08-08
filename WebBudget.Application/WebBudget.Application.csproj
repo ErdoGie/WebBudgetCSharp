@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebBudget.Domain\WebBudget.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

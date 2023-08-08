@@ -9,16 +9,15 @@ namespace WebBudget.Domain.Entities
 	public class WebBudgetIncome
 	{
 
-        public  required int Id { get; set; }
-        public string IncomeType { get; set; } = default!;
-
-		public DateTime TodaysDate { get; set; } = DateTime.UtcNow;
-
-		public DateTime ChosenDate { get; set; } 
-
-		public decimal IncomeValue { get; set; }
+		public string IncomeType { get; set; } = default!;
 
 
 
-    }
+		public DateTime IncomeDate { get; set; }
+
+		public float IncomeValue { get; set; }
+
+
+
+	}
 }

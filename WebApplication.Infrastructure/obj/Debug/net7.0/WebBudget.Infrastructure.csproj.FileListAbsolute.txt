@@ -1,0 +1,17 @@
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\WebBudget.Infrastructure.deps.json
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\WebBudget.Infrastructure.runtimeconfig.json
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\WebBudget.Infrastructure.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\WebBudget.Infrastructure.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\WebBudget.Domain.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\WebBudget.Domain.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.AssemblyInfo.cs
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.csproj.CopyComplete
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\refint\WebBudget.Infrastructure.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\WebBudget.Infrastructure.genruntimeconfig.cache
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\ref\WebBudget.Infrastructure.dll
