@@ -16,8 +16,7 @@ namespace WebBudget.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EncodedName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {
@@ -31,7 +30,8 @@ namespace WebBudget.Infrastructure.Migrations
                     WebBudgetId = table.Column<int>(type: "int", nullable: false),
                     ExpenseType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpenseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpenseValue = table.Column<float>(type: "real", nullable: false)
+                    ExpenseValue = table.Column<float>(type: "real", nullable: false),
+                    EncodedExpenseName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +51,8 @@ namespace WebBudget.Infrastructure.Migrations
                     WebBudgetId = table.Column<int>(type: "int", nullable: false),
                     IncomeType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IncomeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IncomeValue = table.Column<float>(type: "real", nullable: false)
+                    IncomeValue = table.Column<float>(type: "real", nullable: false),
+                    EncodedIncomeName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

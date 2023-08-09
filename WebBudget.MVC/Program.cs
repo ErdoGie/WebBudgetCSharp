@@ -1,4 +1,4 @@
-using WebBudget.Infrastructure.Persistance;
+ï»¿using WebBudget.Infrastructure.Persistance;
 using WebBudget.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using WebBudget.Infrastructure.Seeders;
@@ -13,7 +13,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-//do aplikacji Scope przypisujê CreateScope, aby póŸniej go u¿yæ z mojego 
+//do aplikacji Scope przypisujÄ™ CreateScope, aby pÃ³Åºniej go uÅ¼yÄ‡ z mojego 
 // Extension'a 
 var scope = app.Services.CreateScope();
 

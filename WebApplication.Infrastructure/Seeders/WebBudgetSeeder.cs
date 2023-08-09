@@ -26,28 +26,38 @@ namespace WebBudget.Infrastructure.Seeders
 			{
 				if (!_dbContext.WebBudgets.Any())
 				{
-					var firstSeeder = new Domain.Entities.WebBudget()
+					//oba seedery ustawiam od strzała.
+					var income = new WebBudgetIncome
 					{
-						BudgetIncome = new WebBudgetIncome
-						{
-							IncomeDate = new DateTime(2023, 01, 17),
-							IncomeType = "Wyplata",
-							IncomeValue = 4000
 
-						},
-						BudgetExpense = new WebBudgetExpense
-						{
-							ExpenseType = "Koszt pralki",
-							ExpenseValue = 500,
-							ExpenseDate = new DateTime(2023, 01, 18)
+						IncomeDate = new DateTime(2023, 07, 17),
+						IncomeType = "Wyplata lipiec",
+						IncomeValue = 4000
 
-						}
 
 					};
+					var expense = new WebBudgetExpense
+					{
+						ExpenseType = "Moje urodzi ny",
+						ExpenseValue = 500,
+						ExpenseDate = new DateTime(2023, 01, 18)
+					};
 
-					firstSeeder.EncodeExpenseName();
-					firstSeeder.EncodeIncomeName();
-					_dbContext.WebBudgets.Add(firstSeeder);
+					var incomeSeeder = new Domain.Entities.WebBudget()
+					{
+						BudgetIncome = income
+					};
+
+					var expenseSeeder = new Domain.Entities.WebBudget()
+					{
+						BudgetExpense = expense
+					};
+
+					incomeSeeder.BudgetIncome.EncodeIncomeName();
+					expenseSeeder.BudgetExpense.EncodeExpenseName();
+
+					_dbContext.WebBudgets.Add(incomeSeeder);
+					_dbContext.WebBudgets.Add(expenseSeeder);
 					await _dbContext.SaveChangesAsync();
 
 				}

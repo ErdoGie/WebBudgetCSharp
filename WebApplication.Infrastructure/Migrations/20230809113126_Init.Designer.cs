@@ -12,7 +12,7 @@ using WebBudget.Infrastructure.Persistance;
 namespace WebBudget.Infrastructure.Migrations
 {
     [DbContext(typeof(WebBudgetDbContext))]
-    [Migration("20230808161907_Init")]
+    [Migration("20230809113126_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -33,10 +33,6 @@ namespace WebBudget.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("EncodedName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("WebBudgets");
@@ -48,6 +44,10 @@ namespace WebBudget.Infrastructure.Migrations
                         {
                             b1.Property<int>("WebBudgetId")
                                 .HasColumnType("int");
+
+                            b1.Property<string>("EncodedExpenseName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<DateTime>("ExpenseDate")
                                 .HasColumnType("datetime2");
@@ -71,6 +71,10 @@ namespace WebBudget.Infrastructure.Migrations
                         {
                             b1.Property<int>("WebBudgetId")
                                 .HasColumnType("int");
+
+                            b1.Property<string>("EncodedIncomeName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<DateTime>("IncomeDate")
                                 .HasColumnType("datetime2");

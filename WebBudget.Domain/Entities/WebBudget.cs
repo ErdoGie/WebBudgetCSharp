@@ -9,17 +9,16 @@ namespace WebBudget.Domain.Entities
 {
 	public class WebBudget
 	{
-		public  int Id { get; set; }
+		public int Id { get; set; }
 		public WebBudgetIncome BudgetIncome { get; set; } = default!;
 
 		public WebBudgetExpense BudgetExpense { get; set; } = default!;
 
-		public string EncodedName { get; private set; } = default!;
+/*		public string IncomeEncodedName { get; private set; } = default!;
+		public string ExpenseEncodedName { get; private set; } = default!;
 
-		public void EncodeIncomeName() => EncodedName = BudgetIncome.IncomeType.ToLower().Replace(" ", "-");
-		public void EncodeExpenseName() => EncodedName = BudgetExpense.ExpenseType.ToLower().Replace(" ", "-");
-
+		public void EncodeIncomeName() => IncomeEncodedName = BudgetIncome.IncomeType.ToLower().Replace(" ", "-");
+		public void EncodeExpenseName() => ExpenseEncodedName = BudgetExpense.ExpenseType.ToLower().Replace(" ", "-");*/
 
 	}
-
 }
