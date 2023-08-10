@@ -14,11 +14,6 @@ namespace WebBudget.Domain.Entities
 
 		public WebBudgetExpense BudgetExpense { get; set; } = default!;
 
-/*		public string IncomeEncodedName { get; private set; } = default!;
-		public string ExpenseEncodedName { get; private set; } = default!;
-
-		public void EncodeIncomeName() => IncomeEncodedName = BudgetIncome.IncomeType.ToLower().Replace(" ", "-");
-		public void EncodeExpenseName() => ExpenseEncodedName = BudgetExpense.ExpenseType.ToLower().Replace(" ", "-");*/
 
 	}
 }

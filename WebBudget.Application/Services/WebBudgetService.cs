@@ -19,12 +19,18 @@ namespace WebBudget.Application.Services
 		{
 			_webBudgetRepository = webBudgetRepository;
 		}
-		public async Task Create(Domain.Entities.WebBudget webBudget)
+		public async Task CreateIncome(Domain.Entities.WebBudget webBudget)
 		{
 			//przed zapisem do bazy danych muszę wywołać moje metody,
 			//aby były prawidłowo zapisane podczas powstawania nowej encji.
 
 			webBudget.BudgetIncome.EncodeIncomeName();
+
+			await _webBudgetRepository.Create(webBudget);
+		}
+		public async Task CreateExpense(Domain.Entities.WebBudget webBudget)
+		{ 
+
 			webBudget.BudgetExpense.EncodeExpenseName();
 
 			await _webBudgetRepository.Create(webBudget);

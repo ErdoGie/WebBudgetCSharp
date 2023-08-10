@@ -2,6 +2,8 @@
 {
 	public interface IWebBudgetService
 	{
-		Task Create(Domain.Entities.WebBudget webBudget);
+		Task CreateIncome(Domain.Entities.WebBudget webBudget);
+
+		Task CreateExpense(Domain.Entities.WebBudget webBudget);
 	}
 }

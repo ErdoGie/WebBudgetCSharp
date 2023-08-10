@@ -14,8 +14,6 @@ namespace WebBudget.Infrastructure.Persistance
         {
             
         }
-
-
         public DbSet <Domain.Entities.WebBudget> WebBudgets { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
