@@ -2,6 +2,7 @@
 using WebBudget.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using WebBudget.Infrastructure.Seeders;
+using WebBudget.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
@@ -24,11 +27,9 @@ var seeder = scope.ServiceProvider.GetRequiredService<WebBudgetSeeder>();
 await seeder.Seed();
 
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
 
