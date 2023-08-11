@@ -15,8 +15,4 @@
     <ProjectReference Include="..\WebBudget.Domain\WebBudget.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="WebBudget\" />
-  </ItemGroup>
-
 </Project>

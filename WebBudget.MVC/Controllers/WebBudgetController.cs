@@ -14,13 +14,13 @@ namespace WebBudget.MVC.Controllers
 		{
 
 			_webBudgetService = webBudgetService;
-
 		}
 
 		// do tej metody przyjmuję dany typ budzetu
 		[HttpPost]
 		public async Task<IActionResult> CreateIncome(Domain.Entities.WebBudget webBudget)
 		{
+
 			await _webBudgetService.CreateIncome(webBudget);
 
 			return RedirectToAction(nameof(CreateIncome));
