@@ -14,7 +14,6 @@ namespace WebBudget.Domain.Entities
 		public DateTime IncomeDate { get; set; }
 
 		public float IncomeValue { get; set; }
-		//	public string EncodedName { get; private set; } = default!;
 
 		public string EncodedIncomeName { get; private set; } = default!;
 

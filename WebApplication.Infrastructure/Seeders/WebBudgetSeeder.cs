@@ -38,7 +38,7 @@ namespace WebBudget.Infrastructure.Seeders
 					};
 					var expense = new WebBudgetExpense
 					{
-						ExpenseType = "Moje urodzi ny",
+						ExpenseType = "Moje urodziny",
 						ExpenseValue = 500,
 						ExpenseDate = new DateTime(2023, 01, 18)
 					};

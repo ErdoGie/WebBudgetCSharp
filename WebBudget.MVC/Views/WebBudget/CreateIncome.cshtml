@@ -19,32 +19,43 @@
 			<form action="/WebBudget/CreateIncome" method="post">
 				<div class="form-group mb-3">
 					<label class="control-label" for="IncomeType">
-						Income Name
+						Income Category
 					</label>
 					<div class="input-group">
-						<input class="form-control bg-light text-white custom-input text-align:center" type="text" id="IncomeType" name="BudgetIncome.IncomeType" placeholder="Provide income type" />
+						<input class="form-control bg-light text-white custom-input text-align:center" type="text" id="IncomeType" name="BudgetIncome.IncomeType" placeholder="Provide income type" readonly />
 						<div class="input-group-append">
 							<button class="btn btn-secondary" type="button" id="toggleIncomeOptions">
 								<i class="fas fa-caret-down"></i>
 							</button>
 						</div>
 					</div>
-					<div class="options-container" id="IncomeType" style="display: none;">
-						<label>
-							<input type="radio" name="incomeOption" value="wyplata" /> Wyplata
-						</label>
-						<br />
-
-						<label>
-							<input type="radio" name="incomeOption" value="odszkodowanie" /> Odszkodowanie
-						</label>
-						<br />
-						<label>
-							<input type="radio" name="incomeOption" value="inne" /> Inne
-						</label>
+					<div class="options-container" id="IncomeTypeOptions" style="display: none;">
+						<div class="row">
+							<div class="col-md-6">
+								<label>
+									<input type="radio" name="incomeOption" value="Payment" /> Payment
+								</label>
+							</div>
+							<div class="col-md-6">
+								<label>
+									<input type="radio" name="incomeOption" value="Insurance" /> Insurance
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<label>
+									<input type="radio" name="incomeOption" value="Another" /> Another(provide)
+								</label>
+							</div>
+							<div class="col-md-6">
+								<label>
+									<input type="radio" name="incomeOption" value="Gift" /> Gift
+								</label>
+							</div>
+						</div>
 					</div>
 				</div>
-
 
 				<div class="form-group mb-3">
 					<label class="control-label" for="IncomeDate">
@@ -62,7 +73,7 @@
 
 				<div class="form-group mb-3">
 					<Button type="submit" class=" btn btn-primary">
-						Add InNcome
+						Add Income
 					</Button>
 					@*<Button type="submit" class = "btn btn-primary"> Cancel</Button> zrefaktorować - dodać przycisk Cancel, wraz z redirectem do strony głównej/ gdzie indziej*@
 				</div>
@@ -75,19 +86,28 @@
 			enableTime: false,
 			dateFormat: 'Y-m-d',
 		});
+	
 		var incomeTypeInput = document.getElementById("IncomeType");
-		var incomeTypeOptions = document.getElementById("IncomeTypeOptions");
 		var toggleButton = document.getElementById("toggleIncomeOptions");
+		var incomeTypeOptions = document.getElementById("IncomeTypeOptions");
 
 		toggleButton.addEventListener("click", function () {
 			incomeTypeOptions.style.display = incomeTypeOptions.style.display === "none" ? "block" : "none";
+			if (incomeTypeOptions.style.display === "block") {
+				document.querySelectorAll("#IncomeTypeOptions input[type='radio']").forEach(function (radio) {
+					radio.addEventListener("change", function () {
+						if (this.value === "Another") {
+							incomeTypeInput.removeAttribute("readonly");
+							incomeTypeInput.value = "";
+						} else {
+							incomeTypeInput.setAttribute("readonly", true);
+							incomeTypeInput.value = this.value;
+						}
+						incomeTypeOptions.style.display = "none";
+					});
+				});
+			}
 		});
 
-		document.querySelectorAll("#IncomeTypeOptions input[type='radio']").forEach(function (radio) {
-			radio.addEventListener("change", function () {
-				incomeTypeInput.value = this.value;
-				incomeTypeOptions.style.display = "none"; 
-			});
-		});
 	</script>
 }
