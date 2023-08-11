@@ -27,10 +27,17 @@ namespace WebBudget.Infrastructure.Repositories
 
 		}
 
-		public async Task Create(Domain.Entities.WebBudget webBudget)
+		public async Task CreateIncome(Domain.Entities.WebBudgetIncome webBudgetIncome)
 		{
 
-			_webBudgetDbContext.Add(webBudget);
+			_webBudgetDbContext.Add(webBudgetIncome);
+			await _webBudgetDbContext.SaveChangesAsync();
+
+		}
+		public async Task CreateExpense(Domain.Entities.WebBudgetExpense webBudgetExpense)
+		{
+
+			_webBudgetDbContext.Add(webBudgetExpense);
 			await _webBudgetDbContext.SaveChangesAsync();
 
 		}

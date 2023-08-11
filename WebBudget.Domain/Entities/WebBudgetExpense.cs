@@ -8,7 +8,7 @@ namespace WebBudget.Domain.Entities
 {
 	public class WebBudgetExpense
 	{
-
+		public int ExpenseId { get; set; }
 		public string ExpenseType { get; set; } = default!;
 
 		public DateTime ExpenseDate { get; set; }

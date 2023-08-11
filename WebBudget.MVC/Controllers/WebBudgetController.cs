@@ -18,19 +18,19 @@ namespace WebBudget.MVC.Controllers
 
 		// do tej metody przyjmuję dany typ budzetu
 		[HttpPost]
-		public async Task<IActionResult> CreateIncome(Domain.Entities.WebBudget webBudget)
+		public async Task<IActionResult> CreateIncome(Domain.Entities.WebBudgetIncome webBudgetIncome)
 		{
 
-			await _webBudgetService.CreateIncome(webBudget);
+			await _webBudgetService.CreateIncome(webBudgetIncome);
 
 			return RedirectToAction(nameof(CreateIncome));
 			// wrócić muszę z refactorem tutaj.
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateExpense(Domain.Entities.WebBudget webBudget)
+		public async Task<IActionResult> CreateExpense(Domain.Entities.WebBudgetExpense webBudgetExpense)
 		{
-			await _webBudgetService.CreateExpense(webBudget);
+			await _webBudgetService.CreateExpense(webBudgetExpense);
 
 			return RedirectToAction(nameof(CreateExpense));
 			// wrócić muszę z refactorem tutaj.

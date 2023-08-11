@@ -20,22 +20,22 @@ namespace WebBudget.Application.Services
         {
             _webBudgetRepository = webBudgetRepository;
         }
-        public async Task CreateIncome(Domain.Entities.WebBudget webBudget)
+        public async Task CreateIncome(Domain.Entities.WebBudgetIncome webBudgetIncome)
         {
 
-            //przed zapisem do bazy danych muszę wywołać moje metody,
-            //aby były prawidłowo zapisane podczas powstawania nowej encji.
-            
-            webBudget.BudgetIncome.EncodeIncomeName();
+			//przed zapisem do bazy danych muszę wywołać moje metody,
+			//aby były prawidłowo zapisane podczas powstawania nowej encji.
 
-            await _webBudgetRepository.Create(webBudget);
+			webBudgetIncome.EncodeIncomeName();
+
+            await _webBudgetRepository.CreateIncome(webBudgetIncome);
         }
-        public async Task CreateExpense(Domain.Entities.WebBudget webBudget)
+        public async Task CreateExpense(Domain.Entities.WebBudgetExpense webBudgetExpense)
         {
 
-            webBudget.BudgetExpense.EncodeExpenseName();
+			webBudgetExpense.EncodeExpenseName();
 
-            await _webBudgetRepository.Create(webBudget);
+            await _webBudgetRepository.CreateExpense(webBudgetExpense);
         }
     }
 }

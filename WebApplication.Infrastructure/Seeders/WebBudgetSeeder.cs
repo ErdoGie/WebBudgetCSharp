@@ -24,7 +24,7 @@ namespace WebBudget.Infrastructure.Seeders
 			//sprawdzam czy połączenie do bazy danych jest OK.
 			if (await _dbContext.Database.CanConnectAsync())
 			{
-				if (!_dbContext.WebBudgets.Any())
+				if (!_dbContext.WebBudgetIncome.Any() && !_dbContext.WebBudgetExpense.Any())
 				{
 					//oba seedery ustawiam od strzała.
 					var income = new WebBudgetIncome
@@ -36,6 +36,7 @@ namespace WebBudget.Infrastructure.Seeders
 
 
 					};
+
 					var expense = new WebBudgetExpense
 					{
 						ExpenseType = "Moje urodziny",
@@ -43,30 +44,20 @@ namespace WebBudget.Infrastructure.Seeders
 						ExpenseDate = new DateTime(2023, 01, 18)
 					};
 
-					var incomeSeeder = new Domain.Entities.WebBudget()
-					{
-						BudgetIncome = income
-					};
+					income.EncodeIncomeName();
+					expense.EncodeExpenseName();
 
-					var expenseSeeder = new Domain.Entities.WebBudget()
-					{
-						BudgetExpense = expense
-					};
-
-					incomeSeeder.BudgetIncome.EncodeIncomeName();
-					expenseSeeder.BudgetExpense.EncodeExpenseName();
-
-					_dbContext.WebBudgets.Add(incomeSeeder);
-					_dbContext.WebBudgets.Add(expenseSeeder);
+					_dbContext.WebBudgetIncome.Add(income);
+					_dbContext.WebBudgetExpense.Add(expense);
 					await _dbContext.SaveChangesAsync();
-
 				}
 
 			}
-
 
 		}
 
 
 	}
+
+
 }

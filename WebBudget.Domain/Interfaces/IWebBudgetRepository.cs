@@ -9,7 +9,8 @@ namespace WebBudget.Domain.Interfaces
 	public interface IWebBudgetRepository
 	{
 
-		Task Create(Domain.Entities.WebBudget webBudget);
+		Task CreateIncome(Domain.Entities.WebBudgetIncome webBudgetIncome);
+		Task CreateExpense(Domain.Entities.WebBudgetExpense webBudgetExpense);
 
 	}
 }

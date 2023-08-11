@@ -9,6 +9,7 @@ namespace WebBudget.Domain.Entities
 {
 	public class WebBudgetIncome
 	{
+		public int IncomeId { get; set; }
 		public string IncomeType { get; set; } = default!;
 
 		public DateTime IncomeDate { get; set; }
