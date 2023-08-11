@@ -1,14 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "sicLkIB2YgVEt/inugorVUOK8YouRYn2P1PrWTkko3515SSPJVlODqOwgr3/RjxxRQeYZaQHoVC5KvksHdxCTw==",
+  "dgSpecHash": "MKhejEseC8b5oMIEXfbGYaI+8/Y/c2oVU4hnMLLw6w05qNlU2wTw98g8LPmQGWRKmL4qKFECY9TrxiSGKL0x8A==",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.MVC\\WebBudget.MVC.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\HP\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
-    "C:\\Users\\HP\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.data.sqlclient\\5.0.2\\microsoft.data.sqlclient.5.0.2.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.0.1\\microsoft.data.sqlclient.sni.runtime.5.0.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.10\\microsoft.entityframeworkcore.7.0.10.nupkg.sha512",

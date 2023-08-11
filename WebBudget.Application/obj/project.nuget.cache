@@ -1,10 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "zw2tGgYiBGO111rWKsIwfB3IMg1lOL94NSWqZCapq+XR7SEr0M/YQmSESfVYrIgFyKKKskUqWEVV0p2RquhqHw==",
+  "dgSpecHash": "ODaOojeT3nbFldqP4buWmkyTWTRPXel+U+CeMpvNYiw93fMMusAHTsU3W7ZfApjkfEtwI5f7q7xpCgVc75S7Rw==",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.Application\\WebBudget.Application.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+    "C:\\Users\\HP\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,6 +1,6 @@
 ﻿namespace WebBudget.Application.Services
 {
-	public interface IWebBudgetService
+    public interface IWebBudgetService
 	{
 		Task CreateIncome(Domain.Entities.WebBudget webBudget);
 

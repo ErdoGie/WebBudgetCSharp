@@ -79,3 +79,5 @@ C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MV
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\Mono.TextTemplating.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
