@@ -1,6 +1,10 @@
-﻿@{
+﻿@using WebBudget.Application.WebBudget;
+@{
 	Layout = "_Layout";
 }
+
+
+@model WebBudgetIncomeDTO;
 
 @section containerContent {
 	<head>
@@ -18,17 +22,20 @@
 		<div class="col-md-4 mx-auto">
 			<form action="/WebBudget/CreateIncome" method="post">
 				<div class="form-group mb-3">
-					<label class="control-label" for="IncomeType">
+					<label class="control-label" asp-for="IncomeType">
 						Income Category
 					</label>
 					<div class="input-group">
-						<input class="form-control bg-light text-white custom-input text-align:center" type="text" id="IncomeType" name="IncomeType" placeholder="Provide income type" readonly />
+						<input class="form-control bg-light text-white custom-input text-align:center" type="text" id="IncomeType" asp-for="IncomeType" placeholder="Provide income type" readonly />
 						<div class="input-group-append">
 							<button class="btn btn-secondary" type="button" id="toggleIncomeOptions">
 								<i class="fas fa-caret-down"></i>
 							</button>
 						</div>
 					</div>
+					<span asp-validation-for="IncomeType" class="text-danger">
+
+					</span>
 					<div class="options-container" id="IncomeTypeOptions" style="display: none;">
 						<div class="row">
 							<div class="col-md-6">
@@ -58,18 +65,24 @@
 				</div>
 
 				<div class="form-group mb-3">
-					<label class="control-label" for="IncomeDate">
+					<label class="control-label" asp-for="IncomeDate">
 						Income Date
 					</label>
-					<input style="text-align:center" class="form-control bg-light text-white" type="text" id="IncomeDate" name="IncomeDate" placeholder="Select date" data-input>
+					<input style="text-align:center" class="form-control bg-light text-white" type="text" id="IncomeDate" asp-for="IncomeDate" placeholder="Select date" data-input>
 				</div>
+				<span asp-validation-for="IncomeDate" class="text-danger">
+
+				</span>
 
 				<div class="form-group mb-3">
-					<label class="control-label" for="IncomeValue">
+					<label class="control-label" asp-for="IncomeValue">
 						Income Value
 					</label>
-					<input style="text-align:center" class="form-control bg-light text-white" type="text" id="IncomeValue" name="IncomeValue" placeholder="Provide income value" />
+					<input style="text-align:center" class="form-control bg-light text-white" type="text" id="IncomeValue" asp-for="IncomeValue" placeholder="Provide income value" />
 				</div>
+				<span asp-validation-for="IncomeValue" class="text-danger">
+
+				</span>
 
 				<div class="form-group mb-3">
 					<Button type="submit" class=" btn btn-primary">
@@ -86,7 +99,7 @@
 			enableTime: false,
 			dateFormat: 'Y-m-d',
 		});
-	
+
 		var incomeTypeInput = document.getElementById("IncomeType");
 		var toggleButton = document.getElementById("toggleIncomeOptions");
 		var incomeTypeOptions = document.getElementById("IncomeTypeOptions");
@@ -110,4 +123,11 @@
 		});
 
 	</script>
+	}
+
+@section Scripts{
+
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }

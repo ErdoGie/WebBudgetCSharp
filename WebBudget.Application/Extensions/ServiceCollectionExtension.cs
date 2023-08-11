@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WebBudget.Application.Mappings;
 using WebBudget.Application.Services;
 
 namespace WebBudget.Application.Extensions
@@ -18,6 +19,7 @@ namespace WebBudget.Application.Extensions
 
 			services.AddScoped<IWebBudgetService, WebBudgetService>();
 
+			services.AddAutoMapper(typeof(WebBudgetIncomeMappingProfile));
 
 		}
 

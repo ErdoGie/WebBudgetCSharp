@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
 using WebBudget.Application.Services;
+using WebBudget.Application.WebBudget;
 //
 namespace WebBudget.MVC.Controllers
 {
@@ -18,22 +19,25 @@ namespace WebBudget.MVC.Controllers
 
 		// do tej metody przyjmuję dany typ budzetu
 		[HttpPost]
-		public async Task<IActionResult> CreateIncome(Domain.Entities.WebBudgetIncome webBudgetIncome)
+		public async Task<IActionResult> CreateIncome(WebBudgetIncomeDTO webBudgetIncome)
 		{
+			if (!ModelState.IsValid)
+			{
+
+				return View(webBudgetIncome);
+			}
 
 			await _webBudgetService.CreateIncome(webBudgetIncome);
 
 			return RedirectToAction(nameof(CreateIncome));
-			// wrócić muszę z refactorem tutaj.
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateExpense(Domain.Entities.WebBudgetExpense webBudgetExpense)
+		public async Task<IActionResult> CreateExpense(WebBudgetExpenseDTO webBudgetExpense)
 		{
 			await _webBudgetService.CreateExpense(webBudgetExpense);
 
 			return RedirectToAction(nameof(CreateExpense));
-			// wrócić muszę z refactorem tutaj.
 		}
 
 
