@@ -9,11 +9,9 @@ namespace WebBudget.Application.WebBudget
 {
 	public class WebBudgetIncomeDTO
 	{
-		[Required(ErrorMessage ="Insert Category")]
-		[StringLength(20, MinimumLength = 2)]
+		
 		public string IncomeType { get; set; } = default!;
 
-		[Required(ErrorMessage = "Insert Date")]
 		public DateTime IncomeDate { get; set; }
 
 		public float IncomeValue { get; set; }

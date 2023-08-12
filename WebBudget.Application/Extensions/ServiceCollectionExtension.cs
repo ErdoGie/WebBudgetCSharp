@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebBudget.Application.Mappings;
 using WebBudget.Application.Services;
+using WebBudget.Application.WebBudget;
 
 namespace WebBudget.Application.Extensions
 {
@@ -21,9 +24,11 @@ namespace WebBudget.Application.Extensions
 
 			services.AddAutoMapper(typeof(WebBudgetIncomeMappingProfile));
 
+
+			services.AddValidatorsFromAssemblyContaining<WebBudgetIncomeDTOValidator>()
+				.AddFluentValidationAutoValidation()
+				.AddFluentValidationClientsideAdapters();
+
 		}
-
-
-
 	}
 }
