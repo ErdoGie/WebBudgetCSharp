@@ -24,11 +24,11 @@ namespace WebBudget.Application.Extensions
 
 			services.AddAutoMapper(typeof(WebBudgetIncomeMappingProfile));
 
+			services.AddAutoMapper(typeof(WebBudgetExpenseMappingProfile));
 
 			services.AddValidatorsFromAssemblyContaining<WebBudgetIncomeDTOValidator>()
 				.AddFluentValidationAutoValidation()
 				.AddFluentValidationClientsideAdapters();
-
 		}
 	}
 }

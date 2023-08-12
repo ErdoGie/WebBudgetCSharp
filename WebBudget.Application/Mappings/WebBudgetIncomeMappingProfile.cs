@@ -11,14 +11,10 @@ namespace WebBudget.Application.Mappings
 {
 	public class WebBudgetIncomeMappingProfile :Profile
 	{
-
         public WebBudgetIncomeMappingProfile()
         {
             CreateMap<WebBudgetIncomeDTO, Domain.Entities.WebBudgetIncome>()
                 .ForMember(i => i.IncomeType, opt => opt.MapFrom(src => src.IncomeType));
-
-
         }
-
     }
 }

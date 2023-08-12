@@ -2,15 +2,14 @@
 @{
 	Layout = "_Layout";
 }
-
-
 @model WebBudgetIncomeDTO;
 
 @section containerContent {
 	<head>
+
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.css">
 		<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
-
+		<script src="~/js/site.js"> </script>
 
 	</head>
 	<h1> Add Income </h1>
@@ -18,12 +17,11 @@
 	<hr />
 
 	<div class="row">
-
 		<div class="col-md-4 mx-auto">
 			<form action="/WebBudget/CreateIncome" method="post">
 				<div class="form-group mb-3">
 					<label class="control-label" asp-for="IncomeType">
-						Income Category
+						Income Type
 					</label>
 					<div class="input-group">
 						<input class="form-control bg-light text-white custom-input text-align:center" type="text" id="IncomeType" asp-for="IncomeType" placeholder="Provide income type" readonly />
@@ -70,7 +68,7 @@
 					</label>
 					<input style="text-align:center" class="form-control bg-light text-white" type="text" id="IncomeDate" asp-for="IncomeDate" placeholder="Select date" />
 					<span asp-validation-for="IncomeDate" class="text-danger"></span>
-					<span id="dateValidationMessage" ></span>
+					<span id="validationDateMessage"></span>
 				</div>
 
 				<div class="form-group mb-3">
@@ -78,69 +76,24 @@
 						Income Value
 					</label>
 					<input style="text-align:center" class="form-control bg-light text-white" type="text" id="IncomeValue" asp-for="IncomeValue" placeholder="Provide income value" />
+					<span asp-validation-for="IncomeValue" class="text-danger"></span>
+					<span id="incomeValueValidationMessage" class="text-danger"></span>
 				</div>
-				<span asp-validation-for="IncomeValue" class="text-danger">
-
-				</span>
 
 				<div class="form-group mb-3">
-					<Button type="submit" class=" btn btn-primary">
+					<button type="submit" class="btn btn-primary" onclick="showIncomeAddedMessage()">
 						Add Income
-					</Button>
-					@*<Button type="submit" class = "btn btn-primary"> Cancel</Button> zrefaktorować - dodać przycisk Cancel, wraz z redirectem do strony głównej/ gdzie indziej*@
+					</button>
 				</div>
+
 			</form>
 		</div>
 	</div>
 
-	<script>
-
-		flatpickr('#IncomeDate', {
-			enableTime: false,
-			dateFormat: 'Y-m-d',
-		});
+	@*stworzyc main panel w ktorym beda opcje do wyboru jezeli bedzie uzyszkodnik zalogowany ktory bedzie tam przekierowywac po dodaniu przychodu/wydatku*@
 
 
-		document.getElementById("IncomeDate").addEventListener("change", function () {
-			var selectedDate = new Date(this.value);
-			var currentDate = new Date();
-			var minDate = new Date(2000, 0, 1);
-			var maxDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-			var validationMessage = document.getElementById("dateValidationMessage");
 
-			if (selectedDate >= minDate && selectedDate <= maxDate) {
-				validationMessage.textContent = "Date validation correct.";
-				validationMessage.style.color = "green"; // Set text color to green
-			} else {
-				validationMessage.textContent = "Date must be between 2000-01-01 and the end of the current month.";
-				validationMessage.style.color = "red"; // Set text color to red
-			}
-		});
-
-
-		var incomeTypeInput = document.getElementById("IncomeType");
-		var toggleButton = document.getElementById("toggleIncomeOptions");
-		var incomeTypeOptions = document.getElementById("IncomeTypeOptions");
-
-		toggleButton.addEventListener("click", function () {
-			incomeTypeOptions.style.display = incomeTypeOptions.style.display === "none" ? "block" : "none";
-			if (incomeTypeOptions.style.display === "block") {
-				document.querySelectorAll("#IncomeTypeOptions input[type='radio']").forEach(function (radio) {
-					radio.addEventListener("change", function () {
-						if (this.value === "Another") {
-							incomeTypeInput.removeAttribute("readonly");
-							incomeTypeInput.value = "";
-						} else {
-							incomeTypeInput.setAttribute("readonly", true);
-							incomeTypeInput.value = this.value;
-						}
-						incomeTypeOptions.style.display = "none";
-					});
-				});
-			}
-		});
-
-	</script>
 	}
 
 @section Scripts{

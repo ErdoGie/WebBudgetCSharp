@@ -10,13 +10,10 @@ namespace WebBudget.Application.Mappings
 {
 	public class WebBudgetExpenseMappingProfile : Profile
 	{
-
 		public WebBudgetExpenseMappingProfile()
 		{
 			CreateMap<WebBudgetExpenseDTO, Domain.Entities.WebBudgetExpense>()
 				.ForMember(i => i.ExpenseType, opt => opt.MapFrom(src => src.ExpenseType));
-
 		}
-
 	}
 }

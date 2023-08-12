@@ -10,18 +10,9 @@ namespace WebBudget.Domain.Entities
 	{
 		public int ExpenseId { get; set; }
 		public string ExpenseType { get; set; } = default!;
-
 		public DateTime ExpenseDate { get; set; }
-
 		public float ExpenseValue { get; set; }
-
-		//	public string EncodedName { get; private set; } = default!;
-
 		public string EncodedExpenseName { get; private set; } = default!;
-
 		public void EncodeExpenseName() => EncodedExpenseName = ExpenseType.ToLower().Replace(" ", "-");
-
-
-
 	}
 }
