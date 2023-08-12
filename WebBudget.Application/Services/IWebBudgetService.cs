@@ -7,5 +7,7 @@ namespace WebBudget.Application.Services
 		Task CreateIncome(WebBudgetIncomeDTO webBudgetIncome);
 
 		Task CreateExpense(WebBudgetExpenseDTO webBudgetExpense);
+	
+		Task <IEnumerable<WebBudgetIncomeDTO>> GetAllIncomes();
 	}
 }

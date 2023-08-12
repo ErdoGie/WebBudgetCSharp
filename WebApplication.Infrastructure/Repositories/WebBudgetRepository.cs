@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebBudget.Domain.Entities;
 using WebBudget.Domain.Interfaces;
 using WebBudget.Infrastructure.Persistance;
 
@@ -41,5 +43,10 @@ namespace WebBudget.Infrastructure.Repositories
 			await _webBudgetDbContext.SaveChangesAsync();
 
 		}
+
+		//odnosze sie do mojego dbCOntextu
+		public async Task<IEnumerable<WebBudgetIncome>> GetAllIncomes()
+			=> await _webBudgetDbContext.WebBudgetIncome.ToListAsync();
+		
 	}
 }

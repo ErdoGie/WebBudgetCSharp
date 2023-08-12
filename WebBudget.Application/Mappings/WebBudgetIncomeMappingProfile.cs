@@ -15,6 +15,12 @@ namespace WebBudget.Application.Mappings
         {
             CreateMap<WebBudgetIncomeDTO, Domain.Entities.WebBudgetIncome>()
                 .ForMember(i => i.IncomeType, opt => opt.MapFrom(src => src.IncomeType));
+
+            // muszę zmapować z encji bazodanowej na encje dto
+
+            CreateMap<Domain.Entities.WebBudgetIncome, WebBudgetIncomeDTO>()
+                .ForMember(i => i.IncomeType, opt => opt.MapFrom(src => src.IncomeType));
+
         }
     }
 }

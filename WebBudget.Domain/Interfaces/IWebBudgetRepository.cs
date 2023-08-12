@@ -12,5 +12,7 @@ namespace WebBudget.Domain.Interfaces
 		Task CreateIncome(Domain.Entities.WebBudgetIncome webBudgetIncome);
 		Task CreateExpense(Domain.Entities.WebBudgetExpense webBudgetExpense);
 
+		Task <IEnumerable<Domain.Entities.WebBudgetIncome>> GetAllIncomes();
+
 	}
 }

@@ -81,7 +81,12 @@ footer {
     text-align: center;
     
 }
-
+.pager-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 20px; 
+}
 /*photos*/
 .C_Image {
     height: 20vh;

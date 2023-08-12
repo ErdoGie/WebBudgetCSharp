@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using WebBudget.Application.Services;
 using WebBudget.Application.WebBudget;
+using X.PagedList;
 using static Azure.Core.HttpHeader;
 //
 namespace WebBudget.MVC.Controllers
@@ -30,7 +31,7 @@ namespace WebBudget.MVC.Controllers
 
 			TempData["IncomeAdded"] = true;
 
-			return RedirectToAction("Index", "Home"); 
+			return RedirectToAction(nameof(IncomesIndex)); 
 		}
 
 		[HttpPost]
@@ -45,9 +46,23 @@ namespace WebBudget.MVC.Controllers
 
 			return RedirectToAction(nameof(CreateExpense));
 		}
+        public async Task<IActionResult> IncomesIndex(int? page)
+        {
+            int pageSize = 6;
+            int pageNumber = page ?? 1;
 
+            var webBudgetIncome = await _webBudgetService.GetAllIncomes();
 
-		public IActionResult CreateExpense()
+            var paginatedIncomeData = webBudgetIncome.ToPagedList(pageNumber, pageSize);
+
+            int pageCount = (int)Math.Ceiling((double)webBudgetIncome.Count() / pageSize);
+
+            ViewBag.PageCount = pageCount;
+
+            return View(paginatedIncomeData);
+        }
+
+        public IActionResult CreateExpense()
 		{
 			return View();
 		}

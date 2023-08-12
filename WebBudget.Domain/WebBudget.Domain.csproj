@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="X.PagedList" Version="8.4.7" />
+  </ItemGroup>
+
 </Project>
