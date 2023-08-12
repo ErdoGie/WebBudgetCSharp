@@ -82,7 +82,10 @@ footer {
     
 }
 .pager-container {
-    display: flex;
+    
+    position: absolute;
+    top: 88%;
+    left: 90%;
     justify-content: flex-end;
     align-items: flex-end;
     margin-top: 20px; 

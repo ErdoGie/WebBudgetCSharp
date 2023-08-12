@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ namespace WebBudget.Domain.Entities
 	{
 		public int ExpenseId { get; set; }
 		public string ExpenseType { get; set; } = default!;
+		[Column(TypeName = "Date")]
 		public DateTime ExpenseDate { get; set; }
 		public float ExpenseValue { get; set; }
 		public string EncodedExpenseName { get; private set; } = default!;

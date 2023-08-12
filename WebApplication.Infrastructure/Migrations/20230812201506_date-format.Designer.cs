@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebBudget.Infrastructure.Persistance;
 
@@ -11,9 +12,11 @@ using WebBudget.Infrastructure.Persistance;
 namespace WebBudget.Infrastructure.Migrations
 {
     [DbContext(typeof(WebBudgetDbContext))]
-    partial class WebBudgetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230812201506_date-format")]
+    partial class dateformat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +38,7 @@ namespace WebBudget.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ExpenseDate")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ExpenseType")
                         .IsRequired()
@@ -62,7 +65,7 @@ namespace WebBudget.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("IncomeDate")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("IncomeType")
                         .IsRequired()

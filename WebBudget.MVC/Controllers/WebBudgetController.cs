@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using WebBudget.Application.Services;
 using WebBudget.Application.WebBudget;
+using WebBudget.Domain.Entities;
 using X.PagedList;
 using static Azure.Core.HttpHeader;
 //
@@ -44,7 +45,7 @@ namespace WebBudget.MVC.Controllers
 
 			await _webBudgetService.CreateExpense(webBudgetExpense);
 
-			return RedirectToAction(nameof(CreateExpense));
+			return RedirectToAction(nameof(ExpensesIndex));
 		}
         public async Task<IActionResult> IncomesIndex(int? page)
         {
@@ -61,6 +62,22 @@ namespace WebBudget.MVC.Controllers
 
             return View(paginatedIncomeData);
         }
+
+		public async Task<IActionResult> ExpensesIndex(int? page)
+		{
+			int pageSize = 6;
+			int pageNumber = page ?? 1;
+			var webBudgetExpese = await _webBudgetService.GetAllExpenses();
+
+			var paginatedExpenseData = webBudgetExpese.ToPagedList(pageNumber, pageSize);
+
+			int pageCount = (int)Math.Ceiling((double)webBudgetExpese.Count() / pageSize);
+
+			ViewBag.PageCount = pageCount;
+
+			return View(paginatedExpenseData);
+		}
+
 
         public IActionResult CreateExpense()
 		{

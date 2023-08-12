@@ -8,6 +8,10 @@ namespace WebBudget.Application.Services
 
 		Task CreateExpense(WebBudgetExpenseDTO webBudgetExpense);
 	
+
+		// ze zmapowanych przychodow/wydatkow musze je pobrac 
 		Task <IEnumerable<WebBudgetIncomeDTO>> GetAllIncomes();
+
+		Task<IEnumerable<WebBudgetExpenseDTO>> GetAllExpenses();
 	}
 }

@@ -41,6 +41,16 @@ namespace WebBudget.Application.Services
 			await _webBudgetRepository.CreateIncome(webBudgetIncome);
 		}
 
+		public async Task<IEnumerable<WebBudgetExpenseDTO>> GetAllExpenses()
+		{
+			var webBudgetExpense = await _webBudgetRepository.GetAllExpenses();
+
+			var dtoExpenses = _mapper.Map<IEnumerable<WebBudgetExpenseDTO>>(webBudgetExpense);
+
+			return dtoExpenses;
+
+		}
+
 		public async Task<IEnumerable<WebBudgetIncomeDTO>> GetAllIncomes()
 		{
 			var webBudgetIncome = await _webBudgetRepository.GetAllIncomes();
