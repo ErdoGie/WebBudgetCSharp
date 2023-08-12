@@ -22,80 +22,58 @@ namespace WebBudget.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WebBudget.Domain.Entities.WebBudget", b =>
+            modelBuilder.Entity("WebBudget.Domain.Entities.WebBudgetExpense", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ExpenseId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExpenseId"));
 
-                    b.HasKey("Id");
+                    b.Property<string>("EncodedExpenseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("WebBudgets");
+                    b.Property<DateTime>("ExpenseDate")
+                        .HasColumnType("Date");
+
+                    b.Property<string>("ExpenseType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("ExpenseValue")
+                        .HasColumnType("real");
+
+                    b.HasKey("ExpenseId");
+
+                    b.ToTable("WebBudgetExpense", (string)null);
                 });
 
-            modelBuilder.Entity("WebBudget.Domain.Entities.WebBudget", b =>
+            modelBuilder.Entity("WebBudget.Domain.Entities.WebBudgetIncome", b =>
                 {
-                    b.OwnsOne("WebBudget.Domain.Entities.WebBudgetExpense", "BudgetExpense", b1 =>
-                        {
-                            b1.Property<int>("WebBudgetId")
-                                .HasColumnType("int");
+                    b.Property<int>("IncomeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                            b1.Property<string>("EncodedExpenseName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IncomeId"));
 
-                            b1.Property<DateTime>("ExpenseDate")
-                                .HasColumnType("datetime2");
+                    b.Property<string>("EncodedIncomeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                            b1.Property<string>("ExpenseType")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("IncomeDate")
+                        .HasColumnType("Date");
 
-                            b1.Property<float>("ExpenseValue")
-                                .HasColumnType("real");
+                    b.Property<string>("IncomeType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                            b1.HasKey("WebBudgetId");
+                    b.Property<float>("IncomeValue")
+                        .HasColumnType("real");
 
-                            b1.ToTable("BudgetExpense", (string)null);
+                    b.HasKey("IncomeId");
 
-                            b1.WithOwner()
-                                .HasForeignKey("WebBudgetId");
-                        });
-
-                    b.OwnsOne("WebBudget.Domain.Entities.WebBudgetIncome", "BudgetIncome", b1 =>
-                        {
-                            b1.Property<int>("WebBudgetId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("EncodedIncomeName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<DateTime>("IncomeDate")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<string>("IncomeType")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<float>("IncomeValue")
-                                .HasColumnType("real");
-
-                            b1.HasKey("WebBudgetId");
-
-                            b1.ToTable("BudgetIncome", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("WebBudgetId");
-                        });
-
-                    b.Navigation("BudgetExpense")
-                        .IsRequired();
-
-                    b.Navigation("BudgetIncome")
-                        .IsRequired();
+                    b.ToTable("WebBudgetIncome", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "u1uyRWT9BtL/udDKua1YGF6wxnmLjzl0linzGsgRM3WeV8ao2uNv4ExmbR9/EOlsQOXzaCzQBK4pjEih12/ZmA==",
+  "dgSpecHash": "7vcJmCpM4oVQW2u1eW8h0BZf8N86yfZn4UwrFXUtEUnxKEHDevryTVvIzbYHQQEWmF51dctaLtGiPz2tKa86Jg==",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.Domain\\WebBudget.Domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\HP\\.nuget\\packages\\jetbrains.annotations\\2022.3.1\\jetbrains.annotations.2022.3.1.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\x.pagedlist\\8.4.7\\x.pagedlist.8.4.7.nupkg.sha512"
+  ],
   "logs": []
 }

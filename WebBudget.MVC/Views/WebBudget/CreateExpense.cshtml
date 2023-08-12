@@ -1,0 +1,159 @@
+﻿@{
+	Layout = "_Layout";
+}
+@using WebBudget.Application.WebBudget;
+
+@model WebBudgetExpenseDTO;
+
+@section containerContent {
+	<head>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
+		<script src="~/js/site.js"> </script>
+
+	</head>
+	<h1> Add Expense </h1>
+
+	<hr />
+
+	<div class="row">
+
+		<div class="col-md-4 mx-auto">
+			<form action="/WebBudget/CreateExpense" method="post">
+				<div class="form-group mb-3">
+					<label class="control-label" asp-for="ExpenseType">
+						Expense Category
+					</label>
+					<div class="input-group">
+						<input class="form-control bg-light text-white custom-input text-align:center" type="text" id="ExpenseType" asp-for="ExpenseType" placeholder="Provide expense category" readonly />
+						<div class="input-group-append">
+							<button class="btn btn-secondary" type="button" id="toogleExpenseTypes">
+								<i class="fas fa-caret-down"></i>
+							</button>
+						</div>
+					</div>
+					<span asp-validation-for="ExpenseType" class="text-danger">
+
+					</span>
+					<div class="options-container" id="ExpenseTypeOptions" style="display: none;">
+						<div class="row">
+							<div class="col-md-6">
+								<label>
+									<input type="radio" name="incomeOption" value="Fridge" /> Fridge
+								</label>
+							</div>
+							<div class="col-md-6">
+								<label>
+									<input type="radio" name="incomeOption" value="Taxes" /> Taxes
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<label>
+									<input type="radio" name="incomeOption" value="Another" /> Another(provide)
+								</label>
+							</div>
+							<div class="col-md-6">
+								<label>
+									<input type="radio" name="incomeOption" value="Cigarettes" /> Cigarettes
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group mb-3">
+					<label class="control-label" asp-for="ExpenseDate">
+						Expense Date
+					</label>
+					<input style="text-align:center" class="form-control bg-light text-white" type="text" id="ExpenseDate" asp-for="ExpenseDate" placeholder="Select date" data-input>
+					<span id="validationDateMessage"></span>
+				</div>
+				<span asp-validation-for="ExpenseDate" class="text-danger">
+
+				</span>
+
+				<div class="form-group mb-3">
+					<label class="control-label" asp-for="ExpenseValue">
+						Expense Value
+					</label>
+					<input style="text-align:center" class="form-control bg-light text-white" type="text" id="ExpenseValue" asp-for="ExpenseValue" placeholder="Provide expense value"  />
+					<span asp-validation-for="ExpenseValue" class="text-danger"></span>
+					<span id="expenseValueValidationMessage" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mb-3">
+					<Button type="submit" class=" btn btn-primary">
+						Add Expense
+					</Button>
+					@*<Button type="submit" class = "btn btn-primary"> Cancel</Button> zrefaktorować - dodać przycisk Cancel, wraz z redirectem do strony głównej/ gdzie indziej*@
+				</div>
+			</form>
+		</div>
+	</div>
+	<script>
+		flatpickr('#ExpenseDate', {
+			enableTime: false,
+			dateFormat: 'Y-m-d',
+		});
+		
+		var expenseTypeInput = document.getElementById("ExpenseType");
+		var toggleButton = document.getElementById("toogleExpenseTypes");
+		var ExpenseTypeOptions = document.getElementById("ExpenseTypeOptions");
+
+		toggleButton.addEventListener("click", function () {
+			ExpenseTypeOptions.style.display = ExpenseTypeOptions.style.display === "none" ? "block" : "none";
+			if (ExpenseTypeOptions.style.display === "block") {
+				document.querySelectorAll("#ExpenseTypeOptions input[type='radio']").forEach(function (radio) {
+					radio.addEventListener("change", function () {
+						if (this.value === "Another") {
+							expenseTypeInput.removeAttribute("readonly");
+							expenseTypeInput.value = "";
+						} else {
+							expenseTypeInput.setAttribute("readonly", true);
+							expenseTypeInput.value = this.value;
+						}
+						ExpenseTypeOptions.style.display = "none";
+					});
+				});
+			}
+		});
+		document.getElementById("ExpenseDate").addEventListener("change", function () {
+			var selectedDate = new Date(this.value);
+			var currentDate = new Date();
+			var minDate = new Date(2000, 0, 1);
+			var maxDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+			var validationMessage = document.getElementById("validationDateMessage");
+
+			if (selectedDate >= minDate && selectedDate <= maxDate) {
+				validationMessage.textContent = "Date validation correct.";
+				validationMessage.style.color = "#04b524";
+			} else {
+				validationMessage.textContent = "Date must be between 2000-01-01 and the end of the current month.";
+				validationMessage.style.color = "#fc002e";
+			}
+		});
+
+		var expenseValueInput = document.getElementById("ExpenseValue");
+		var expenseValueValidationMessage = document.getElementById("expenseValueValidationMessage");
+
+		expenseValueInput.addEventListener("input", function () {
+			var value = parseFloat(expenseValueInput.value);
+			if (isNaN(value) || value < 0) {
+				expenseValueValidationMessage.textContent = "Value must be a non-negative number.";
+				expenseValueValidationMessage.style.color = "#fc002e";
+			} else {
+				expenseValueValidationMessage.textContent = "";
+			}
+		});
+
+	</script>
+}
+@section Scripts{
+
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

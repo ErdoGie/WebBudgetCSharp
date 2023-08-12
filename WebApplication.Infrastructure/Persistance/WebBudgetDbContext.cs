@@ -14,24 +14,25 @@ namespace WebBudget.Infrastructure.Persistance
         {
             
         }
+        public DbSet <Domain.Entities.WebBudgetIncome> WebBudgetIncome { get; set; }
+		public DbSet<Domain.Entities.WebBudgetExpense> WebBudgetExpense { get; set; }
 
-
-        public DbSet <Domain.Entities.WebBudget> WebBudgets { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			//tworze obie encje za jednym zamachem 
-			modelBuilder.Entity<Domain.Entities.WebBudget>(entity =>
+			modelBuilder.Entity<Domain.Entities.WebBudgetIncome>(entity =>
 			{
-				entity.OwnsOne(w => w.BudgetIncome, income =>
-				{
-					income.ToTable("BudgetIncome");
-				});
+				
+					entity.ToTable("WebBudgetIncome");
+					entity.HasKey(i => i.IncomeId); 
+				
+			});
 
-				entity.OwnsOne(w => w.BudgetExpense, expense =>
-				{
-					expense.ToTable("BudgetExpense");
-				});
+			modelBuilder.Entity<WebBudgetExpense>(entity =>
+			{
+				entity.ToTable("WebBudgetExpense");
+				entity.HasKey(e => e.ExpenseId); 
 			});
 		}
 	}

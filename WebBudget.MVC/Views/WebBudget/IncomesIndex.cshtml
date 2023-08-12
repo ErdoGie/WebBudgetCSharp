@@ -1,0 +1,64 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model IEnumerable<WebBudget.Application.WebBudget.WebBudgetIncomeDTO>
+
+@{
+	ViewData["Title"] = "IncomesIndex";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	var pageNumber = ViewBag.PageNumber;
+	var PageCount = ViewBag.PageCount;
+}
+@section containerContent  {
+	<h1>Your incomes</h1>
+	
+	<div class="row">
+		@foreach (var item in Model)
+		{
+			<div class="col-md-6 col-lg-4">
+				<div class="card m-3">
+					<div class="card-body">
+						<h5 class="card-title"> @item.IncomeType</h5>
+						<h6 class="card-subtitle mb-2 text-muted">@item.IncomeDate.ToString("yyyy-MM-dd")</h6>
+						<h5 class="card-title"> @item.IncomeValue zł</h5>
+						<a href="#" class="btn btn-primary">Edit</a>
+						<a href="#" class="btn btn-primary">Delete</a>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<nav aria-label="Income navigation">
+				<pager class="pager-container" asp-action="IncomesIndex" asp-controller="WebBudget">
+					<ul class="pagination">
+						@for (int i = 1; i <= ViewBag.PageCount; i++)
+						{
+							<li class="page-item @(i == pageNumber ? "active" : "")">
+								<a class="page-link" asp-route-page="@i">@i</a>
+							</li>
+						}
+					</ul>
+				</pager>
+			</nav>
+		</div>
+	</div>
+  }
+
+@if (TempData.ContainsKey("IncomeAdded") && (bool)TempData["IncomeAdded"] == true)
+{
+
+	<script>
+		window.onload = function () {
+			alert("Income added successfully");
+		};</script>
+}
+
+@section scripts {
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+}
