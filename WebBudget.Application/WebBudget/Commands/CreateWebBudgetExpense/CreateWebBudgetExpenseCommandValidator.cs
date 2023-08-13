@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace WebBudget.Application.WebBudget
 {
-	public class WebBudgetExpenseDTOValidator : AbstractValidator<WebBudgetExpenseDTO>
+	public class CreateWebBudgetExpenseCommandValidator : AbstractValidator<WebBudgetExpenseDTO>
 	{
-		public WebBudgetExpenseDTOValidator()
+		public CreateWebBudgetExpenseCommandValidator()
 		{
 
 			RuleFor(i => i.ExpenseType)
@@ -17,6 +17,9 @@ namespace WebBudget.Application.WebBudget
 				.MinimumLength(3).WithMessage("Minimum text length is 3 characters")
 				.MaximumLength(15).WithMessage("Maximum text length is 15 characters");
 
+			RuleFor(i => i.ExpenseValue)
+			   .NotEmpty().WithMessage("Value cannot be empty")
+			   .GreaterThan(0).WithMessage("Value cannot be below zero.");
 
 			RuleFor(i => i.ExpenseDate)
 				.NotEmpty().WithMessage("Provide Date.");

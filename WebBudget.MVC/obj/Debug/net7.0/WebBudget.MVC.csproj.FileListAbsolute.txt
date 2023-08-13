@@ -266,3 +266,6 @@ C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MV
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\JetBrains.Annotations.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\X.PagedList.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\X.PagedList.Mvc.Core.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\MediatR.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\MediatR.Contracts.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\MediatR.Extensions.Microsoft.DependencyInjection.dll

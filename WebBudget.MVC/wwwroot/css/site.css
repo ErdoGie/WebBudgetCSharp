@@ -67,10 +67,10 @@ footer {
 
 .centered-container {
     color: black;
-    position: absolute;
-    top: -50%; 
+    position: relative;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, 55%);
+    transform: translate(-50%, -60%);
     padding: 20px;
     height: 63vh;
     width: 140vh;
@@ -79,17 +79,17 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     max-width: 80%;
     text-align: center;
-    
+    overflow: auto;
 }
+
 .pager-container {
-    
-    position: absolute;
-    top: 88%;
-    left: 90%;
-    justify-content: flex-end;
-    align-items: flex-end;
-    margin-top: 20px; 
+    position: relative;
+    bottom: 0%;
+    right: -1.8%;
+   
+    margin-bottom:10px;
 }
+
 /*photos*/
 .C_Image {
     height: 20vh;
@@ -97,6 +97,7 @@ footer {
     margin-bottom: 10px;
 }
 .grid-container {
+
     display: flex;
     flex-wrap: wrap;
     gap: 20px;

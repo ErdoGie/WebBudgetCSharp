@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿/*using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,21 +26,21 @@ namespace WebBudget.Application.Services
 		}
 		public async Task CreateExpense(WebBudgetExpenseDTO webBudgetExpenseDTO)
 		{
-			var webBudgetExpense = _mapper.Map<Domain.Entities.WebBudgetExpense>(webBudgetExpenseDTO);
+			*//*var webBudgetExpense = _mapper.Map<Domain.Entities.WebBudgetExpense>(webBudgetExpenseDTO);
 
 			webBudgetExpense.EncodeExpenseName();
 
-			await _webBudgetRepository.CreateExpense(webBudgetExpense);
+			await _webBudgetRepository.CreateExpense(webBudgetExpense);*//*
 		}
-		public async Task CreateIncome(WebBudgetIncomeDTO webBudgetIncomeDTO)
+	*//*	public async Task CreateIncome(WebBudgetIncomeDTO webBudgetIncomeDTO)
 		{
-			var webBudgetIncome = _mapper.Map<Domain.Entities.WebBudgetIncome>(webBudgetIncomeDTO);
+			*//*var webBudgetIncome = _mapper.Map<Domain.Entities.WebBudgetIncome>(webBudgetIncomeDTO);
 		
 			webBudgetIncome.EncodeIncomeName(); 
 
-			await _webBudgetRepository.CreateIncome(webBudgetIncome);
+			await _webBudgetRepository.CreateIncome(webBudgetIncome);*//*
 		}
-
+*//*
 		public async Task<IEnumerable<WebBudgetExpenseDTO>> GetAllExpenses()
 		{
 			var webBudgetExpense = await _webBudgetRepository.GetAllExpenses();
@@ -51,13 +51,14 @@ namespace WebBudget.Application.Services
 
 		}
 
-		public async Task<IEnumerable<WebBudgetIncomeDTO>> GetAllIncomes()
+		*//*public async Task<IEnumerable<WebBudgetIncomeDTO>> GetAllIncomes()
 		{
-			var webBudgetIncome = await _webBudgetRepository.GetAllIncomes();
+			*//*var webBudgetIncome = await _webBudgetRepository.GetAllIncomes();
 
 			var dtoIncomes = _mapper.Map<IEnumerable<WebBudgetIncomeDTO>>(webBudgetIncome);
 
-			return dtoIncomes;
-		}
+			return dtoIncomes;*//*
+		}*//*
 	}
 }
+*/

@@ -1,8 +1,8 @@
-﻿@using WebBudget.Application.WebBudget;
+﻿@using WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome;
 @{
 	Layout = "_Layout";
 }
-@model WebBudgetIncomeDTO;
+@model CreateWebBudgetIncomeCommand;
 
 @section containerContent {
 	<head>
@@ -24,7 +24,7 @@
 						Income Type
 					</label>
 					<div class="input-group">
-						<input class="form-control bg-light text-white custom-input text-align:center" type="text" id="IncomeType" asp-for="IncomeType" placeholder="Provide income type" readonly />
+						<input class="form-control bg-light text-white custom-input text-align:center" type="text" id="IncomeType" asp-for="IncomeType" placeholder="Choose income category" readonly />
 						<div class="input-group-append">
 							<button class="btn btn-secondary" type="button" id="toggleIncomeOptions">
 								<i class="fas fa-caret-down"></i>
