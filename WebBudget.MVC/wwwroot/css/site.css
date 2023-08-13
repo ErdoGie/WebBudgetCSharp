@@ -39,15 +39,13 @@ body {
 
 footer {
    
-    padding: 15px;
+    margin-top:20px;
+    padding:5px;
     text-align: center;
     background-color: black;
   
 }
 
-.footer_color {
-    color: black;
-}
 
 .custom-navbar {
 
@@ -70,25 +68,31 @@ footer {
     position: absolute;
     top: -50%; 
     left: 50%;
-    transform: translate(-50%, 55%);
+    transform: translate(-50%, 50%);
     padding: 20px;
-    height: 63vh;
-    width: 140vh;
+    height: 68vh;
+    width: 160vh;
     background-color: rgba(255, 255, 255, 0.88);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     max-width: 80%;
     text-align: center;
+    overflow:auto;
     
 }
+.small-card {
+   
+    font-size: 20px;
+    margin-bottom:20px;
+}
+
 .pager-container {
-    
     position: absolute;
-    top: 88%;
-    left: 90%;
-    justify-content: flex-end;
-    align-items: flex-end;
-    margin-top: 20px; 
+    bottom: 0;
+    left: 0;
+    right: 50%;
+    text-align: center;
+    padding: 10px;
 }
 /*photos*/
 .C_Image {
