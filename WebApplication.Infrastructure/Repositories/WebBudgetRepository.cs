@@ -16,10 +16,7 @@ namespace WebBudget.Infrastructure.Repositories
 	// muszę zaimplementować interfejs z Domain'a inaczej nie będzie "połączenia" pomiędzy wartswami
 	public class WebBudgetRepository : IWebBudgetRepository
 	{
-
-
 		private readonly WebBudgetDbContext _webBudgetDbContext;
-
 
 		// muszę zapisać mój webBudget w kontekście bazy danych
 		// do tego referencja poprzez konstruktor
@@ -48,11 +45,14 @@ namespace WebBudget.Infrastructure.Repositories
 		public async Task<IEnumerable<WebBudgetIncome>> GetAllIncomes()
 			=> await _webBudgetDbContext.WebBudgetIncome.ToListAsync();
 
-
-
-
 		public async Task<IEnumerable<WebBudgetExpense>> GetAllExpenses()
 		=> await _webBudgetDbContext.WebBudgetExpense.ToListAsync();
 
+		public async Task<Domain.Entities.WebBudgetIncome> GetIncomeByEncodedName(string encodedIncomeName)
+		=> await _webBudgetDbContext.WebBudgetIncome.FirstAsync(i => i.EncodedIncomeName == encodedIncomeName);
+
+		public async Task CommitChanges()
+		=> await _webBudgetDbContext.SaveChangesAsync();
+	
 	}
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebBudget.Application.WebBudget;
+using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets;
 using WebBudget.Domain.Entities;
 
 namespace WebBudget.Application.Mappings
@@ -20,6 +21,10 @@ namespace WebBudget.Application.Mappings
 
             CreateMap<Domain.Entities.WebBudgetIncome, WebBudgetIncomeDTO>()
                 .ForMember(i => i.IncomeType, opt => opt.MapFrom(src => src.IncomeType));
+
+
+            //tworze metode ktora na podstawie WebBudgetIncomeDTO utworzy mape do typu edycji.
+            CreateMap<WebBudgetIncomeDTO, EditWebBudgetIncomeCommand>();
 
         }
     }
