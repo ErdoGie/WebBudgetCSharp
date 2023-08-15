@@ -70,8 +70,20 @@ namespace WebBudget.Infrastructure.Repositories
 				await _webBudgetDbContext.SaveChangesAsync();
 			}
 
-			return expense;
+			return expense!;
 		}
 
+		public async Task<WebBudgetIncome> RemoveIncome(string encodedIncomeName)
+		{
+			var income = await _webBudgetDbContext.WebBudgetIncome.FirstAsync(i => i.EncodedIncomeName == encodedIncomeName);
+
+			if (income != null)
+			{
+				_webBudgetDbContext.WebBudgetIncome.Remove(income);
+				await _webBudgetDbContext.SaveChangesAsync();
+			}
+
+			return income!;
+		}
 	}
 }

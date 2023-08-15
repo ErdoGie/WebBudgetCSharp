@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebBudget.Domain.Interfaces
+﻿namespace WebBudget.Domain.Interfaces
 {
 	public interface IWebBudgetRepository
 	{
@@ -22,6 +16,8 @@ namespace WebBudget.Domain.Interfaces
 		Task<Domain.Entities.WebBudgetExpense> GetExpenseByEncodedName(string encodedExpenseName);
 
 		Task<Domain.Entities.WebBudgetExpense> RemoveExpense(string endodedExpenseName);
+
+		Task<Domain.Entities.WebBudgetIncome> RemoveIncome(string encodedIncomeName);
 
 		Task CommitChanges();
 

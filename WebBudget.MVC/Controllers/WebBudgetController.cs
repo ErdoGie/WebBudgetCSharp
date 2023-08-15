@@ -6,6 +6,7 @@ using WebBudget.Application.WebBudget;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetExpense;
+using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.GetWebBudgetByEncodedNameExpense;
@@ -88,7 +89,7 @@ namespace WebBudget.MVC.Controllers
 
 			return View(paginatedExpenseData);
 		}
-		// ------------------------------------------------- EDIT --------------------------------------------- //
+		// ------------------------------------------------- EDIT INCOME --------------------------------------------- //
 
 		[Route("WebBudget/Income/{encodedIncomeName}/Edit")]
 		public async Task<IActionResult> IncomeEdit(string encodedIncomeName)
@@ -115,6 +116,7 @@ namespace WebBudget.MVC.Controllers
 
 			return RedirectToAction(nameof(IncomesIndex));
 		}
+		// ---------------------------------------- EDIT EXPENSE -------------------------------------------------- //
 
 
 		[Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
@@ -144,7 +146,7 @@ namespace WebBudget.MVC.Controllers
 			return RedirectToAction(nameof(ExpensesIndex));
 		}
 
-		// ---------------------------------------- DELETE -------------------------------------------------- //
+		// ---------------------------------------- DELETE EXPENSE -------------------------------------------------- //
 
 		[Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
 		public async Task<IActionResult> ExpenseDelete(string encodedExpenseName)
@@ -171,6 +173,35 @@ namespace WebBudget.MVC.Controllers
 			TempData["IncomeAdded"] = true;
 
 			return RedirectToAction(nameof(ExpensesIndex));
+		}
+
+		// ---------------------------------------- DELETE INCOME -------------------------------------------------- //
+
+		[Route("WebBudget/Income/{encodedIncomeName}/Delete")]
+		public async Task<IActionResult> IncomeDelete(string encodedIncomeName)
+		{
+			var dto = await _mediator.Send(new GetWebBudgetIncomeByEncodedNameQuery(encodedIncomeName));
+
+			DeleteWebBudgetIncomeeCommand model = _mapper.Map<DeleteWebBudgetIncomeeCommand>(dto);
+
+
+			return View(model);
+		}
+
+		[HttpPost]
+		[Route("WebBudget/Income/{encodedIncomeName}/Delete")]
+		public async Task<IActionResult> IncomeDelete(string encodedIncomeName, DeleteWebBudgetIncomeeCommand command)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(command);
+			}
+
+			await _mediator.Send(command);
+
+			TempData["IncomeAdded"] = true;
+
+			return RedirectToAction(nameof(IncomesIndex));
 		}
 
 

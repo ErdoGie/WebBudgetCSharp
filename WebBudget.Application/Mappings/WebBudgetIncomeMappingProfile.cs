@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebBudget.Application.WebBudget;
+using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetIncome;
 using WebBudget.Domain.Entities;
 
@@ -25,6 +26,8 @@ namespace WebBudget.Application.Mappings
 
             //tworze metode ktora na podstawie WebBudgetIncomeDTO utworzy mape do typu edycji.
             CreateMap<WebBudgetIncomeDTO, EditWebBudgetIncomeCommand>();
+
+            CreateMap<WebBudgetIncomeDTO, DeleteWebBudgetIncomeeCommand>();
 
         }
     }
