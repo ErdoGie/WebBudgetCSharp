@@ -23,7 +23,7 @@
 						<h5 class="card-title"> @item.ExpenseType</h5>
 						<h6 class="card-subtitle mb-2 text-muted">@item.ExpenseDate.ToString("yyyy-MM-dd")</h6>
 						<h5 class="card-title"> @item.ExpenseValue zł</h5>
-						<a href="#" class="btn btn-primary">Edit</a>
+						<a asp-controller="WebBudget" asp-action="ExpenseEdit" asp-route-encodedExpenseName="@item.EncodedExpenseName" class="btn btn-primary">Edit</a>
 						<a href="#" class="btn btn-primary">Delete</a>
 					</div>
 				</div>
@@ -33,7 +33,7 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<nav aria-label="Income navigation">
+			<nav aria-label="Expense navigation">
 				<pager class="pager-container" asp-action="ExpensesIndex" asp-controller="WebBudget">
 					<ul class="pagination">
 						@for (int i = 1; i <= ViewBag.PageCount; i++)

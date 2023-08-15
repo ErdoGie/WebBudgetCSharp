@@ -5,17 +5,19 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using WebBudget.Application.WebBudget;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome;
-using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets;
+using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetExpense;
+using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetIncome;
+using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.GetWebBudgetByEncodedNameExpense;
 using WebBudget.Application.WebBudget.Commands.Queries.GetAllWebBudgetExpenses;
 using WebBudget.Application.WebBudget.Commands.Queries.GetAllWEbBudgetIncomes;
-using WebBudget.Application.WebBudget.Commands.Queries.GetWebBudgetIncomeByEncodedName;
+using WebBudget.Application.WebBudget.Commands.Queries.GetWebBudgetsByEncodedName;
 using WebBudget.Domain.Entities;
 using X.PagedList;
 using static Azure.Core.HttpHeader;
 //
 namespace WebBudget.MVC.Controllers
 {
-	public class WebBudgetController : Controller
+    public class WebBudgetController : Controller
 	{
 		private readonly IMediator _mediator;
 		private readonly IMapper _mapper;
@@ -93,8 +95,6 @@ namespace WebBudget.MVC.Controllers
 
 			EditWebBudgetIncomeCommand model = _mapper.Map<EditWebBudgetIncomeCommand>(dto);
 
-			
-			model.EncodedIncomeName = model.IncomeType.ToLower().Replace(" ", "-");
 			return View(model);
 		}
 
@@ -114,6 +114,33 @@ namespace WebBudget.MVC.Controllers
 			return RedirectToAction(nameof(IncomesIndex));
 		}
 
+
+		[Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
+		public async Task<IActionResult> ExpenseEdit(string encodedExpenseName)
+		{
+			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
+
+			EditWebBudgetExpenseCommand model = _mapper.Map<EditWebBudgetExpenseCommand>(dto);
+
+
+			return View(model);
+		}
+
+		[HttpPost]
+		[Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
+		public async Task<IActionResult> ExpenseEdit(string encodedExpenseName, EditWebBudgetExpenseCommand command)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(command);
+			}
+
+			await _mediator.Send(command);
+
+			TempData["IncomeAdded"] = true;
+
+			return RedirectToAction(nameof(ExpensesIndex));
+		}
 
 		public IActionResult CreateExpense()
 		{

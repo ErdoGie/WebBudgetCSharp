@@ -16,8 +16,8 @@ namespace WebBudget.Application.WebBudget
 
 		public float ExpenseValue { get; set; }
 
-		public string? EncodedExpenseName { get; private set; } = default!;
+		public string EncodedExpenseName { get; set; } = default!;
 
-	//	public void EncodeExpenseName() => EncodedExpenseName = ExpenseType.ToLower().Replace(" ", "-");
+		public void EncodeExpenseName() => EncodedExpenseName = ExpenseType.ToLower().Replace(" ", "-");
 	}
 }

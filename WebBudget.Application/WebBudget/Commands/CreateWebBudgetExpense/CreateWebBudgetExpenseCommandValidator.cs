@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebBudget.Application.WebBudget.Commands.CreateWebBudgetExpense;
 
 namespace WebBudget.Application.WebBudget
 {
-	public class CreateWebBudgetExpenseCommandValidator : AbstractValidator<WebBudgetExpenseDTO>
+	public class CreateWebBudgetExpenseCommandValidator : AbstractValidator<CreateWebBudgetExpenseCommand>
 	{
 		public CreateWebBudgetExpenseCommandValidator()
 		{

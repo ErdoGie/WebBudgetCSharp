@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebBudget.Application.WebBudget;
-using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets;
+using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetIncome;
 using WebBudget.Domain.Entities;
 
 namespace WebBudget.Application.Mappings
 {
-	public class WebBudgetIncomeMappingProfile :Profile
+    public class WebBudgetIncomeMappingProfile :Profile
 	{
         public WebBudgetIncomeMappingProfile()
         {

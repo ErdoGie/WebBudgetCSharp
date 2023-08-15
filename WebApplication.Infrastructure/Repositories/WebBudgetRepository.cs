@@ -51,8 +51,12 @@ namespace WebBudget.Infrastructure.Repositories
 		public async Task<Domain.Entities.WebBudgetIncome> GetIncomeByEncodedName(string encodedIncomeName)
 		=> await _webBudgetDbContext.WebBudgetIncome.FirstAsync(i => i.EncodedIncomeName == encodedIncomeName);
 
+
+		public async Task<Domain.Entities.WebBudgetExpense> GetExpenseByEncodedName(string encodedExpenseName)
+		=> await _webBudgetDbContext.WebBudgetExpense.FirstOrDefaultAsync(e => e.EncodedExpenseName == encodedExpenseName);
+
 		public async Task CommitChanges()
 		=> await _webBudgetDbContext.SaveChangesAsync();
-	
+
 	}
 }
