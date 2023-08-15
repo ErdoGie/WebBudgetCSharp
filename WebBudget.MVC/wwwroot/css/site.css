@@ -68,11 +68,7 @@ footer {
     position: relative;
     top: 50%;
     left: 50%;
-<<<<<<< HEAD
-    transform: translate(-50%, 50%);
-=======
-    transform: translate(-50%, -60%);
->>>>>>> Feature_Functionalities
+    transform: translate(-50%, -55%);
     padding: 20px;
     height: 68vh;
     width: 160vh;
@@ -81,7 +77,6 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     max-width: 80%;
     text-align: center;
-<<<<<<< HEAD
     overflow:auto;
     
 }
@@ -98,7 +93,7 @@ footer {
     right: 50%;
     text-align: center;
     padding: 10px;
-=======
+
     overflow: auto;
 }
 
@@ -108,7 +103,6 @@ footer {
     right: -1.8%;
    
     margin-bottom:10px;
->>>>>>> Feature_Functionalities
 }
 
 /*photos*/
