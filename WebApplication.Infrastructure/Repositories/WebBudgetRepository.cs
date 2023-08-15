@@ -53,10 +53,25 @@ namespace WebBudget.Infrastructure.Repositories
 
 
 		public async Task<Domain.Entities.WebBudgetExpense> GetExpenseByEncodedName(string encodedExpenseName)
-		=> await _webBudgetDbContext.WebBudgetExpense.FirstOrDefaultAsync(e => e.EncodedExpenseName == encodedExpenseName);
+		=> await _webBudgetDbContext.WebBudgetExpense.FirstAsync(e => e.EncodedExpenseName == encodedExpenseName);
+
 
 		public async Task CommitChanges()
 		=> await _webBudgetDbContext.SaveChangesAsync();
+
+
+		public async Task<WebBudgetExpense> RemoveExpense(string encodedExpenseName)
+		{
+			var expense = await _webBudgetDbContext.WebBudgetExpense.FirstAsync(e => e.EncodedExpenseName == encodedExpenseName);
+
+			if (expense != null)
+			{
+				_webBudgetDbContext.WebBudgetExpense.Remove(expense);
+				await _webBudgetDbContext.SaveChangesAsync();
+			}
+
+			return expense;
+		}
 
 	}
 }

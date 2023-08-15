@@ -21,6 +21,8 @@ namespace WebBudget.Domain.Interfaces
 		Task<Domain.Entities.WebBudgetIncome> GetIncomeByEncodedName(string encodedIncomeName);
 		Task<Domain.Entities.WebBudgetExpense> GetExpenseByEncodedName(string encodedExpenseName);
 
+		Task<Domain.Entities.WebBudgetExpense> RemoveExpense(string endodedExpenseName);
+
 		Task CommitChanges();
 
 	}

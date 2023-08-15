@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using WebBudget.Application.WebBudget;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome;
+using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.GetWebBudgetByEncodedNameExpense;
@@ -87,6 +88,7 @@ namespace WebBudget.MVC.Controllers
 
 			return View(paginatedExpenseData);
 		}
+		// ------------------------------------------------- EDIT --------------------------------------------- //
 
 		[Route("WebBudget/Income/{encodedIncomeName}/Edit")]
 		public async Task<IActionResult> IncomeEdit(string encodedIncomeName)
@@ -141,6 +143,36 @@ namespace WebBudget.MVC.Controllers
 
 			return RedirectToAction(nameof(ExpensesIndex));
 		}
+
+		// ---------------------------------------- DELETE -------------------------------------------------- //
+
+		[Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
+		public async Task<IActionResult> ExpenseDelete(string encodedExpenseName)
+		{
+			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
+
+			DeleteWebBudgetExpenseCommand model = _mapper.Map<DeleteWebBudgetExpenseCommand>(dto);
+
+
+			return View(model);
+		}
+
+		[HttpPost]
+		[Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
+		public async Task<IActionResult> ExpenseDelete(string encodedExpenseName, DeleteWebBudgetExpenseCommand command)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(command);
+			}
+
+			await _mediator.Send(command);
+
+			TempData["IncomeAdded"] = true;
+
+			return RedirectToAction(nameof(ExpensesIndex));
+		}
+
 
 		public IActionResult CreateExpense()
 		{
