@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebBudget.Application.WebBudget;
+using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetExpense;
+using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetExpense;
+using WebBudget.Domain.Entities;
 
 namespace WebBudget.Application.Mappings
 {
@@ -17,6 +20,11 @@ namespace WebBudget.Application.Mappings
 
 			CreateMap<Domain.Entities.WebBudgetExpense, WebBudgetExpenseDTO>()
 			 .ForMember(i => i.ExpenseType, opt => opt.MapFrom(src => src.ExpenseType));
+
+			CreateMap<WebBudgetExpenseDTO, EditWebBudgetExpenseCommand>();
+
+			CreateMap<WebBudgetExpenseDTO, DeleteWebBudgetExpenseCommand>();
+
 		}
 	}
 }

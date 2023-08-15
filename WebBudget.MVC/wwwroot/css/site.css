@@ -65,10 +65,14 @@ footer {
 
 .centered-container {
     color: black;
-    position: absolute;
-    top: -50%; 
+    position: relative;
+    top: 50%;
     left: 50%;
+<<<<<<< HEAD
     transform: translate(-50%, 50%);
+=======
+    transform: translate(-50%, -60%);
+>>>>>>> Feature_Functionalities
     padding: 20px;
     height: 68vh;
     width: 160vh;
@@ -77,6 +81,7 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     max-width: 80%;
     text-align: center;
+<<<<<<< HEAD
     overflow:auto;
     
 }
@@ -93,7 +98,19 @@ footer {
     right: 50%;
     text-align: center;
     padding: 10px;
+=======
+    overflow: auto;
 }
+
+.pager-container {
+    position: relative;
+    bottom: 0%;
+    right: -1.8%;
+   
+    margin-bottom:10px;
+>>>>>>> Feature_Functionalities
+}
+
 /*photos*/
 .C_Image {
     height: 20vh;
@@ -101,6 +118,7 @@ footer {
     margin-bottom: 10px;
 }
 .grid-container {
+
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -114,9 +132,11 @@ footer {
     text-align: center;
 }
 
-
+.pulsating-button{
+    cursor:pointer;
+    animation: pulse 1s infinite;
+}
 /*animations*/
-
 @keyframes slideDown {
     0% {
         opacity: 0;
@@ -131,6 +151,20 @@ footer {
 
 .slideDownAnimation {
     animation: slideDown 1s ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1.);
+    }
 }
 
 @keyframes fadeIn {

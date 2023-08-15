@@ -15,7 +15,7 @@ namespace WebBudget.Domain.Entities
 		[Column(TypeName = "Date")]
 		public DateTime ExpenseDate { get; set; }
 		public float ExpenseValue { get; set; }
-		public string EncodedExpenseName { get; private set; } = default!;
+		public string EncodedExpenseName { get;  set; } = default!;
 		public void EncodeExpenseName() => EncodedExpenseName = ExpenseType.ToLower().Replace(" ", "-");
 	}
 }
