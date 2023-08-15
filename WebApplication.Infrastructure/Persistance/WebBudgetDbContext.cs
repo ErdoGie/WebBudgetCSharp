@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using WebBudget.Domain.Entities;
 
 namespace WebBudget.Infrastructure.Persistance
 {
-	public class WebBudgetDbContext : DbContext
+	public class WebBudgetDbContext : IdentityDbContext
 	{
         public WebBudgetDbContext(DbContextOptions<WebBudgetDbContext> options ) :base(options)
         {
@@ -20,6 +21,8 @@ namespace WebBudget.Infrastructure.Persistance
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+
+			base.OnModelCreating(modelBuilder);
 			//tworze obie encje za jednym zamachem 
 			modelBuilder.Entity<Domain.Entities.WebBudgetIncome>(entity =>
 			{

@@ -68,3 +68,30 @@ if (window.location.pathname === '/') {
 
     elementToAnimate.classList.add('slideDownAnimation');
 }
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const registerForm = document.getElementById('registerForm');
+    const inputFields = registerForm.querySelectorAll('input');
+
+    inputFields.forEach(function (input) {
+        input.addEventListener('input', checkAndToggleShake);
+        });
+
+    function checkAndToggleShake() {
+        let allFieldsFilled = true;
+    inputFields.forEach(function (input) {
+                if (input.value.trim() === '') {
+        allFieldsFilled = false;
+                }
+            });
+
+    if (allFieldsFilled) {
+        document.getElementById('registerSubmit').classList.add('shake-button');
+            } else {
+        document.getElementById('registerSubmit').classList.remove('shake-button');
+            }
+        }
+    });

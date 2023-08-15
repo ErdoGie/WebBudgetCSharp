@@ -1,4 +1,4 @@
-﻿using WebBudget.Infrastructure.Persistance;
+using WebBudget.Infrastructure.Persistance;
 using WebBudget.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using WebBudget.Infrastructure.Seeders;
@@ -44,4 +44,5 @@ app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
 app.Run();
