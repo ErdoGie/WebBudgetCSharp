@@ -9,23 +9,20 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.GetWeb
 	public class GetWebBudgetExpenseByEncodedNameQueryHandler : IRequestHandler<GetWebBudgetExpenseByEncodedNameQuery, WebBudgetExpenseDTO>
 	{
 
-		
+
 		private readonly IWebBudgetRepository _webBudgetRepository;
 		private readonly IMapper _mapper;
-        private readonly UserManager<IdentityUser> _userManager;
 
 
-        public GetWebBudgetExpenseByEncodedNameQueryHandler(IWebBudgetRepository webBudgetRepository, IMapper mapper, UserManager<IdentityUser> userManager )
+		public GetWebBudgetExpenseByEncodedNameQueryHandler(IWebBudgetRepository webBudgetRepository, IMapper mapper)
 		{
 			_webBudgetRepository = webBudgetRepository;
 			_mapper = mapper;
-			_userManager = userManager;
 
 		}
 		public async Task<WebBudgetExpenseDTO> Handle(GetWebBudgetExpenseByEncodedNameQuery request, CancellationToken cancellationToken)
 		{
 			var webBudget = await _webBudgetRepository.GetExpenseByEncodedName(request.EncodedName);
-
 
 
 			var dto = _mapper.Map<WebBudgetExpenseDTO>(webBudget);

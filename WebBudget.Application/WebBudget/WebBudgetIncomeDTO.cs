@@ -14,5 +14,7 @@ namespace WebBudget.Application.WebBudget
 		public float IncomeValue { get; set; }
 		public string? EncodedIncomeName { get; set; }
 		public void EncodeIncomeName() => EncodedIncomeName = IncomeType.ToLower().Replace(" ", "-");
+		public bool HasUserAccess { get; set; }
+
 	}
 }

@@ -23,5 +23,6 @@ namespace WebBudget.Domain.Entities
 
 		public string EncodedIncomeName { get; set; } = default!;
 		public void EncodeIncomeName() => EncodedIncomeName = IncomeType.ToLower().Replace(" ", "-");
+		
 	}
 }

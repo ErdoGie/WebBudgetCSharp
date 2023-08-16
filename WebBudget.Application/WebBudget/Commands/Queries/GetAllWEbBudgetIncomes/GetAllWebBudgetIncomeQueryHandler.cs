@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebBudget.Application.UserApplication;
 using WebBudget.Domain.Interfaces;
 
 namespace WebBudget.Application.WebBudget.Commands.Queries.GetAllWEbBudgetIncomes
@@ -20,7 +21,6 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.GetAllWEbBudgetIncome
             
 			_webBudgetRepository = webBudgetRepository;
 			_mapper = mapper;
-
         }
 
         public async Task<IEnumerable<WebBudgetIncomeDTO>> Handle(GetAllWebBudgetIncomesQuery request, CancellationToken cancellationToken)

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Humanizer;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,6 @@ namespace WebBudget.MVC.Controllers
 			{
 				return View(command);
 			}
-
 			
 			await _mediator.Send(command);
 
@@ -85,6 +85,12 @@ namespace WebBudget.MVC.Controllers
 
 			var webBudgetIncome = await _mediator.Send(new GetAllWebBudgetIncomesQuery());
 
+		/*	if (!webBudgetIncome.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}*/
+
+
 			var paginatedIncomeData = webBudgetIncome.ToPagedList(pageNumber, pageSize);
 
 			int pageCount = (int)Math.Ceiling((double)webBudgetIncome.Count() / pageSize);
@@ -115,6 +121,11 @@ namespace WebBudget.MVC.Controllers
 		{
 			var dto = await _mediator.Send(new GetWebBudgetIncomeByEncodedNameQuery(encodedIncomeName));
 
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
+
 			EditWebBudgetIncomeCommand model = _mapper.Map<EditWebBudgetIncomeCommand>(dto);
 
 			return View(model);
@@ -142,6 +153,11 @@ namespace WebBudget.MVC.Controllers
 		public async Task<IActionResult> ExpenseEdit(string encodedExpenseName)
 		{
 			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
+
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 
 			EditWebBudgetExpenseCommand model = _mapper.Map<EditWebBudgetExpenseCommand>(dto);
 

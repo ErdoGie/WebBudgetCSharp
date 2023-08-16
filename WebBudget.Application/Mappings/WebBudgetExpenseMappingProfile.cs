@@ -24,7 +24,7 @@ namespace WebBudget.Application.Mappings
                 .ForMember(i => i.ExpenseType, opt => opt.MapFrom(src => src.ExpenseType));
 
             CreateMap<Domain.Entities.WebBudgetExpense, WebBudgetExpenseDTO>()
-                .ForMember(e => e.HasUserAccess, opt => opt.MapFrom(src => user != null && src.CreatedById == user.Id))
+             .ForMember(e => e.HasUserAccess, opt => opt.MapFrom(src => user != null && src.CreatedById == user.Id))
              .ForMember(i => i.ExpenseType, opt => opt.MapFrom(src => src.ExpenseType));
 
             CreateMap<WebBudgetExpenseDTO, EditWebBudgetExpenseCommand>();

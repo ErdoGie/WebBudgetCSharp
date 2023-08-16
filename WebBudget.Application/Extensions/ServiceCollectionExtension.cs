@@ -17,7 +17,7 @@ using WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome;
 
 namespace WebBudget.Application.Extensions
 {
-    public static class ServiceCollectionExtension
+	public static class ServiceCollectionExtension
 	{
 		public static void AddApplication(this IServiceCollection services)
 		{
@@ -27,7 +27,6 @@ namespace WebBudget.Application.Extensions
 			services.AddMediatR(typeof(CreateWebBudgetIncomeCommand));
 			services.AddMediatR(typeof(CreateWebBudgetExpenseCommand));
 
-			services.AddAutoMapper(typeof(WebBudgetIncomeMappingProfile));
 
 			// zamieniam z addAutoMapper na AddScoped poniewaz autoMapper wymaga bezparametrowych kostruktorow, a ja niestety juz mam parameter IUSerContext w konstruktorze
 			services.AddScoped(provider => new MapperConfiguration(cfg =>
@@ -35,6 +34,8 @@ namespace WebBudget.Application.Extensions
 				var scope = provider.CreateScope();
 				var userContext = scope.ServiceProvider.GetRequiredService<IUserContext>();
 				cfg.AddProfile(new WebBudgetExpenseMappingProfile(userContext));
+				cfg.AddProfile(new WebBudgetIncomeMappingProfile(userContext));
+
 
 				//zeby utworzyc mappera muszę na konfiguracji wywolac metode CreateMapper.
 			}).CreateMapper()
