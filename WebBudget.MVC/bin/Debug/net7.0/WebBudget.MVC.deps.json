@@ -2719,6 +2719,7 @@
       },
       "WebBudget.Domain/1.0.0": {
         "dependencies": {
+          "Microsoft.Extensions.Identity.Stores": "7.0.10",
           "X.PagedList": "8.4.7"
         },
         "runtime": {

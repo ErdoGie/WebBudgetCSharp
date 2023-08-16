@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
 using WebBudget.Application.WebBudget;
@@ -32,6 +33,7 @@ namespace WebBudget.MVC.Controllers
 
 		// do tej metody przyjmuję dany typ budzetu
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> CreateIncome(CreateWebBudgetIncomeCommand command)
 		{
 			if (!ModelState.IsValid)
@@ -39,6 +41,7 @@ namespace WebBudget.MVC.Controllers
 				return View(command);
 			}
 
+			
 			await _mediator.Send(command);
 
 			TempData["IncomeAdded"] = true;
@@ -46,7 +49,22 @@ namespace WebBudget.MVC.Controllers
 			return RedirectToAction(nameof(IncomesIndex));
 		}
 
+		[Authorize]
+		public IActionResult CreateIncome()
+		{
+
+
+			return View();
+		}
+
+		[Authorize]
+		public IActionResult CreateExpense()
+		{
+			return View();
+		}
+
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> CreateExpense(CreateWebBudgetExpenseCommand command)
 		{
 			if (!ModelState.IsValid)
@@ -204,16 +222,6 @@ namespace WebBudget.MVC.Controllers
 		}
 
 
-		public IActionResult CreateExpense()
-		{
-			return View();
-		}
 
-		public IActionResult CreateIncome()
-		{
-
-
-			return View();
-		}
 	}
 }

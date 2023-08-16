@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Cr24h6lzJkOLoXSWUG4KA+kr6fSqvnGnL4ndiEiwo6FwD9TxP1/Y6fFT+8pYh0p4Fovhy9+HL8xEPj9x+JpjDg==",
+  "dgSpecHash": "CfMZZssXX0Fhk1cGl4F55Gn+BglniAX6rXfianCRCD75oAlDqunC1r6XXyLvf+OKInf8Gp7sL5l5uqlFmOoKdw==",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.Application\\WebBudget.Application.csproj",
   "expectedPackageFiles": [
@@ -13,11 +13,18 @@
     "C:\\Users\\HP\\.nuget\\packages\\mediatr\\11.0.0\\mediatr.11.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\11.1.0\\mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\7.0.10\\microsoft.aspnetcore.cryptography.internal.7.0.10.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.10\\microsoft.aspnetcore.cryptography.keyderivation.7.0.10.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
-    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
-    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
-    "C:\\Users\\HP\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.identity.core\\7.0.10\\microsoft.extensions.identity.core.7.0.10.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.identity.stores\\7.0.10\\microsoft.extensions.identity.stores.7.0.10.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.logging\\7.0.0\\microsoft.extensions.logging.7.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.options\\7.0.1\\microsoft.extensions.options.7.0.1.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\x.pagedlist\\8.4.7\\x.pagedlist.8.4.7.nupkg.sha512"
   ],
   "logs": []
