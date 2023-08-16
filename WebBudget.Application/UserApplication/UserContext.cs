@@ -10,7 +10,7 @@ namespace WebBudget.Application.UserApplication
 {
 	public interface IUserContext
 	{
-		CurrentlyLoggedUser GetCurrentlyLoggedUser();
+		CurrentlyLoggedUser? GetCurrentlyLoggedUser();
 	}
 
 	public class UserContext : IUserContext
@@ -25,7 +25,7 @@ namespace WebBudget.Application.UserApplication
 			_httpContextAccessor = httpContextAccessor;
 		}
 
-		public CurrentlyLoggedUser GetCurrentlyLoggedUser()
+		public CurrentlyLoggedUser? GetCurrentlyLoggedUser()
 		{
 
 			//w zaleznosci od tego czy uzyszkodnik jest zalogowany czy nie,
@@ -35,6 +35,11 @@ namespace WebBudget.Application.UserApplication
 			if (loggedUser == null)
 			{
 				throw new InvalidOperationException("User Context not available");
+			}
+
+			if (loggedUser.Identity == null ||  !loggedUser.Identity.IsAuthenticated)
+			{
+				return null;
 			}
 
 			var userId = loggedUser.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)!.Value;

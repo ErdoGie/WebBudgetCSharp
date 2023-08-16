@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace WebBudget.Application.WebBudget.Commands.Queries.GetAllWebBudgetExpenses
 {
-	public class GetAllWebBudgetExpensesQuery : IRequest<IEnumerable<WebBudgetExpenseDTO>>
-	{
+    public class GetAllWebBudgetExpensesQuery : IRequest<IEnumerable<WebBudgetExpenseDTO>>
+    {
+     
 
 
-
-	}
+    }
 }

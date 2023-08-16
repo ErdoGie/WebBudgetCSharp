@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebBudget.Application.UserApplication;
 using WebBudget.Domain.Interfaces;
 
 namespace WebBudget.Application.WebBudget.Commands.Queries.GetAllWebBudgetExpenses
@@ -13,18 +14,21 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.GetAllWebBudgetExpens
 	{
 		private readonly IMapper _mapper;
 		private readonly IWebBudgetRepository _webBudgetRepository;
+		private readonly IUserContext _userContext;
 
-		public GetAllWebBudgetExpenseQueryHandle(IWebBudgetRepository webBudgetRepository, IMapper mapper)
+		public GetAllWebBudgetExpenseQueryHandle(IWebBudgetRepository webBudgetRepository, IMapper mapper, IUserContext userContext)
 		{
 			_webBudgetRepository = webBudgetRepository;
 			_mapper = mapper;
-
+			_userContext = userContext;
 		}
 
 		public async Task<IEnumerable<WebBudgetExpenseDTO>> Handle(GetAllWebBudgetExpensesQuery request, CancellationToken cancellationToken)
 		{
 
 			var webBudgetExpense = await _webBudgetRepository.GetAllExpenses();
+
+
 
 			var dtoExpenses = _mapper.Map<IEnumerable<WebBudgetExpenseDTO>>(webBudgetExpense);
 

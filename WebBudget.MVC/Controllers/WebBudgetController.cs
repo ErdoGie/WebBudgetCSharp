@@ -145,7 +145,6 @@ namespace WebBudget.MVC.Controllers
 
 			EditWebBudgetExpenseCommand model = _mapper.Map<EditWebBudgetExpenseCommand>(dto);
 
-
 			return View(model);
 		}
 
