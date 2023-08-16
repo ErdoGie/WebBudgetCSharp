@@ -30,9 +30,10 @@ namespace WebBudget.MVC.Controllers
 			_mapper = mapper;
 			_mediator = mediator;
 		}
+        // ------------------------------------------------- CREATE INCOME --------------------------------------------- //
 
-		// do tej metody przyjmuję dany typ budzetu
-		[HttpPost]
+        // do tej metody przyjmuję dany typ budzetu
+        [HttpPost]
 		[Authorize]
 		public async Task<IActionResult> CreateIncome(CreateWebBudgetIncomeCommand command)
 		{
@@ -52,12 +53,11 @@ namespace WebBudget.MVC.Controllers
 		[Authorize]
 		public IActionResult CreateIncome()
 		{
-
-
 			return View();
 		}
+        // ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
 
-		[Authorize]
+        [Authorize]
 		public IActionResult CreateExpense()
 		{
 			return View();
@@ -76,7 +76,9 @@ namespace WebBudget.MVC.Controllers
 
 			return RedirectToAction(nameof(ExpensesIndex));
 		}
-		public async Task<IActionResult> IncomesIndex(int? page)
+        // ------------------------------------------------- INDEXES--------------------------------------------- //
+
+        public async Task<IActionResult> IncomesIndex(int? page)
 		{
 			int pageSize = 6;
 			int pageNumber = page ?? 1;
