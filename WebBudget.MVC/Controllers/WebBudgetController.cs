@@ -205,6 +205,11 @@ namespace WebBudget.MVC.Controllers
 		{
 			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
 
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
+
 			DeleteWebBudgetExpenseCommand model = _mapper.Map<DeleteWebBudgetExpenseCommand>(dto);
 
 
@@ -233,7 +238,10 @@ namespace WebBudget.MVC.Controllers
 		public async Task<IActionResult> IncomeDelete(string encodedIncomeName)
 		{
 			var dto = await _mediator.Send(new GetWebBudgetIncomeByEncodedNameQuery(encodedIncomeName));
-
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 			DeleteWebBudgetIncomeeCommand model = _mapper.Map<DeleteWebBudgetIncomeeCommand>(dto);
 
 
