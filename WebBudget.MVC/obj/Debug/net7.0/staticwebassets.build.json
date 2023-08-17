@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OtRo+rYWau9euEaPRsbDwofSSVxsuIXwq6YX4df214s=",
+  "Hash": "62q1TMW77Jk5+nvhVh2GAftAnram1Uf5LXpB2YRABtM=",
   "Source": "WebBudget.MVC",
   "BasePath": "_content/WebBudget.MVC",
   "Mode": "Default",
@@ -2106,6 +2106,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.MVC\\wwwroot\\Media\\smile.mp4",
+      "SourceId": "WebBudget.MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.MVC\\wwwroot\\",
+      "BasePath": "_content/WebBudget.MVC",
+      "RelativePath": "Media/smile.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Media\\smile.mp4"
+    },
+    {
+      "Identity": "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.MVC\\wwwroot\\Sound\\1.mp3",
+      "SourceId": "WebBudget.MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\Documents\\Dokumenty\\PRogramowanie\\C#\\Web_Budget_Project\\WebBudget.MVC\\wwwroot\\",
+      "BasePath": "_content/WebBudget.MVC",
+      "RelativePath": "Sound/1.mp3",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Sound\\1.mp3"
     }
   ]
 }

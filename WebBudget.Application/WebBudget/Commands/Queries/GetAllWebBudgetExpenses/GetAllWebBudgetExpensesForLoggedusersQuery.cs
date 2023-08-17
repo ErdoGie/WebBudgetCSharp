@@ -17,6 +17,5 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.GetAllWebBudgetExpens
 
         }
 
-
     }
 }

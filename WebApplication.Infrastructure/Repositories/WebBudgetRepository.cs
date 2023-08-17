@@ -46,8 +46,8 @@ namespace WebBudget.Infrastructure.Repositories
 		=> await _webBudgetDbContext.WebBudgetIncome.Where(i=>i.CreatedById == userId).ToListAsync();
 
 
-		public async Task<IEnumerable<WebBudgetExpense>> GetAllExpenses()
-		=> await _webBudgetDbContext.WebBudgetExpense.ToListAsync();
+		public async Task<IEnumerable<WebBudgetExpense>> GetAllExpensesForLoggedUser(string userId)
+		=> await _webBudgetDbContext.WebBudgetExpense.Where(i => i.CreatedById == userId).ToListAsync();
 
 		public async Task<Domain.Entities.WebBudgetIncome> GetIncomeByEncodedName(string encodedIncomeName)
 		=> await _webBudgetDbContext.WebBudgetIncome.FirstAsync(i => i.EncodedIncomeName == encodedIncomeName);

@@ -85,7 +85,7 @@ namespace WebBudget.MVC.Controllers
 		{
 			int pageSize = 6;
 			int pageNumber = page ?? 1;
-			if (User.Identity.IsAuthenticated)
+			if (User.Identity!.IsAuthenticated)
 			{
 				var webBudgetIncomeQuery = new GetAllWebBudgetIncomesForLoggedUserQuery(userId);
 				var webBudgetIncome = await _mediator.Send(webBudgetIncomeQuery);
@@ -105,19 +105,20 @@ namespace WebBudget.MVC.Controllers
 			}
 		}
 
-		public async Task<IActionResult> ExpensesIndex(int? page)
+		public async Task<IActionResult> ExpensesIndex(int? page, string userId)
 		{
 			int pageSize = 6;
 			int pageNumber = page ?? 1;
 
-			if (User.Identity.IsAuthenticated)
+			if (User.Identity!.IsAuthenticated)
 			{
 
-				var webBudgetExpese = await _mediator.Send(new GetAllWebBudgetExpensesQuery());
+				var webBudgetExpeseQuery = new GetAllWebBudgetExpensesForLoggedusersQuery(userId);
+				var webBudgetExpense = await _mediator.Send(webBudgetExpeseQuery);
 
-				var paginatedExpenseData = webBudgetExpese.ToPagedList(pageNumber, pageSize);
+				var paginatedExpenseData = webBudgetExpense.ToPagedList(pageNumber, pageSize);
 
-				int pageCount = (int)Math.Ceiling((double)webBudgetExpese.Count() / pageSize);
+				int pageCount = (int)Math.Ceiling((double)webBudgetExpense.Count() / pageSize);
 
 				ViewBag.PageCount = pageCount;
 

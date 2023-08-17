@@ -6,6 +6,11 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <None Include="wwwroot\Media\smile.mp4" />
+	  <None Include="wwwroot\Sound\1.mp3" />
+	</ItemGroup>
+
 
 	<ItemGroup>
 		<PackageReference Include="MediatR" Version="11.0.0" />

@@ -10,21 +10,26 @@ using WebBudget.Domain.Interfaces;
 
 namespace WebBudget.Application.WebBudget.Commands.Queries.GetAllWebBudgetExpenses
 {
-	public class GetAllWebBudgetExpenseQueryHandle : IRequestHandler<GetAllWebBudgetExpensesQuery, IEnumerable<WebBudgetExpenseDTO>>
+	public class GetAllWebBudgetExpenseForLoggedUsersQueryHandle : IRequestHandler<GetAllWebBudgetExpensesForLoggedusersQuery, IEnumerable<WebBudgetExpenseDTO>>
 	{
 		private readonly IMapper _mapper;
 		private readonly IWebBudgetRepository _webBudgetRepository;
+		private readonly IUserContext _userContext;
 
-		public GetAllWebBudgetExpenseQueryHandle(IWebBudgetRepository webBudgetRepository, IMapper mapper)
+		public GetAllWebBudgetExpenseForLoggedUsersQueryHandle(IWebBudgetRepository webBudgetRepository, IMapper mapper, IUserContext userContext)
 		{
 			_webBudgetRepository = webBudgetRepository;
 			_mapper = mapper;
+			_userContext = userContext;
 		}
 
-		public async Task<IEnumerable<WebBudgetExpenseDTO>> Handle(GetAllWebBudgetExpensesQuery request, CancellationToken cancellationToken)
+		public async Task<IEnumerable<WebBudgetExpenseDTO>> Handle(GetAllWebBudgetExpensesForLoggedusersQuery request, CancellationToken cancellationToken)
 		{
+			var currentlyLoggedUser = _userContext.GetCurrentlyLoggedUser();
+			var userId = currentlyLoggedUser?.Id;
 
-			var webBudgetExpense = await _webBudgetRepository.GetAllExpenses();
+
+			var webBudgetExpense = await _webBudgetRepository.GetAllExpensesForLoggedUser(userId!);
 
 
 			var dtoExpenses = _mapper.Map<IEnumerable<WebBudgetExpenseDTO>>(webBudgetExpense);
