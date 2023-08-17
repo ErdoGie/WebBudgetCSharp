@@ -274,8 +274,8 @@ namespace WebBudget.MVC.Controllers
         {
             float balance = await _calculateBalance.CalculateUsersBalance(userId, startDate, endDate);
 
-/*            ViewBag.Balance = balance;
-*/
+            ViewBag.Balance = balance;
+
             return View();
         }
 
@@ -290,7 +290,5 @@ namespace WebBudget.MVC.Controllers
 
             return View();
         }
-
-
     }
 }
