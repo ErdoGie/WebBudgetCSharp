@@ -14,6 +14,7 @@ using WebBudget.Application.UserApplication;
 using WebBudget.Application.WebBudget;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome;
+using WebBudget.Domain.Entities;
 
 namespace WebBudget.Application.Extensions
 {
@@ -48,6 +49,8 @@ namespace WebBudget.Application.Extensions
 			services.AddValidatorsFromAssemblyContaining<CreateWebBudgetExpenseCommandValidator>()
 				.AddFluentValidationAutoValidation()
 				.AddFluentValidationClientsideAdapters();
+
+			services.AddScoped<CalcualteBalance>();
 		}
 	}
 }

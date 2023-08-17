@@ -1,4 +1,6 @@
-﻿namespace WebBudget.Domain.Interfaces
+﻿using WebBudget.Domain.Entities;
+
+namespace WebBudget.Domain.Interfaces
 {
     public interface IWebBudgetRepository
     {
@@ -20,5 +22,9 @@
         Task<Domain.Entities.WebBudgetIncome> RemoveIncome(string encodedIncomeName);
 
         Task CommitChanges();
-	}
+
+        Task<IEnumerable<WebBudgetIncome>> GetAllUserIncomesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate);
+        Task<IEnumerable<WebBudgetExpense>> GetAllUserExpensesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate);
+
+    }
 }
