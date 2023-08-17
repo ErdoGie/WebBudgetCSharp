@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 namespace WebBudget.Application.WebBudget.Commands.Queries.GetAllWEbBudgetIncomes
 {
 	// w tej kwerendzie chce zwrocic liste obiektow typu incomeDTO
-	public class GetAllWebBudgetIncomesQuery :IRequest<IEnumerable<WebBudgetIncomeDTO>>
+	public class GetAllWebBudgetIncomesForLoggedUserQuery :IRequest<IEnumerable<WebBudgetIncomeDTO>>
 	{
+		public string UserId { get; }
 
-
-
-	}
+        public GetAllWebBudgetIncomesForLoggedUserQuery(string userId)
+        {
+            UserId = userId;
+            
+        }
+    }
 }

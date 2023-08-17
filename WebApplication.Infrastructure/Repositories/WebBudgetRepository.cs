@@ -42,8 +42,9 @@ namespace WebBudget.Infrastructure.Repositories
 		}
 
 		//odnosze sie do mojego dbCOntextu
-		public async Task<IEnumerable<WebBudgetIncome>> GetAllIncomes()
-			=> await _webBudgetDbContext.WebBudgetIncome.ToListAsync();
+		public async Task<IEnumerable<WebBudgetIncome>> GetAllIncomesForLoggedUser(string userId)
+		=> await _webBudgetDbContext.WebBudgetIncome.Where(i=>i.CreatedById == userId).ToListAsync();
+
 
 		public async Task<IEnumerable<WebBudgetExpense>> GetAllExpenses()
 		=> await _webBudgetDbContext.WebBudgetExpense.ToListAsync();

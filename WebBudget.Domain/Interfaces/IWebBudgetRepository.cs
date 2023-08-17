@@ -8,7 +8,7 @@
 
 
         // muszę mieć osobne Taski w interfejsie, aby pobrac z bazy danych pozniej w DBCOntextie
-        Task<IEnumerable<Domain.Entities.WebBudgetIncome>> GetAllIncomes();
+        Task<IEnumerable<Domain.Entities.WebBudgetIncome>> GetAllIncomesForLoggedUser(string userId);
 
         Task<IEnumerable<Domain.Entities.WebBudgetExpense>> GetAllExpenses();
 
@@ -20,6 +20,5 @@
         Task<Domain.Entities.WebBudgetIncome> RemoveIncome(string encodedIncomeName);
 
         Task CommitChanges();
-
-    }
+	}
 }

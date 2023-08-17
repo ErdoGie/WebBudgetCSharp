@@ -17,9 +17,7 @@
 	<div class="row">
 		@foreach (var item in Model)
 		{
-			@if (item.HasUserAccess)
-			{
-				<div class="col-md-6 col-lg-4 small-card">
+						<div class="col-md-6 col-lg-4 small-card">
 					<div class="card m-3 small-card">
 						<div class="card-body">
 							<h6 class="card-title"> @item.IncomeType</h6>
@@ -31,7 +29,7 @@
 						</div>
 					</div>
 				</div>
-			}
+			
 		}
 	</div>
 

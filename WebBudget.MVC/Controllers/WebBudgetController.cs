@@ -2,6 +2,7 @@
 using Humanizer;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
 using WebBudget.Application.WebBudget;
@@ -20,21 +21,23 @@ using X.PagedList;
 //
 namespace WebBudget.MVC.Controllers
 {
-    public class WebBudgetController : Controller
+	public class WebBudgetController : Controller
 	{
 		private readonly IMediator _mediator;
 		private readonly IMapper _mapper;
+		private readonly UserManager<IdentityUser> _userManager;
 
 		//przekazuje zależność 
-		public WebBudgetController(IMediator mediator, IMapper mapper)
+		public WebBudgetController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager)
 		{
 			_mapper = mapper;
 			_mediator = mediator;
+			_userManager = userManager;
 		}
-        // ------------------------------------------------- CREATE INCOME --------------------------------------------- //
+		// ------------------------------------------------- CREATE INCOME --------------------------------------------- //
 
-        // do tej metody przyjmuję dany typ budzetu
-        [HttpPost]
+		// do tej metody przyjmuję dany typ budzetu
+		[HttpPost]
 		[Authorize]
 		public async Task<IActionResult> CreateIncome(CreateWebBudgetIncomeCommand command)
 		{
@@ -42,7 +45,7 @@ namespace WebBudget.MVC.Controllers
 			{
 				return View(command);
 			}
-			
+
 			await _mediator.Send(command);
 
 			TempData["IncomeAdded"] = true;
@@ -55,9 +58,9 @@ namespace WebBudget.MVC.Controllers
 		{
 			return View();
 		}
-        // ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
+		// ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
 
-        [Authorize]
+		[Authorize]
 		public IActionResult CreateExpense()
 		{
 			return View();
@@ -76,43 +79,57 @@ namespace WebBudget.MVC.Controllers
 
 			return RedirectToAction(nameof(ExpensesIndex));
 		}
-        // ------------------------------------------------- INDEXES--------------------------------------------- //
+		// ------------------------------------------------- INDEXES--------------------------------------------- //
 
-        public async Task<IActionResult> IncomesIndex(int? page)
+		public async Task<IActionResult> IncomesIndex(int? page, string userId)
 		{
 			int pageSize = 6;
 			int pageNumber = page ?? 1;
+			if (User.Identity.IsAuthenticated)
+			{
+				var webBudgetIncomeQuery = new GetAllWebBudgetIncomesForLoggedUserQuery(userId);
+				var webBudgetIncome = await _mediator.Send(webBudgetIncomeQuery);
 
-			var webBudgetIncome = await _mediator.Send(new GetAllWebBudgetIncomesQuery());
+				var paginatedIncomeData = webBudgetIncome.ToPagedList(pageNumber, pageSize);
 
-		/*	if (!webBudgetIncome.HasUserAccess)
+				int pageCount = (int)Math.Ceiling((double)webBudgetIncome.Count() / pageSize);
+
+				ViewBag.PageCount = pageCount;
+
+				return View(paginatedIncomeData);
+			}
+
+			else
 			{
 				return RedirectToAction("NoAccess", "Home");
-			}*/
-
-
-			var paginatedIncomeData = webBudgetIncome.ToPagedList(pageNumber, pageSize);
-
-			int pageCount = (int)Math.Ceiling((double)webBudgetIncome.Count() / pageSize);
-
-			ViewBag.PageCount = pageCount;
-
-			return View(paginatedIncomeData);
+			}
 		}
 
 		public async Task<IActionResult> ExpensesIndex(int? page)
 		{
 			int pageSize = 6;
 			int pageNumber = page ?? 1;
-			var webBudgetExpese = await _mediator.Send(new GetAllWebBudgetExpensesQuery());
 
-			var paginatedExpenseData = webBudgetExpese.ToPagedList(pageNumber, pageSize);
+			if (User.Identity.IsAuthenticated)
+			{
 
-			int pageCount = (int)Math.Ceiling((double)webBudgetExpese.Count() / pageSize);
+				var webBudgetExpese = await _mediator.Send(new GetAllWebBudgetExpensesQuery());
 
-			ViewBag.PageCount = pageCount;
+				var paginatedExpenseData = webBudgetExpese.ToPagedList(pageNumber, pageSize);
 
-			return View(paginatedExpenseData);
+				int pageCount = (int)Math.Ceiling((double)webBudgetExpese.Count() / pageSize);
+
+				ViewBag.PageCount = pageCount;
+
+				return View(paginatedExpenseData);
+			}
+
+			else
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
+
+
 		}
 		// ------------------------------------------------- EDIT INCOME --------------------------------------------- //
 
