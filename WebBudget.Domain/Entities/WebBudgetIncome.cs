@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,7 +17,12 @@ namespace WebBudget.Domain.Entities
 		[Column(TypeName = "Date")]
 		public DateTime IncomeDate { get; set; }
 		public float IncomeValue { get; set; }
+
+		public string? CreatedById { get; set; }
+		public IdentityUser? CreatedBy { get; set; }
+
 		public string EncodedIncomeName { get; set; } = default!;
 		public void EncodeIncomeName() => EncodedIncomeName = IncomeType.ToLower().Replace(" ", "-");
+		
 	}
 }

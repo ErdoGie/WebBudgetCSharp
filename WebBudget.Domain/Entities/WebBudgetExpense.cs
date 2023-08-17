@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +16,9 @@ namespace WebBudget.Domain.Entities
 		[Column(TypeName = "Date")]
 		public DateTime ExpenseDate { get; set; }
 		public float ExpenseValue { get; set; }
-		public string EncodedExpenseName { get;  set; } = default!;
+        public string? CreatedById { get; set; }
+        public IdentityUser? CreatedBy { get; set; }
+        public string EncodedExpenseName { get;  set; } = default!;
 		public void EncodeExpenseName() => EncodedExpenseName = ExpenseType.ToLower().Replace(" ", "-");
 	}
 }

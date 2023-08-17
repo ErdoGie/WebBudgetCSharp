@@ -15,19 +15,26 @@
 	<h4>Your expenses</h4>
 
 	<div class="row">
+
 		@foreach (var item in Model)
 		{
-			<div class="col-md-6 col-lg-4">
-				<div class="card m-3">
-					<div class="card-body">
-						<h5 class="card-title"> @item.ExpenseType</h5>
-						<h6 class="card-subtitle mb-2 text-muted">@item.ExpenseDate.ToString("yyyy-MM-dd")</h6>
-						<h5 class="card-title"> @item.ExpenseValue zł</h5>
-						<a asp-controller="WebBudget" asp-action="ExpenseEdit" asp-route-encodedExpenseName="@item.EncodedExpenseName" class="btn btn-primary">Edit</a>
-						<a asp-controller="WebBudget" asp-action="ExpenseDelete" asp-route-encodedExpenseName="@item.EncodedExpenseName" class="btn btn-primary">Delete</a>
+			
+				<div class="col-md-6 col-lg-4">
+					<div class="card m-3">
+						<div class="card-body">
+							<h5 class="card-title"> @item.ExpenseType</h5>
+							<h6 class="card-subtitle mb-2 text-muted">@item.ExpenseDate.ToString("yyyy-MM-dd")</h6>
+							<h5 class="card-title"> @item.ExpenseValue zł</h5>
+
+							<a asp-controller="WebBudget" asp-action="ExpenseEdit" asp-route-encodedExpenseName="@item.EncodedExpenseName" class="btn btn-primary">Edit</a>
+
+							<a asp-controller="WebBudget" asp-action="ExpenseDelete" asp-route-encodedExpenseName="@item.EncodedExpenseName" class="btn btn-primary">Delete</a>
+						</div>
 					</div>
 				</div>
-			</div>
+			
+
+
 		}
 	</div>
 

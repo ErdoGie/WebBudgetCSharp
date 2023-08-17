@@ -25,7 +25,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@300&display=swap" rel="stylesheet">
 
 </head>
-<body >
+<body>
 	<header class="text-center py-4">
 		<h2 class="WebBudget">Web Budget</h2>
 	</header>
@@ -41,12 +41,13 @@
 					<li class="nav-item">
 						<a class="nav-link text-dark text-white " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 					</li>
-				
+
 					<li class="nav-item">
 						<a class="nav-link text-dark text-white" asp-area="" asp-controller="Home" asp-action="About">About Project</a>
 					</li>
-			
+
 				</ul>
+				<partial name="_LoginPartial" />
 			</div>
 		</div>
 	</nav>
@@ -65,7 +66,7 @@
 	</div>
 
 
-	
+
 
 	@* javascript *@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>

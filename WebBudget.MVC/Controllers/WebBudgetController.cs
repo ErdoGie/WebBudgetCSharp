@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using Humanizer;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
 using WebBudget.Application.WebBudget;
@@ -18,20 +21,24 @@ using X.PagedList;
 //
 namespace WebBudget.MVC.Controllers
 {
-    public class WebBudgetController : Controller
+	public class WebBudgetController : Controller
 	{
 		private readonly IMediator _mediator;
 		private readonly IMapper _mapper;
+		private readonly UserManager<IdentityUser> _userManager;
 
 		//przekazuje zależność 
-		public WebBudgetController(IMediator mediator, IMapper mapper)
+		public WebBudgetController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager)
 		{
 			_mapper = mapper;
 			_mediator = mediator;
+			_userManager = userManager;
 		}
+		// ------------------------------------------------- CREATE INCOME --------------------------------------------- //
 
 		// do tej metody przyjmuję dany typ budzetu
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> CreateIncome(CreateWebBudgetIncomeCommand command)
 		{
 			if (!ModelState.IsValid)
@@ -46,7 +53,21 @@ namespace WebBudget.MVC.Controllers
 			return RedirectToAction(nameof(IncomesIndex));
 		}
 
+		[Authorize]
+		public IActionResult CreateIncome()
+		{
+			return View();
+		}
+		// ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
+
+		[Authorize]
+		public IActionResult CreateExpense()
+		{
+			return View();
+		}
+
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> CreateExpense(CreateWebBudgetExpenseCommand command)
 		{
 			if (!ModelState.IsValid)
@@ -58,35 +79,58 @@ namespace WebBudget.MVC.Controllers
 
 			return RedirectToAction(nameof(ExpensesIndex));
 		}
-		public async Task<IActionResult> IncomesIndex(int? page)
+		// ------------------------------------------------- INDEXES--------------------------------------------- //
+
+		public async Task<IActionResult> IncomesIndex(int? page, string userId)
 		{
 			int pageSize = 6;
 			int pageNumber = page ?? 1;
+			if (User.Identity!.IsAuthenticated)
+			{
+				var webBudgetIncomeQuery = new GetAllWebBudgetIncomesForLoggedUserQuery(userId);
+				var webBudgetIncome = await _mediator.Send(webBudgetIncomeQuery);
 
-			var webBudgetIncome = await _mediator.Send(new GetAllWebBudgetIncomesQuery());
+				var paginatedIncomeData = webBudgetIncome.ToPagedList(pageNumber, pageSize);
 
-			var paginatedIncomeData = webBudgetIncome.ToPagedList(pageNumber, pageSize);
+				int pageCount = (int)Math.Ceiling((double)webBudgetIncome.Count() / pageSize);
 
-			int pageCount = (int)Math.Ceiling((double)webBudgetIncome.Count() / pageSize);
+				ViewBag.PageCount = pageCount;
 
-			ViewBag.PageCount = pageCount;
+				return View(paginatedIncomeData);
+			}
 
-			return View(paginatedIncomeData);
+			else
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 		}
 
-		public async Task<IActionResult> ExpensesIndex(int? page)
+		public async Task<IActionResult> ExpensesIndex(int? page, string userId)
 		{
 			int pageSize = 6;
 			int pageNumber = page ?? 1;
-			var webBudgetExpese = await _mediator.Send(new GetAllWebBudgetExpensesQuery());
 
-			var paginatedExpenseData = webBudgetExpese.ToPagedList(pageNumber, pageSize);
+			if (User.Identity!.IsAuthenticated)
+			{
 
-			int pageCount = (int)Math.Ceiling((double)webBudgetExpese.Count() / pageSize);
+				var webBudgetExpeseQuery = new GetAllWebBudgetExpensesForLoggedusersQuery(userId);
+				var webBudgetExpense = await _mediator.Send(webBudgetExpeseQuery);
 
-			ViewBag.PageCount = pageCount;
+				var paginatedExpenseData = webBudgetExpense.ToPagedList(pageNumber, pageSize);
 
-			return View(paginatedExpenseData);
+				int pageCount = (int)Math.Ceiling((double)webBudgetExpense.Count() / pageSize);
+
+				ViewBag.PageCount = pageCount;
+
+				return View(paginatedExpenseData);
+			}
+
+			else
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
+
+
 		}
 		// ------------------------------------------------- EDIT INCOME --------------------------------------------- //
 
@@ -94,6 +138,11 @@ namespace WebBudget.MVC.Controllers
 		public async Task<IActionResult> IncomeEdit(string encodedIncomeName)
 		{
 			var dto = await _mediator.Send(new GetWebBudgetIncomeByEncodedNameQuery(encodedIncomeName));
+
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 
 			EditWebBudgetIncomeCommand model = _mapper.Map<EditWebBudgetIncomeCommand>(dto);
 
@@ -123,8 +172,12 @@ namespace WebBudget.MVC.Controllers
 		{
 			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
 
-			EditWebBudgetExpenseCommand model = _mapper.Map<EditWebBudgetExpenseCommand>(dto);
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 
+			EditWebBudgetExpenseCommand model = _mapper.Map<EditWebBudgetExpenseCommand>(dto);
 
 			return View(model);
 		}
@@ -151,6 +204,11 @@ namespace WebBudget.MVC.Controllers
 		public async Task<IActionResult> ExpenseDelete(string encodedExpenseName)
 		{
 			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
+
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 
 			DeleteWebBudgetExpenseCommand model = _mapper.Map<DeleteWebBudgetExpenseCommand>(dto);
 
@@ -180,7 +238,10 @@ namespace WebBudget.MVC.Controllers
 		public async Task<IActionResult> IncomeDelete(string encodedIncomeName)
 		{
 			var dto = await _mediator.Send(new GetWebBudgetIncomeByEncodedNameQuery(encodedIncomeName));
-
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 			DeleteWebBudgetIncomeeCommand model = _mapper.Map<DeleteWebBudgetIncomeeCommand>(dto);
 
 
@@ -204,16 +265,6 @@ namespace WebBudget.MVC.Controllers
 		}
 
 
-		public IActionResult CreateExpense()
-		{
-			return View();
-		}
 
-		public IActionResult CreateIncome()
-		{
-
-
-			return View();
-		}
 	}
 }

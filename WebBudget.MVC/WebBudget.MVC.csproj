@@ -6,9 +6,16 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <None Include="wwwroot\Media\smile.mp4" />
+	  <None Include="wwwroot\Sound\1.mp3" />
+	</ItemGroup>
+
 
 	<ItemGroup>
 		<PackageReference Include="MediatR" Version="11.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
 			<PrivateAssets>all</PrivateAssets>
