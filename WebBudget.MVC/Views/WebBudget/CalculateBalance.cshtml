@@ -5,33 +5,23 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section containerContent{
-	<h1>Balance</h1>
 
     <div>
-        <h4>Calculate Balance</h4>
+        <h3>Calculate your balance</h3>
         <hr />
+        <h4>Choose date range:</h4>
+        <br />
         <form method="post" asp-action="Balance">
-            <div class="form-group">
-                <label for="startDate">Start Date:</label>
+            <div class="form-group col-md-4 mx-auto">
+                <label for="startDate">Beginning Date</label>
                 <input type="date" class="form-control" id="startDate" name="startDate" required />
             </div>
-            <div class="form-group">
-                <label for="endDate">End Date:</label>
+            <div class="form-group col-sm-4 mx-auto">
+                <label for="endDate">Ending Date:</label>
                 <input type="date" class="form-control" id="endDate" name="endDate" required />
             </div>
-            <button type="submit" class="btn btn-primary">Calculate Balance</button>
+            <button type="submit" class="btn btn-primary" style="margin-top:20px">Calculate!</button>
         </form>
-
-        <h2>Balance</h2>
-
-        @if (ViewBag.Balance != null)
-        {
-            <p>Your balance is: @ViewBag.Balance</p>
-        }
-        else
-        {
-            <p>No balance available.</p>
-        }
     </div>
 
 }

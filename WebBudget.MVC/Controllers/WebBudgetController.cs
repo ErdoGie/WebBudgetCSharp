@@ -276,6 +276,7 @@ namespace WebBudget.MVC.Controllers
 
             ViewBag.Balance = balance;
 
+
             return View();
         }
 
