@@ -26,13 +26,15 @@ namespace WebBudget.MVC.Controllers
 		private readonly IMediator _mediator;
 		private readonly IMapper _mapper;
 		private readonly UserManager<IdentityUser> _userManager;
+		private readonly CalcualteBalance _calculateBalance;
 
 		//przekazuje zależność 
-		public WebBudgetController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager)
+		public WebBudgetController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager, CalcualteBalance calcualteBalance)
 		{
 			_mapper = mapper;
 			_mediator = mediator;
 			_userManager = userManager;
+			_calculateBalance = calcualteBalance;
 		}
 		// ------------------------------------------------- CREATE INCOME --------------------------------------------- //
 
@@ -264,7 +266,30 @@ namespace WebBudget.MVC.Controllers
 			return RedirectToAction(nameof(IncomesIndex));
 		}
 
+		// ---------------------------------------- CALCULATE BALANCE -------------------------------------------------- //
+
+		[HttpGet]
+
+        public async Task<IActionResult> CalculateBalance(string userId, DateTime startDate, DateTime endDate)
+        {
+            float balance = await _calculateBalance.CalculateUsersBalance(userId, startDate, endDate);
+
+            ViewBag.Balance = balance;
 
 
-	}
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Balance(DateTime startDate, DateTime endDate)
+        {
+			string userId = _userManager.GetUserId(User)!;
+
+            float balance = await _calculateBalance.CalculateUsersBalance(userId, startDate, endDate);
+
+            ViewBag.Balance = balance;
+
+            return View();
+        }
+    }
 }

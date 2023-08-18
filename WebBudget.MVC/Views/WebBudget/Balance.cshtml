@@ -1,0 +1,68 @@
+﻿@model WebBudget.Domain.Entities.CalcualteBalance
+
+@{
+	ViewData["Title"] = "Balance";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section containerContent{
+	<h1>Balance</h1>
+
+	<div>
+		<hr />
+		<div id="loading-spinner" class="spinner" style="">
+			<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>Calculating, please be patient...
+		</div>
+		@if (ViewBag.Balance != null)
+		{
+			<div id="balanceContainer" style="visibility:hidden; padding:7%">
+				@if (ViewBag.Balance > 0)
+				{
+					<h4>Your balance is equal to:</h4>
+					<h4>@ViewBag.Balance</h4>
+
+				}
+				else if (ViewBag.Balance < 0)
+				{
+					<h4>Oops negative balance detected!</h4>
+
+					<h4>It's:@ViewBag.Balance</h4>
+					<audio id="myAudio" loop>
+						<source src="~/Sound/1.mp3" type="audio/mp3">
+					</audio>
+				}
+				else
+				{
+					<h4>Hmm. Looks like you are break even.</h4>
+				}
+
+			</div>
+
+		}
+		else
+		{
+			<p>Looks like nothing is here.</p>
+		}
+	</div>
+	<div style="margin-top:10%;">
+
+		<a asp-action="CalculateBalance">Back to List</a>
+		@*refactor - link do głównego*@
+	</div>
+}
+
+<script>
+
+	function showdiv() {
+		document.getElementById("balanceContainer").style.visibility = "visible";
+		var audio = document.getElementById('myAudio');
+		audio.play();
+	}
+	setTimeout("showdiv()", 4000);
+
+
+	setTimeout(function () {
+		document.getElementById('loading-spinner').style.display = 'none';
+	}, 4000);
+
+</script>

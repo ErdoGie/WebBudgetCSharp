@@ -22,11 +22,11 @@ var app = builder.Build();
 // Extension'a 
 var scope = app.Services.CreateScope();
 
-var seeder = scope.ServiceProvider.GetRequiredService<WebBudgetSeeder>();
+/*var seeder = scope.ServiceProvider.GetRequiredService<WebBudgetSeeder>();
 
 
 //seeduje moje pierwsze dane;
-await seeder.Seed();
+await seeder.Seed();*/
 
 
 if (!app.Environment.IsDevelopment())
