@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebBudget.Infrastructure.Persistance;
 
@@ -11,9 +12,11 @@ using WebBudget.Infrastructure.Persistance;
 namespace WebBudget.Infrastructure.Migrations
 {
     [DbContext(typeof(WebBudgetDbContext))]
-    partial class WebBudgetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230818170830_CategoryIncome1")]
+    partial class CategoryIncome1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,7 +246,7 @@ namespace WebBudget.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("IncomeCategories");
+                    b.ToTable("IncomeCategory");
                 });
 
             modelBuilder.Entity("WebBudget.Domain.Entities.WebBudgetExpense", b =>

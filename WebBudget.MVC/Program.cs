@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WebBudget.Infrastructure.Seeders;
 using WebBudget.Application.Extensions;
 using Microsoft.AspNetCore.Identity;
+using WebBudget.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

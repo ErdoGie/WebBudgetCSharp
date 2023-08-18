@@ -26,6 +26,8 @@ namespace WebBudget.Infrastructure.Repositories
 
 		}
 
+
+
 		public async Task CreateIncome(Domain.Entities.WebBudgetIncome webBudgetIncome)
 		{
 
@@ -97,5 +99,29 @@ namespace WebBudget.Infrastructure.Repositories
             .Where(e => e.CreatedById == userId && e.ExpenseDate >= beginningDate && e.ExpenseDate <= endingDate)
             .ToListAsync();
 
+        public bool CheckIfIncomeCategoryExists(string categoryName)
+        {
+            return _webBudgetDbContext.WebBudgetIncome.Any(i => i.IncomeType.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+        } 
+
+        public async Task AddIncomeCategory(IncomeCategory category)
+        {
+          /*  bool categoryExists = CheckIfIncomeCategoryExists(category);
+
+            if (!categoryExists)
+            {
+                var newIncomeCategory = new WebBudgetIncome
+                {
+                    IncomeType = categoryName,
+
+                };
+
+                _webBudgetDbContext.WebBudgetIncome.Add(newIncomeCategory);
+                await _webBudgetDbContext.SaveChangesAsync();
+            }*/
+
+            _webBudgetDbContext.IncomeCategories.Add(category);
+            await _webBudgetDbContext.SaveChangesAsync();
+        }
     }
 }
