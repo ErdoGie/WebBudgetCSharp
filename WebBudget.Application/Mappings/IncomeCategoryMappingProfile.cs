@@ -13,7 +13,6 @@ namespace WebBudget.Application.Mappings
 {
     public class IncomeCategoryMappingProfile : Profile
     {
-
         public IncomeCategoryMappingProfile(IUserContext userContext)
         {
             var user = userContext.GetCurrentlyLoggedUser();

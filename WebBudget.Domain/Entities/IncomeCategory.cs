@@ -16,7 +16,7 @@ namespace WebBudget.Domain.Entities
         [Required]
         public string CategoryName { get; set; } = default!;
 
-        public string? UserId { get; set; } 
-        public IdentityUser? User { get; set; } = default!;
+        public string UserId { get; set; } = default!;
+        public IdentityUser User { get; set; } = default!;
     }
 }

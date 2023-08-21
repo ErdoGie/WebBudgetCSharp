@@ -123,5 +123,13 @@ namespace WebBudget.Infrastructure.Repositories
             _webBudgetDbContext.IncomeCategories.Add(category);
             await _webBudgetDbContext.SaveChangesAsync();
         }
-    }
+
+		public async Task<List<IncomeCategory>> GetAllIncomeCategoriesForUser(string userId)
+		{
+			return await _webBudgetDbContext.IncomeCategories
+				.Where(category => category.UserId == userId)
+				.ToListAsync();
+		}
+
+	}
 }

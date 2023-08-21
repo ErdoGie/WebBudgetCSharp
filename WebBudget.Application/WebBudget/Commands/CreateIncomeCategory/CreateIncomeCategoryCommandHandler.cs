@@ -13,8 +13,6 @@ namespace WebBudget.Application.WebBudget.Commands.CreateIncomeCategory
 {
     public class CreateIncomeCategoryCommandHandler : IRequestHandler<CreateIncomeCategoryCommand>
     {
-
-
         private readonly IWebBudgetRepository _webBudgetRepository;
         private readonly IMapper _mapper;
         private readonly IUserContext _userContext;
@@ -35,7 +33,7 @@ namespace WebBudget.Application.WebBudget.Commands.CreateIncomeCategory
 
             incomeCategory.CategoryName = request.CategoryName;
 
-            incomeCategory.UserId = _userContext.GetCurrentlyLoggedUser()?.Id;
+            incomeCategory.UserId = _userContext.GetCurrentlyLoggedUser().Id;
 
 
             await _webBudgetRepository.AddIncomeCategory(incomeCategory);

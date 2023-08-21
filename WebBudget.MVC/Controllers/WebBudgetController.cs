@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
+using WebBudget.Application.CreateIncomeViewModel;
 using WebBudget.Application.WebBudget;
 using WebBudget.Application.WebBudget.Commands.CreateIncomeCategory;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetExpense;
@@ -31,38 +32,57 @@ namespace WebBudget.MVC.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly CalcualteBalance _calculateBalance;
+        private readonly IWebBudgetRepository _webBudgetRepository;
 
         //przekazuje zależność 
-        public WebBudgetController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager, CalcualteBalance calcualteBalance)
+        public WebBudgetController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager, CalcualteBalance calcualteBalance, IWebBudgetRepository webBudgetRepository)
         {
             _mapper = mapper;
             _mediator = mediator;
             _userManager = userManager;
             _calculateBalance = calcualteBalance;
+            _webBudgetRepository = webBudgetRepository;
         }
         // ------------------------------------------------- CREATE INCOME --------------------------------------------- //
 
         // do tej metody przyjmuję dany typ budzetu
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateIncome(CreateWebBudgetIncomeCommand command)
+        public async Task<IActionResult> CreateIncome(IncomeViewModel command)
         {
             if (!ModelState.IsValid)
             {
                 return View(command);
             }
 
+            var userId = _userManager.GetUserId(User);
+            var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+
+            var viewModel = new IncomeViewModel
+            {
+               
+                IncomeCategories = incomeCategories
+            };
+
             await _mediator.Send(command);
 
-            TempData["IncomeAdded"] = true;
 
             return RedirectToAction(nameof(IncomesIndex));
         }
 
+        [HttpGet]
         [Authorize]
-        public IActionResult CreateIncome()
+        public async Task<IActionResult> CreateIncome()
         {
-            return View();
+            var userId = _userManager.GetUserId(User);
+            var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+
+            var viewModel = new IncomeViewModel
+            {
+                IncomeCategories = incomeCategories
+            };
+
+            return View(viewModel);
         }
         // ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
 
@@ -309,7 +329,7 @@ namespace WebBudget.MVC.Controllers
 
             await _mediator.Send(command);
 
-            return RedirectToAction(nameof(CreateIncome));
+            return RedirectToAction(nameof(ShowIncomeCategories));
 
 
         }
@@ -321,6 +341,13 @@ namespace WebBudget.MVC.Controllers
 
 
 
+		[Authorize]
+		public async Task<IActionResult> ShowIncomeCategories()
+		{
+			var userId = _userManager.GetUserId(User);
+			var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
 
-    }
+			return View(incomeCategories);
+		}
+	}
 }

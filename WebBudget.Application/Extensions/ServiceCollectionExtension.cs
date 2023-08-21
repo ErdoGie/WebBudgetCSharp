@@ -55,6 +55,8 @@ namespace WebBudget.Application.Extensions
 				.AddFluentValidationClientsideAdapters();
 
 			services.AddScoped<CalcualteBalance>();
+
+
 		}
 	}
 }

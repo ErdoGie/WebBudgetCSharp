@@ -1,103 +1,43 @@
-﻿@using WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome;
+﻿@model WebBudget.Application.CreateIncomeViewModel.IncomeViewModel
+
 @{
-	Layout = "_Layout";
+    ViewData["Title"] = "CreateIncome";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model CreateWebBudgetIncomeCommand;
 
-@section containerContent {
-	<head>
+<h1>CreateIncome</h1>
 
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.css">
-		<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
-		<script src="~/js/site.js"> </script>
-
-	</head>
-	<h1> Add Income </h1>
-
-	<hr />
-
-	<div class="row">
-		<div class="col-md-4 mx-auto">
-			<form action="/WebBudget/CreateIncome" method="post">
-				<div class="form-group mb-3">
-					<label class="control-label" asp-for="IncomeType">
-						Income Type
-					</label>
-					<div class="input-group">
-						<input class="form-control bg-light text-white custom-input text-align:center" type="text" id="IncomeType" asp-for="IncomeType" placeholder="Choose income category" readonly />
-						<div class="input-group-append">
-							<button class="btn btn-secondary" type="button" id="toggleIncomeOptions">
-								<i class="fas fa-caret-down"></i>
-							</button>
-						</div>
-					</div>
-					<span asp-validation-for="IncomeType" class="text-danger">
-
-					</span>
-					<div class="options-container" id="IncomeTypeOptions" style="display: none;">
-						<div class="row">
-							<div class="col-md-6">
-								<label>
-									<input type="radio" name="incomeOption" value="Payment" /> Payment
-								</label>
-							</div>
-							<div class="col-md-6">
-								<label>
-									<input type="radio" name="incomeOption" value="Insurance" /> Insurance
-								</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<label>
-									<input type="radio" name="incomeOption" value="Another" /> Another(provide)
-								</label>
-							</div>
-							<div class="col-md-6">
-								<label>
-									<input type="radio" name="incomeOption" value="Gift" /> Gift
-								</label>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group mb-3">
-					<label class="control-label" asp-for="IncomeDate">
-						Income Date
-					</label>
-					<input style="text-align:center" class="form-control bg-light text-white" type="text" id="IncomeDate" asp-for="IncomeDate" placeholder="Select date" />
-					<span asp-validation-for="IncomeDate" class="text-danger"></span>
-					<span id="validationDateMessage"></span>
-				</div>
-
-				<div class="form-group mb-3">
-					<label class="control-label" asp-for="IncomeValue">
-						Income Value
-					</label>
-					<input style="text-align:center" class="form-control bg-light text-white" type="text" id="IncomeValue" asp-for="IncomeValue" placeholder="Provide income value" />
-					<span asp-validation-for="IncomeValue" class="text-danger"></span>
-					<span id="incomeValueValidationMessage" class="text-danger"></span>
-				</div>
-
-				<div class="form-group mb-3">
-					<button type="submit" class="btn btn-primary" onclick="showIncomeAddedMessage()">
-						Add Income
-					</button>
-				</div>
-
-			</form>
-		</div>
-	</div>
-
-	@*stworzyc main panel z przyciskami w ktorym beda opcje do wyboru jezeli bedzie uzyszkodnik zalogowany ktory bedzie tam przekierowywac po dodaniu przychodu/wydatku*@
+<h4>IncomeViewModel</h4>
+<hr />
+<form asp-action="CreateIncome">
+    <div class="form-group">
+        <label for="IncomeCommand.IncomeType" class="control-label">Income Type</label>
+        <select id="IncomeCommand.IncomeType" name="IncomeCommand.IncomeType" class="form-control">
+            @foreach (var category in Model.IncomeCategories)
+            {
+                <option value="@category.CategoryName">@category.CategoryName</option>
+            }
+        </select>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="IncomeCommand.IncomeDate" class="control-label">Income Date</label>
+        <input id="IncomeCommand.IncomeDate" name="IncomeCommand.IncomeDate" class="form-control" type="date" />
+    </div>
+    <div class="form-group">
+        <label for="IncomeCommand.IncomeValue" class="control-label">Income Value</label>
+        <input id="IncomeCommand.IncomeValue" name="IncomeCommand.IncomeValue" class="form-control" type="number" step="0.01" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
 
 
-	}
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
-@section Scripts{
-
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
