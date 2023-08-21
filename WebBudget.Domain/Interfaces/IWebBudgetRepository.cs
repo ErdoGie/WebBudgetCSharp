@@ -30,5 +30,10 @@ namespace WebBudget.Domain.Interfaces
 
 		Task<List<IncomeCategory>> GetAllIncomeCategoriesForUser(string userId);
 
+
+        Task AddExpenseCategory(ExpenseCategory category);
+
+        Task<List<ExpenseCategory>> GetAllExpenseCategoriesForUser(string userId);
+
 	}
 }

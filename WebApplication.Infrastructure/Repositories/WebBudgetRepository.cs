@@ -45,7 +45,7 @@ namespace WebBudget.Infrastructure.Repositories
 
 		//odnosze sie do mojego dbCOntextu
 		public async Task<IEnumerable<WebBudgetIncome>> GetAllIncomesForLoggedUser(string userId)
-		=> await _webBudgetDbContext.WebBudgetIncome.Where(i=>i.CreatedById == userId).ToListAsync();
+		=> await _webBudgetDbContext.WebBudgetIncome.Where(i => i.CreatedById == userId).ToListAsync();
 
 
 		public async Task<IEnumerable<WebBudgetExpense>> GetAllExpensesForLoggedUser(string userId)
@@ -94,35 +94,22 @@ namespace WebBudget.Infrastructure.Repositories
 			.Where(i => i.CreatedById == userId && i.IncomeDate >= beginningDate && i.IncomeDate <= endingDate)
 			.ToListAsync();
 
-        public async Task<IEnumerable<WebBudgetExpense>> GetAllUserExpensesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate)
-            => await _webBudgetDbContext.WebBudgetExpense
-            .Where(e => e.CreatedById == userId && e.ExpenseDate >= beginningDate && e.ExpenseDate <= endingDate)
-            .ToListAsync();
+		public async Task<IEnumerable<WebBudgetExpense>> GetAllUserExpensesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate)
+			=> await _webBudgetDbContext.WebBudgetExpense
+			.Where(e => e.CreatedById == userId && e.ExpenseDate >= beginningDate && e.ExpenseDate <= endingDate)
+			.ToListAsync();
 
-        public bool CheckIfIncomeCategoryExists(string categoryName)
-        {
-            return _webBudgetDbContext.WebBudgetIncome.Any(i => i.IncomeType.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
-        } 
+		public bool CheckIfIncomeCategoryExists(string categoryName)
+		{
+			return _webBudgetDbContext.WebBudgetIncome.Any(i => i.IncomeType.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+		}
 
-        public async Task AddIncomeCategory(IncomeCategory category)
-        {
-          /*  bool categoryExists = CheckIfIncomeCategoryExists(category);
+		public async Task AddIncomeCategory(IncomeCategory category)
+		{
 
-            if (!categoryExists)
-            {
-                var newIncomeCategory = new WebBudgetIncome
-                {
-                    IncomeType = categoryName,
-
-                };
-
-                _webBudgetDbContext.WebBudgetIncome.Add(newIncomeCategory);
-                await _webBudgetDbContext.SaveChangesAsync();
-            }*/
-
-            _webBudgetDbContext.IncomeCategories.Add(category);
-            await _webBudgetDbContext.SaveChangesAsync();
-        }
+			_webBudgetDbContext.IncomeCategories.Add(category);
+			await _webBudgetDbContext.SaveChangesAsync();
+		}
 
 		public async Task<List<IncomeCategory>> GetAllIncomeCategoriesForUser(string userId)
 		{
@@ -131,5 +118,15 @@ namespace WebBudget.Infrastructure.Repositories
 				.ToListAsync();
 		}
 
+		public async Task AddExpenseCategory(ExpenseCategory category)
+		{
+			_webBudgetDbContext.ExpenseCategories.Add(category);
+			await _webBudgetDbContext.SaveChangesAsync();
+		}
+
+		public async Task<List<ExpenseCategory>> GetAllExpenseCategoriesForUser(string userId)
+			 => await _webBudgetDbContext.ExpenseCategories
+			.Where(e => e.UserId == userId)
+			.ToListAsync();
 	}
 }

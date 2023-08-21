@@ -224,6 +224,29 @@ namespace WebBudget.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WebBudget.Domain.Entities.ExpenseCategory", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ExpenseCategories");
+                });
+
             modelBuilder.Entity("WebBudget.Domain.Entities.IncomeCategory", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -237,6 +260,7 @@ namespace WebBudget.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CategoryId");
@@ -253,6 +277,9 @@ namespace WebBudget.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExpenseId"));
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
@@ -272,6 +299,8 @@ namespace WebBudget.Infrastructure.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("ExpenseId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("CreatedById");
 
@@ -366,20 +395,39 @@ namespace WebBudget.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WebBudget.Domain.Entities.ExpenseCategory", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WebBudget.Domain.Entities.IncomeCategory", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("WebBudget.Domain.Entities.WebBudgetExpense", b =>
                 {
+                    b.HasOne("WebBudget.Domain.Entities.IncomeCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
+
+                    b.Navigation("Category");
 
                     b.Navigation("CreatedBy");
                 });

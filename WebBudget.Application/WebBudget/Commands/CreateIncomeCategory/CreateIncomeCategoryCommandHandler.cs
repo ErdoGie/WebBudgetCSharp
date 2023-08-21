@@ -33,7 +33,7 @@ namespace WebBudget.Application.WebBudget.Commands.CreateIncomeCategory
 
             incomeCategory.CategoryName = request.CategoryName;
 
-            incomeCategory.UserId = _userContext.GetCurrentlyLoggedUser().Id;
+            incomeCategory.UserId = _userContext.GetCurrentlyLoggedUser()!.Id;
 
 
             await _webBudgetRepository.AddIncomeCategory(incomeCategory);

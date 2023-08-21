@@ -19,6 +19,8 @@ namespace WebBudget.Infrastructure.Persistance
         public DbSet<Domain.Entities.WebBudgetExpense> WebBudgetExpense { get; set; }
 
         public DbSet<Domain.Entities.IncomeCategory> IncomeCategories { get; set; }
+        public DbSet<Domain.Entities.ExpenseCategory> ExpenseCategories { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
