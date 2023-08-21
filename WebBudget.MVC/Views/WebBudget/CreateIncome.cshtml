@@ -12,7 +12,7 @@
 	<div class="col-md-4 mx-auto" style="padding:5%">
 		<form asp-action="CreateIncome">
 			<div class="form-group">
-				<label for="IncomeCommand.IncomeType" class="control-label">Income Type</label>
+				<label for="IncomeCommand.IncomeType" class="control-label">Category</label>
 				<div class="form-group">
 					@if (Model.IncomeCategories.Any())
 					{
@@ -35,11 +35,11 @@
 			</div>
 
 			<div class="form-group">
-				<label for="IncomeCommand.IncomeDate" class="control-label">Income Date</label>
+				<label for="IncomeCommand.IncomeDate" class="control-label">Date</label>
 				<input id="IncomeCommand.IncomeDate" style="text-align:center" name="IncomeCommand.IncomeDate" class="form-control" type="date" />
 			</div>
 			<div class="form-group">
-				<label for="IncomeCommand.IncomeValue" class="control-label">Income Value</label>
+				<label for="IncomeCommand.IncomeValue" class="control-label">Value</label>
 				<input id="IncomeCommand.IncomeValue" name="IncomeCommand.IncomeValue" style="text-align:center" class="form-control" />
 			</div>
 			<div class="form-group d-flex justify-content-center">
@@ -51,7 +51,7 @@
 
 
 	<div>
-		<a asp-action="Index">Back to List</a>
+		<a asp-action="ManageIncome">Back to List</a>
 	</div>
 
 }

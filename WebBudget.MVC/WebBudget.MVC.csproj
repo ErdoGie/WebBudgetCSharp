@@ -7,8 +7,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Include="wwwroot\Media\smile.mp4" />
-	  <None Include="wwwroot\Sound\1.mp3" />
+	  <Compile Remove="wwwroot\Media\**" />
+	  <Compile Remove="wwwroot\Sound\**" />
+	  <Content Remove="wwwroot\Media\**" />
+	  <Content Remove="wwwroot\Sound\**" />
+	  <EmbeddedResource Remove="wwwroot\Media\**" />
+	  <EmbeddedResource Remove="wwwroot\Sound\**" />
+	  <None Remove="wwwroot\Media\**" />
+	  <None Remove="wwwroot\Sound\**" />
 	</ItemGroup>
 
 

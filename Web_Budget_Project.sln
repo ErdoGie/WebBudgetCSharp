@@ -5,11 +5,11 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebBudget.MVC", "WebBudget.MVC\WebBudget.MVC.csproj", "{F00E6F13-A604-4A2C-B10E-EBF6A8F9B6FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBudget.Domain", "WebBudget.Domain\WebBudget.Domain.csproj", "{99675F97-5B3F-4AD4-838F-025E362E4B32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebBudget.Domain", "WebBudget.Domain\WebBudget.Domain.csproj", "{99675F97-5B3F-4AD4-838F-025E362E4B32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBudget.Application", "WebBudget.Application\WebBudget.Application.csproj", "{14CE5A77-A15B-4865-B3FF-0A8FE49EF741}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebBudget.Application", "WebBudget.Application\WebBudget.Application.csproj", "{14CE5A77-A15B-4865-B3FF-0A8FE49EF741}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBudget.Infrastructure", "WebApplication.Infrastructure\WebBudget.Infrastructure.csproj", "{B4C368D7-030D-4560-927E-8E1C80DFBAD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebBudget.Infrastructure", "WebApplication.Infrastructure\WebBudget.Infrastructure.csproj", "{B4C368D7-030D-4560-927E-8E1C80DFBAD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -26,22 +26,20 @@ namespace WebBudget.Application.WebBudget.Commands.CreateIncomeCategory
 
         }
 
-        public async Task<Unit> Handle(CreateIncomeCategoryCommand request, CancellationToken cancellationToken)
-        {
+		public async Task<Unit> Handle(CreateIncomeCategoryCommand request, CancellationToken cancellationToken)
+		{
+			var existingCategory = await _webBudgetRepository.GetAllIncomeCategoriesForUser(request.CategoryName);
+			
 
-            var incomeCategory = _mapper.Map<Domain.Entities.IncomeCategory>(request);
+			var incomeCategory = _mapper.Map<Domain.Entities.IncomeCategory>(request);
+			incomeCategory.CategoryName = request.CategoryName;
+			incomeCategory.UserId = _userContext.GetCurrentlyLoggedUser()!.Id;
 
-            incomeCategory.CategoryName = request.CategoryName;
+			await _webBudgetRepository.AddIncomeCategory(incomeCategory);
 
-            incomeCategory.UserId = _userContext.GetCurrentlyLoggedUser()!.Id;
-
-
-            await _webBudgetRepository.AddIncomeCategory(incomeCategory);
-
-
-            return Unit.Value;
-        }
-    }
+			return Unit.Value;
+		}
+	}
 
 }
 

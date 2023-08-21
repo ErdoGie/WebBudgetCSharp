@@ -128,5 +128,7 @@ namespace WebBudget.Infrastructure.Repositories
 			 => await _webBudgetDbContext.ExpenseCategories
 			.Where(e => e.UserId == userId)
 			.ToListAsync();
+
+		
 	}
 }

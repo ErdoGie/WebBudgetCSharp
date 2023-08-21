@@ -347,18 +347,29 @@ namespace WebBudget.MVC.Controllers
 		[Authorize]
 		public async Task<IActionResult> AddIncomeCategory(CreateIncomeCategoryCommand command)
 		{
-
 			if (!ModelState.IsValid)
 			{
+				return View(command);
+			}
+
+			var categoryName = command.CategoryName;
+			var userId = _userManager.GetUserId(User);
+
+			var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+
+			var existingCategory = incomeCategories.FirstOrDefault(c => c.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+
+			if (existingCategory != null)
+			{
+				ModelState.AddModelError("CategoryName", "Category with this name already exists.");
 				return View(command);
 			}
 
 			await _mediator.Send(command);
 
 			return RedirectToAction(nameof(ShowIncomeCategories));
-
-
 		}
+
 		[Authorize]
 		public async Task<IActionResult> ShowIncomeCategories()
 		{
@@ -399,13 +410,18 @@ namespace WebBudget.MVC.Controllers
 			await _mediator.Send(command);
 
 			return RedirectToAction(nameof(ShowExpenseCategories));
-
-
 		}
 
 		public IActionResult AddExpenseCategory()
 		{
 			return View();
 		}
-	}
+
+
+        public IActionResult ManageIncome()
+        {
+            return View();
+        }
+
+    }
 }
