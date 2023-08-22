@@ -14,5 +14,6 @@ namespace WebBudget.Application.WebBudget.Commands.CreateIncomeViewModel
         public CreateWebBudgetIncomeCommand IncomeCommand { get; set; } = new CreateWebBudgetIncomeCommand();
         public List<IncomeCategory> IncomeCategories { get; set; } = new List<IncomeCategory>();
 
+
     }
 }

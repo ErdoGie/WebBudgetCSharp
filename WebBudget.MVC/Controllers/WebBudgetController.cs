@@ -62,15 +62,20 @@ namespace WebBudget.MVC.Controllers
 
 			var viewModel = new IncomeViewModelCommand
 			{
-
 				IncomeCategories = incomeCategories
 			};
 
-			await _mediator.Send(command);
+			int? categoryId = await _webBudgetRepository.GetIncomeCategoryIdByNameAsync(command.IncomeCommand.IncomeType);
+			if (categoryId != null)
+			{
+				command.IncomeCommand.IncomeCategoryId = categoryId.Value;
+			}
 
+			await _mediator.Send(command);
 
 			return RedirectToAction(nameof(IncomesIndex));
 		}
+
 
 		[HttpGet]
 		[Authorize]
@@ -418,10 +423,10 @@ namespace WebBudget.MVC.Controllers
 		}
 
 
-        public IActionResult ManageIncome()
-        {
-            return View();
-        }
+		public IActionResult ManageIncome()
+		{
+			return View();
+		}
 
-    }
+	}
 }

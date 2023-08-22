@@ -129,6 +129,13 @@ namespace WebBudget.Infrastructure.Repositories
 			.Where(e => e.UserId == userId)
 			.ToListAsync();
 
-		
+		public async Task<int?> GetIncomeCategoryIdByNameAsync(string categoryName)
+		{
+			var selectedCategory = await _webBudgetDbContext.IncomeCategories
+				.FirstOrDefaultAsync(c => EF.Functions.Collate(c.CategoryName, "SQL_Latin1_General_CP1_CI_AS") == categoryName);
+
+			return selectedCategory?.CategoryId;
+		}
+
 	}
 }
