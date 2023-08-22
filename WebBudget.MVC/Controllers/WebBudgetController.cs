@@ -91,10 +91,41 @@ namespace WebBudget.MVC.Controllers
 
 			return View(viewModel);
 		}
-		// ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
+        // ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateExpense(ExpenseViewModelCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(command);
+            }
+
+            var userId = _userManager.GetUserId(User);
+            var incomeCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
+
+            var viewModel = new ExpenseViewModelCommand
+            {
+
+                ExpenseCategories = incomeCategories
+            };
+
+            int? categoryId = await _webBudgetRepository.GetExpenseCategoryIdByNameAsync(command.ExpenseCommand.ExpenseType);
+            if (categoryId != null)
+            {
+                command.ExpenseCommand.ExpenseCategoryId = categoryId.Value;
+            }
+
+            await _mediator.Send(command);
 
 
-		[HttpGet]
+            return RedirectToAction(nameof(ExpensesIndex));
+        }
+
+
+
+        [HttpGet]
 		[Authorize]
 		public async Task<IActionResult> CreateExpense()
 		{
@@ -108,31 +139,6 @@ namespace WebBudget.MVC.Controllers
 
 			return View(viewModel);
 		}
-
-		[HttpPost]
-		[Authorize]
-		public async Task<IActionResult> CreateExpense(ExpenseViewModelCommand command)
-		{
-			if (!ModelState.IsValid)
-			{
-				return View(command);
-			}
-
-			var userId = _userManager.GetUserId(User);
-			var incomeCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
-
-			var viewModel = new ExpenseViewModelCommand
-			{
-
-				ExpenseCategories = incomeCategories
-			};
-
-			await _mediator.Send(command);
-
-
-			return RedirectToAction(nameof(ExpensesIndex));
-		}
-
 
 
 		// ------------------------------------------------- INDEXES--------------------------------------------- //

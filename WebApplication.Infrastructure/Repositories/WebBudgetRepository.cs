@@ -137,5 +137,12 @@ namespace WebBudget.Infrastructure.Repositories
 			return selectedCategory?.CategoryId;
 		}
 
-	}
+        public async Task<int?> GetExpenseCategoryIdByNameAsync(string categoryName)
+        {
+            var selectedCategory = await _webBudgetDbContext.ExpenseCategories
+            .FirstOrDefaultAsync(c => EF.Functions.Collate(c.CategoryName, "SQL_Latin1_General_CP1_CI_AS") == categoryName);
+
+            return selectedCategory?.CategoryId;
+        }
+    }
 }

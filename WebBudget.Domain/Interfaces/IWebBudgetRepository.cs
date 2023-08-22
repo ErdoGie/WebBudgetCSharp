@@ -36,6 +36,8 @@ namespace WebBudget.Domain.Interfaces
         Task<List<ExpenseCategory>> GetAllExpenseCategoriesForUser(string userId);
 
         Task<int?> GetIncomeCategoryIdByNameAsync(string categoryName);
+        Task<int?> GetExpenseCategoryIdByNameAsync(string categoryName);
 
-	}
+
+    }
 }
