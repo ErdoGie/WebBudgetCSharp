@@ -418,7 +418,21 @@ namespace WebBudget.MVC.Controllers
 				return View(command);
 			}
 
-			await _mediator.Send(command);
+            var categoryName = command.CategoryName;
+            var userId = _userManager.GetUserId(User);
+
+            var expenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
+
+            var existingCategory = expenseCategories.FirstOrDefault(e => e.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+
+            if (existingCategory != null)
+            {
+                ModelState.AddModelError("CategoryName", "Category with this name already exists.");
+                return View(command);
+            }
+
+
+            await _mediator.Send(command);
 
 			return RedirectToAction(nameof(ShowExpenseCategories));
 		}
