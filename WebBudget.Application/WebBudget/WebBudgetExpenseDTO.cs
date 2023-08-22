@@ -21,5 +21,8 @@ namespace WebBudget.Application.WebBudget
 		public void EncodeExpenseName() => EncodedExpenseName = ExpenseType.ToLower().Replace(" ", "-");
 
 		public bool HasUserAccess { get; set; }
+
+		public int ExpenseCategoryId { get; set; }
+
 	}
 }

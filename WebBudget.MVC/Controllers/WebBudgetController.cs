@@ -428,5 +428,10 @@ namespace WebBudget.MVC.Controllers
 			return View();
 		}
 
+		public IActionResult ManageExpense()
+		{
+			return View();
+		}
+
 	}
 }

@@ -21,8 +21,7 @@ namespace WebBudget.Domain.Entities
         public string EncodedExpenseName { get;  set; } = default!;
 		public void EncodeExpenseName() => EncodedExpenseName = ExpenseType.ToLower().Replace(" ", "-");
 
-		public int? CategoryId { get; set; }
+		public int? ExpenseCategoryId { get; set; }
 
-		public IncomeCategory? Category { get; set; }
 	}
 }
