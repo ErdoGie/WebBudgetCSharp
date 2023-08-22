@@ -53,27 +53,14 @@
 		});
 
 		function deleteCategory(categoryId) {
-			fetch(`/WebBudgetController/ExpenseCategory/${categoryId}`, {
+			fetch(`/WebBudgetController/DeleteExpenseCategory/${categoryId}`, {
 				method: 'POST', // w moim przypadku jest to POST
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Requested-With': 'XMLHttpRequest'
 				}
 			})
-				.then(response => response.json())
-				.then(data => {
-					console.log(data);
-
-					if (data.success) {
-						showSuccessMessage('Category and related incomes have been deleted.');
-					} else {
-						showErrorMessage('An error occurred while deleting category.');
-					}
-				})
-				.catch(error => {
-					console.error('An error occurred:', error);
-					showErrorMessage('An error occurred while deleting category.');
-				});
+		
 		}
 	</script>
 }

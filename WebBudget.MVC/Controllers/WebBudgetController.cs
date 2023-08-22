@@ -474,5 +474,10 @@ namespace WebBudget.MVC.Controllers
 
 			return RedirectToAction(nameof(ManageExpense));
 		}
-	}
+
+        // ---------------------------------------- EDIT EXPENSE CATEGORY -------------------------------------------------- //
+
+
+    
+    }
 }

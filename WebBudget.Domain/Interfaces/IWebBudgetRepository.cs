@@ -42,5 +42,6 @@ namespace WebBudget.Domain.Interfaces
 
 		Task DeleteExpenseCategoryAndRelateExpensesAsync(int categoryId);  
 
+
 	}
 }
