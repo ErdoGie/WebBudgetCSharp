@@ -453,5 +453,26 @@ namespace WebBudget.MVC.Controllers
 			return View();
 		}
 
+
+        // ---------------------------------------- DELETE INCOME CATEGORY -------------------------------------------------- //
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteIncomeCategory(int categoryId)
+        {
+            await _webBudgetRepository.DeleteIncomeCategoryAndRelatedIncomesAsync(categoryId);
+
+			return RedirectToAction(nameof(ManageIncome));
+        }
+		// ---------------------------------------- DELETE EXPENSE CATEGORY -------------------------------------------------- //
+
+
+		[HttpPost]
+		public async Task<IActionResult> DeleteExpenseCategory(int categoryId)
+		{
+			await _webBudgetRepository.DeleteExpenseCategoryAndRelateExpensesAsync(categoryId);
+
+			return RedirectToAction(nameof(ManageExpense));
+		}
 	}
 }

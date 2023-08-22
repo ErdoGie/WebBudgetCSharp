@@ -144,5 +144,39 @@ namespace WebBudget.Infrastructure.Repositories
 
             return selectedCategory?.CategoryId;
         }
-    }
+
+        public async Task DeleteIncomeCategoryAndRelatedIncomesAsync(int categoryId)
+        {
+            var categoryToDelete = await _webBudgetDbContext.IncomeCategories.FindAsync(categoryId);
+          
+            var relatedIncomes = _webBudgetDbContext.WebBudgetIncome
+                .Where(income => income.IncomeCategoryId == categoryId)
+                .ToList();
+
+            _webBudgetDbContext.WebBudgetIncome.RemoveRange(relatedIncomes);
+
+            
+            _webBudgetDbContext.IncomeCategories.Remove(categoryToDelete!);
+
+            await _webBudgetDbContext.SaveChangesAsync();
+        }
+
+	
+
+		public async Task DeleteExpenseCategoryAndRelateExpensesAsync(int categoryId)
+		{
+			var categoryToDelete = await _webBudgetDbContext.ExpenseCategories.FindAsync(categoryId);
+
+			var relatedExpenses = _webBudgetDbContext.WebBudgetExpense
+				.Where(expense => expense.ExpenseCategoryId == categoryId)
+				.ToList();
+
+			_webBudgetDbContext.WebBudgetExpense.RemoveRange(relatedExpenses);
+
+
+			_webBudgetDbContext.ExpenseCategories.Remove(categoryToDelete!);
+
+			await _webBudgetDbContext.SaveChangesAsync();
+		}
+	}
 }

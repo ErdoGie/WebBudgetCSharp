@@ -28,7 +28,7 @@ namespace WebBudget.Domain.Interfaces
 
         Task AddIncomeCategory(IncomeCategory category);
 
-		Task<List<IncomeCategory>> GetAllIncomeCategoriesForUser(string userId);
+        Task<List<IncomeCategory>> GetAllIncomeCategoriesForUser(string userId);
 
 
         Task AddExpenseCategory(ExpenseCategory category);
@@ -38,6 +38,9 @@ namespace WebBudget.Domain.Interfaces
         Task<int?> GetIncomeCategoryIdByNameAsync(string categoryName);
         Task<int?> GetExpenseCategoryIdByNameAsync(string categoryName);
 
+        Task DeleteIncomeCategoryAndRelatedIncomesAsync(int categoryId);
 
-    }
+		Task DeleteExpenseCategoryAndRelateExpensesAsync(int categoryId);  
+
+	}
 }
