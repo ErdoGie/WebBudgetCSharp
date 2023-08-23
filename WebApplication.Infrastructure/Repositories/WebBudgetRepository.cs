@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -178,5 +179,37 @@ namespace WebBudget.Infrastructure.Repositories
 
 			await _webBudgetDbContext.SaveChangesAsync();
 		}
+
+        public async Task EditIncomeCategoryAsync(int categoryId, string newCategoryName)
+        {
+			var categoryToUpdate = await _webBudgetDbContext.IncomeCategories.FirstOrDefaultAsync(c => c.CategoryId == categoryId);
+
+			if (categoryToUpdate != null)
+            {
+				categoryToUpdate.CategoryName = newCategoryName;
+                await _webBudgetDbContext.SaveChangesAsync();
+            }
+			else
+			{
+
+			}
+        }
+
+		public async Task UpdateIncomeCategoryInIncomes(int oldCategoryId, string newCategoryName)
+		{
+			var incomesWithOldCategory = await _webBudgetDbContext.WebBudgetIncome
+				.Where(income => income.IncomeCategoryId == oldCategoryId)
+				.ToListAsync();
+
+			foreach (var income in incomesWithOldCategory)
+			{
+				income.IncomeType = newCategoryName;
+				income.EncodeIncomeName();
+				_webBudgetDbContext.Entry(income).State = EntityState.Modified;
+			}
+
+			await _webBudgetDbContext.SaveChangesAsync();
+		}
+
 	}
 }

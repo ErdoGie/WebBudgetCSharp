@@ -1,66 +1,97 @@
 ﻿@model IEnumerable<WebBudget.Domain.Entities.ExpenseCategory>
 
 @{
-	ViewData["Title"] = "ShowExpenseCategory";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "ShowExpenseCategories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section containerContent {
-	<h1>Your expense categories: </h1>
+    <h1>Your expense categories: </h1>
 
-	<p>
-		<a asp-action="Create">Create New</a>
-	</p>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					@Html.DisplayNameFor(model => model.CategoryName)
-				</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var item in Model)
-			{
-				<tr>
-					<td>
-						@Html.DisplayFor(modelItem => item.CategoryName)
-					</td>
-					<td>
-						<form asp-action="DeleteExpenseCategory" method="post">
-							<input type="hidden" name="categoryId" value="@item.CategoryId" />
-							<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category? Every expense assigned to this Category will be deleted!')">Delete</button>
-						</form>
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        <input type="hidden" name="categoryId" value="@item.CategoryId" />
+                        <button type="button" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteCategoryModal" data-category-id="@item.CategoryId">Delete</button>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
+<!-- Modal -->
+<div class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="deleteCategoryModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                All incomes connected with this category will be deleted!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form id="deleteCategoryForm" asp-action="DeleteExpenseCategory" method="post">
+                    <input type="hidden" name="categoryId" id="categoryIdInput" value="" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @section Scripts {
-	<script>
-		document.querySelectorAll('.delete-btn').forEach(button => {
-			button.addEventListener('click', function () {
-				var categoryId = this.getAttribute('data-category-id');
-				var confirmed = confirm('Are you sure you want to delete this category and its related incomes?');
+    <script>
+        var categoryIdToDelete;
 
-				if (confirmed) {
-					deleteCategory(categoryId);
-				}
-			});
-		});
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                categoryIdToDelete = this.getAttribute('data-category-id');
+                document.getElementById('categoryIdInput').value = categoryIdToDelete;
+            });
+        });
 
-		function deleteCategory(categoryId) {
-			fetch(`/WebBudgetController/DeleteExpenseCategory/${categoryId}`, {
-				method: 'POST', // w moim przypadku jest to POST
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			})
-		
-		}
-	</script>
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+            if (categoryIdToDelete) {
+                deleteCategory(categoryIdToDelete);
+                categoryIdToDelete = null;
+            }
+            $('#deleteCategoryModal').modal('hide');
+        });
+
+        function deleteCategory(categoryId) {
+            fetch(`/WebBudgetController/DeleteExpenseCategory/${categoryId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+
+        }
+    </script>
 }

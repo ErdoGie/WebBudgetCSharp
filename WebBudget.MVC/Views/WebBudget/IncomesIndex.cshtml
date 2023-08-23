@@ -17,19 +17,19 @@
 	<div class="row">
 		@foreach (var item in Model)
 		{
-						<div class="col-md-6 col-lg-4 small-card">
-					<div class="card m-3 small-card">
-						<div class="card-body">
-							<h6 class="card-title"> @item.IncomeType</h6>
-							<h6 class="card-subtitle mb-2 text-muted">@item.IncomeDate.ToString("yyyy-MM-dd")</h6>
-							<h6 class="card-title"> @item.IncomeValue zł</h6>
-							<a asp-controller="WebBudget" asp-action="IncomeEdit" asp-route-encodedIncomeName="@item.EncodedIncomeName" class="btn btn-primary">Edit</a>
-							<a asp-controller="WebBudget" asp-action="IncomeDelete" asp-route-encodedIncomeName="@item.EncodedIncomeName" class="btn btn-primary">Delete</a>
+			<div class="col-md-6 col-lg-4 small-card">
+				<div class="card m-3 small-card">
+					<div class="card-body">
+						<h6 class="card-title"> @item.IncomeType</h6>
+						<h6 class="card-subtitle mb-2 text-muted">@item.IncomeDate.ToString("yyyy-MM-dd")</h6>
+						<h6 class="card-title"> @item.IncomeValue zł</h6>
+						<a asp-controller="WebBudget" asp-action="IncomeEdit" asp-route-encodedIncomeName="@item.EncodedIncomeName" class="btn btn-primary">Edit</a>
+						<a asp-controller="WebBudget" asp-action="IncomeDelete" asp-route-encodedIncomeName="@item.EncodedIncomeName" class="btn btn-primary">Delete</a>
 
-						</div>
 					</div>
 				</div>
-			
+			</div>
+
 		}
 	</div>
 
@@ -50,15 +50,6 @@
 		</div>
 	</div>
   }
-
-@if (TempData.ContainsKey("IncomeAdded") && (bool)TempData["IncomeAdded"] == true)
-{
-
-	<script>
-		window.onload = function () {
-			alert("Income added successfully");
-		};</script>
-}
 
 @section scripts {
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>

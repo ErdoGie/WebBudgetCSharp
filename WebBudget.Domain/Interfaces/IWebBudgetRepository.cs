@@ -42,6 +42,8 @@ namespace WebBudget.Domain.Interfaces
 
 		Task DeleteExpenseCategoryAndRelateExpensesAsync(int categoryId);  
 
-
+        Task EditIncomeCategoryAsync(int categoryId, string newCategoryName);
+        Task UpdateIncomeCategoryInIncomes(int oldCategoryId, string newCategoryName);
+	
 	}
 }
