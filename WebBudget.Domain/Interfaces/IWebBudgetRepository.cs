@@ -26,5 +26,24 @@ namespace WebBudget.Domain.Interfaces
         Task<IEnumerable<WebBudgetIncome>> GetAllUserIncomesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate);
         Task<IEnumerable<WebBudgetExpense>> GetAllUserExpensesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate);
 
-    }
+        Task AddIncomeCategory(IncomeCategory category);
+
+        Task<List<IncomeCategory>> GetAllIncomeCategoriesForUser(string userId);
+
+
+        Task AddExpenseCategory(ExpenseCategory category);
+
+        Task<List<ExpenseCategory>> GetAllExpenseCategoriesForUser(string userId);
+
+        Task<int?> GetIncomeCategoryIdByNameAsync(string categoryName);
+        Task<int?> GetExpenseCategoryIdByNameAsync(string categoryName);
+
+        Task DeleteIncomeCategoryAndRelatedIncomesAsync(int categoryId);
+
+		Task DeleteExpenseCategoryAndRelateExpensesAsync(int categoryId);  
+
+        Task EditIncomeCategoryAsync(int categoryId, string newCategoryName);
+        Task UpdateIncomeCategoryInIncomes(int oldCategoryId, string newCategoryName);
+	
+	}
 }

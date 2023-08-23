@@ -224,6 +224,52 @@ namespace WebBudget.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WebBudget.Domain.Entities.ExpenseCategory", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ExpenseCategories");
+                });
+
+            modelBuilder.Entity("WebBudget.Domain.Entities.IncomeCategory", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("IncomeCategories");
+                });
+
             modelBuilder.Entity("WebBudget.Domain.Entities.WebBudgetExpense", b =>
                 {
                     b.Property<int>("ExpenseId")
@@ -238,6 +284,9 @@ namespace WebBudget.Infrastructure.Migrations
                     b.Property<string>("EncodedExpenseName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ExpenseCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("ExpenseDate")
                         .HasColumnType("Date");
@@ -270,6 +319,9 @@ namespace WebBudget.Infrastructure.Migrations
                     b.Property<string>("EncodedIncomeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IncomeCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("IncomeDate")
                         .HasColumnType("Date");
@@ -337,6 +389,28 @@ namespace WebBudget.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WebBudget.Domain.Entities.ExpenseCategory", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebBudget.Domain.Entities.IncomeCategory", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WebBudget.Domain.Entities.WebBudgetExpense", b =>

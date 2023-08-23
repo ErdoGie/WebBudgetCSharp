@@ -12,9 +12,12 @@ using System.Threading.Tasks;
 using WebBudget.Application.Mappings;
 using WebBudget.Application.UserApplication;
 using WebBudget.Application.WebBudget;
+using WebBudget.Application.WebBudget.Commands.CreateExpenseCategory;
+using WebBudget.Application.WebBudget.Commands.CreateIncomeCategory;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome;
 using WebBudget.Domain.Entities;
+using WebBudget.Domain.Interfaces;
 
 namespace WebBudget.Application.Extensions
 {
@@ -27,6 +30,8 @@ namespace WebBudget.Application.Extensions
 			services.AddScoped<IUserContext, UserContext>();
 			services.AddMediatR(typeof(CreateWebBudgetIncomeCommand));
 			services.AddMediatR(typeof(CreateWebBudgetExpenseCommand));
+			services.AddMediatR(typeof(CreateIncomeCategoryCommand));
+			services.AddMediatR(typeof(CreateExpenseCategoryCommand));
 
 
 			// zamieniam z addAutoMapper na AddScoped poniewaz autoMapper wymaga bezparametrowych kostruktorow, a ja niestety juz mam parameter IUSerContext w konstruktorze
@@ -36,6 +41,8 @@ namespace WebBudget.Application.Extensions
 				var userContext = scope.ServiceProvider.GetRequiredService<IUserContext>();
 				cfg.AddProfile(new WebBudgetExpenseMappingProfile(userContext));
 				cfg.AddProfile(new WebBudgetIncomeMappingProfile(userContext));
+				cfg.AddProfile(new IncomeCategoryMappingProfile(userContext));
+				cfg.AddProfile(new ExpenseCategoryMappingProfile(userContext));
 
 
 				//zeby utworzyc mappera muszę na konfiguracji wywolac metode CreateMapper.
@@ -51,6 +58,8 @@ namespace WebBudget.Application.Extensions
 				.AddFluentValidationClientsideAdapters();
 
 			services.AddScoped<CalcualteBalance>();
+
+
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,8 @@ namespace WebBudget.Infrastructure.Repositories
 
 		}
 
+
+
 		public async Task CreateIncome(Domain.Entities.WebBudgetIncome webBudgetIncome)
 		{
 
@@ -43,7 +46,7 @@ namespace WebBudget.Infrastructure.Repositories
 
 		//odnosze sie do mojego dbCOntextu
 		public async Task<IEnumerable<WebBudgetIncome>> GetAllIncomesForLoggedUser(string userId)
-		=> await _webBudgetDbContext.WebBudgetIncome.Where(i=>i.CreatedById == userId).ToListAsync();
+		=> await _webBudgetDbContext.WebBudgetIncome.Where(i => i.CreatedById == userId).ToListAsync();
 
 
 		public async Task<IEnumerable<WebBudgetExpense>> GetAllExpensesForLoggedUser(string userId)
@@ -92,10 +95,121 @@ namespace WebBudget.Infrastructure.Repositories
 			.Where(i => i.CreatedById == userId && i.IncomeDate >= beginningDate && i.IncomeDate <= endingDate)
 			.ToListAsync();
 
-        public async Task<IEnumerable<WebBudgetExpense>> GetAllUserExpensesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate)
-            => await _webBudgetDbContext.WebBudgetExpense
-            .Where(e => e.CreatedById == userId && e.ExpenseDate >= beginningDate && e.ExpenseDate <= endingDate)
-            .ToListAsync();
+		public async Task<IEnumerable<WebBudgetExpense>> GetAllUserExpensesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate)
+			=> await _webBudgetDbContext.WebBudgetExpense
+			.Where(e => e.CreatedById == userId && e.ExpenseDate >= beginningDate && e.ExpenseDate <= endingDate)
+			.ToListAsync();
 
-    }
+		public bool CheckIfIncomeCategoryExists(string categoryName)
+		{
+			return _webBudgetDbContext.WebBudgetIncome.Any(i => i.IncomeType.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+		}
+
+		public async Task AddIncomeCategory(IncomeCategory category)
+		{
+
+			_webBudgetDbContext.IncomeCategories.Add(category);
+			await _webBudgetDbContext.SaveChangesAsync();
+		}
+
+		public async Task<List<IncomeCategory>> GetAllIncomeCategoriesForUser(string userId)
+		{
+			return await _webBudgetDbContext.IncomeCategories
+				.Where(category => category.UserId == userId)
+				.ToListAsync();
+		}
+
+		public async Task AddExpenseCategory(ExpenseCategory category)
+		{
+			_webBudgetDbContext.ExpenseCategories.Add(category);
+			await _webBudgetDbContext.SaveChangesAsync();
+		}
+
+		public async Task<List<ExpenseCategory>> GetAllExpenseCategoriesForUser(string userId)
+			 => await _webBudgetDbContext.ExpenseCategories
+			.Where(e => e.UserId == userId)
+			.ToListAsync();
+
+		public async Task<int?> GetIncomeCategoryIdByNameAsync(string categoryName)
+		{
+			var selectedCategory = await _webBudgetDbContext.IncomeCategories
+				.FirstOrDefaultAsync(c => EF.Functions.Collate(c.CategoryName, "SQL_Latin1_General_CP1_CI_AS") == categoryName);
+
+			return selectedCategory?.CategoryId;
+		}
+
+        public async Task<int?> GetExpenseCategoryIdByNameAsync(string categoryName)
+        {
+            var selectedCategory = await _webBudgetDbContext.ExpenseCategories
+            .FirstOrDefaultAsync(c => EF.Functions.Collate(c.CategoryName, "SQL_Latin1_General_CP1_CI_AS") == categoryName);
+
+            return selectedCategory?.CategoryId;
+        }
+
+        public async Task DeleteIncomeCategoryAndRelatedIncomesAsync(int categoryId)
+        {
+            var categoryToDelete = await _webBudgetDbContext.IncomeCategories.FindAsync(categoryId);
+          
+            var relatedIncomes = _webBudgetDbContext.WebBudgetIncome
+                .Where(income => income.IncomeCategoryId == categoryId)
+                .ToList();
+
+            _webBudgetDbContext.WebBudgetIncome.RemoveRange(relatedIncomes);
+
+            
+            _webBudgetDbContext.IncomeCategories.Remove(categoryToDelete!);
+
+            await _webBudgetDbContext.SaveChangesAsync();
+        }
+
+	
+
+		public async Task DeleteExpenseCategoryAndRelateExpensesAsync(int categoryId)
+		{
+			var categoryToDelete = await _webBudgetDbContext.ExpenseCategories.FindAsync(categoryId);
+
+			var relatedExpenses = _webBudgetDbContext.WebBudgetExpense
+				.Where(expense => expense.ExpenseCategoryId == categoryId)
+				.ToList();
+
+			_webBudgetDbContext.WebBudgetExpense.RemoveRange(relatedExpenses);
+
+
+			_webBudgetDbContext.ExpenseCategories.Remove(categoryToDelete!);
+
+			await _webBudgetDbContext.SaveChangesAsync();
+		}
+
+        public async Task EditIncomeCategoryAsync(int categoryId, string newCategoryName)
+        {
+			var categoryToUpdate = await _webBudgetDbContext.IncomeCategories.FirstOrDefaultAsync(c => c.CategoryId == categoryId);
+
+			if (categoryToUpdate != null)
+            {
+				categoryToUpdate.CategoryName = newCategoryName;
+                await _webBudgetDbContext.SaveChangesAsync();
+            }
+			else
+			{
+
+			}
+        }
+
+		public async Task UpdateIncomeCategoryInIncomes(int oldCategoryId, string newCategoryName)
+		{
+			var incomesWithOldCategory = await _webBudgetDbContext.WebBudgetIncome
+				.Where(income => income.IncomeCategoryId == oldCategoryId)
+				.ToListAsync();
+
+			foreach (var income in incomesWithOldCategory)
+			{
+				income.IncomeType = newCategoryName;
+				income.EncodeIncomeName();
+				_webBudgetDbContext.Entry(income).State = EntityState.Modified;
+			}
+
+			await _webBudgetDbContext.SaveChangesAsync();
+		}
+
+	}
 }

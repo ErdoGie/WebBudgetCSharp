@@ -31,7 +31,8 @@ namespace WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome
 
 			webBudgetIncome.EncodeIncomeName();
 
-			webBudgetIncome.CreatedById = _userContext.GetCurrentlyLoggedUser().Id;
+			webBudgetIncome.CreatedById = _userContext.GetCurrentlyLoggedUser()!.Id;
+			
 
 			await _webBudgetRepository.CreateIncome(webBudgetIncome);
 

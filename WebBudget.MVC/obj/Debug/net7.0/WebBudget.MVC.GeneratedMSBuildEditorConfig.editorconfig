@@ -16,6 +16,18 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Areas/Identity/Pages/Account/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxDb25maXJtRW1haWxDaGFuZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Areas/Identity/Pages/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -28,8 +40,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcQ2hhbmdlUGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Areas/Identity/Pages/Account/Manage/Email.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW1haWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Areas/Identity/Pages/Account/Manage/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
@@ -96,6 +116,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/AddExpenseCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEFkZEV4cGVuc2VDYXRlZ29yeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/AddIncomeCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEFkZEluY29tZUNhdGVnb3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/Balance.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEJhbGFuY2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -134,6 +162,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/IncomesIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEluY29tZXNJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ManageExpense.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XE1hbmFnZUV4cGVuc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ManageIncome.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XE1hbmFnZUluY29tZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ShowExpenseCategories.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XFNob3dFeHBlbnNlQ2F0ZWdvcmllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ShowIncomeCategories.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XFNob3dJbmNvbWVDYXRlZ29yaWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/Success.cshtml]

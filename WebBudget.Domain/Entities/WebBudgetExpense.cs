@@ -20,5 +20,8 @@ namespace WebBudget.Domain.Entities
         public IdentityUser? CreatedBy { get; set; }
         public string EncodedExpenseName { get;  set; } = default!;
 		public void EncodeExpenseName() => EncodedExpenseName = ExpenseType.ToLower().Replace(" ", "-");
+
+		public int? ExpenseCategoryId { get; set; }
+
 	}
 }
