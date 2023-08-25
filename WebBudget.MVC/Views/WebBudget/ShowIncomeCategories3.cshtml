@@ -1,36 +1,64 @@
-﻿@model IEnumerable<WebBudget.Domain.Entities.IncomeCategory>
+﻿@model WebBudget.Application.WebBudget.Commands.CategoryViewModels.IncomeCategoryViewModel
 
 @{
 	ViewData["Title"] = "ShowIncomeCategories";
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	
-    bool categoryExistsError = ViewData["CategoryExistsError"] as bool? ?? false;
+
+	bool categoryExistsError = ViewData["CategoryExistsError"] as bool? ?? false;
 
 }
 
 @section containerContent {
 	<h1>Manage your income categories </h1>
 
-	<form asp-action="AddIncomeCategory" method="get">
-		<button type="submit" class="btn btn-secondary">
-			Create New
-		</button>
-	</form>
+	<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCategoryModal">
+		Create New
+	</button>
+
+	<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addCategoryModalLabel">Create New Category</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="addCategoryForm" asp-action="AddIncomeCategory" method="post">
+						<div class="form-group">
+							<label for="CreateIncomeCategoryCommand_CategoryName" style="color:white">New Category Name</label>
+							<input asp-for="CreateIncomeCategoryCommand.CategoryName" type="text" class="form-control" id="CategoryName" name="CategoryName" required title="This value cannot be empty" />
+							<span asp-validation-for="CreateIncomeCategoryCommand.CategoryName" class="text-danger"></span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Create</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 	<div class="row">
-		@foreach (var item in Model)
+
+		@foreach (var category in Model.IncomeCategories)
 		{
 			<div class="col-md-6 col-lg-4 small-card">
 				<div class="card m-3 small-card">
 					<div class="card-body">
-						<h6 class="card-title"> @item.CategoryName</h6>
-						<button type="button" class="btn btn-info edit-btn" data-toggle="modal" data-target="#editCategoryModal" data-category-id="@item.CategoryId">Edit</button>
-						<button type="button" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteCategoryModal" data-category-id="@item.CategoryId">Delete</button>
+						<h6 class="card-title"> @category.CategoryName</h6>
+						<button type="button" class="btn btn-info edit-btn" data-toggle="modal" data-target="#editCategoryModal" data-category-id="@category.CategoryId">Edit</button>
+						<button type="button" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteCategoryModal" data-category-id="@category.CategoryId">Delete</button>
 					</div>
 				</div>
 			</div>
-
 		}
+
 	</div>
 }
 
@@ -92,7 +120,12 @@
 
 
 @section Scripts {
+
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 	<script>
+
+
 		var categoryIdToDelete;
 		var categoryIdToEdit;
 
@@ -125,16 +158,7 @@
 
 
 
-		
-
-
-
-
-
-
-
-
-
+		//--------- DELETE --------------//
 
 
 		document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
@@ -170,6 +194,45 @@
 				}
 			});
 		}
+
+
+		document.getElementById('addCategoryForm').addEventListener('submit', async function (event) {
+			event.preventDefault(); // Zapobiegaj domyślnej akcji przesyłania formularza
+
+			var categoryName = document.getElementById('CategoryName').value;
+
+			// Twórz obiekt z danymi do wysłania
+			var data = {
+				CreateIncomeCategoryCommand: {
+					CategoryName: categoryName
+				}
+			};
+
+			const response = await fetch('/WebBudgetController/AddIncomeCategory', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				body: JSON.stringify(data)
+			});
+
+			if (response.ok) {
+				// Jeśli odpowiedź jest poprawna, odśwież listę kategorii bez zamykania modalu
+				var newCategoriesHtml = await response.text();
+				var categoriesContainer = document.querySelector('.row');
+				categoriesContainer.innerHTML = newCategoriesHtml;
+				document.getElementById('CategoryName').value = ''; // Wyczyść pole wprowadzania po dodaniu kategorii
+				document.getElementById('categoryNameError').innerText = ''; // Wyczyść komunikat o błędzie
+			} else {
+				// Jeśli odpowiedź zawiera błędy, wyświetl je wewnątrz modalu
+				const errors = await response.json();
+				var errorSpan = document.getElementById('categoryNameError');
+				errorSpan.innerText = errors["CategoryName"][0]; // Pobierz pierwszy błąd dla pola CategoryName
+			}
+		});
+
+
 
 
 	</script>

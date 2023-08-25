@@ -153,7 +153,9 @@ footer {
     font-size: 40px;
     color: white;
 }
-
+.modal-backdrop {
+  z-index: -1;
+}
 
 /*animations*/
 @keyframes slideDown {

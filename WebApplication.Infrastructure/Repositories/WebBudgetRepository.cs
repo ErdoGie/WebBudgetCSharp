@@ -189,10 +189,7 @@ namespace WebBudget.Infrastructure.Repositories
 				categoryToUpdate.CategoryName = newCategoryName;
                 await _webBudgetDbContext.SaveChangesAsync();
             }
-			else
-			{
-
-			}
+			
         }
 
 		public async Task UpdateIncomeCategoryInIncomes(int oldCategoryId, string newCategoryName)

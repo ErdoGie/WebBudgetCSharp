@@ -1,17 +1,15 @@
-﻿using AutoMapper;
-using Humanizer;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata;
-using WebBudget.Application.WebBudget;
+using WebBudget.Application.WebBudget.Commands.CategoryViewModels;
 using WebBudget.Application.WebBudget.Commands.CreateExpenseCategory;
 using WebBudget.Application.WebBudget.Commands.CreateExpenseViewModel;
 using WebBudget.Application.WebBudget.Commands.CreateIncomeCategory;
 using WebBudget.Application.WebBudget.Commands.CreateIncomeViewModel;
-using WebBudget.Application.WebBudget.Commands.CreateWebBudgetExpense;
-using WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetExpense;
@@ -22,13 +20,11 @@ using WebBudget.Application.WebBudget.Commands.Queries.GetAllWEbBudgetIncomes;
 using WebBudget.Application.WebBudget.Commands.Queries.GetWebBudgetsByEncodedName;
 using WebBudget.Domain.Entities;
 using WebBudget.Domain.Interfaces;
-using WebBudget.Infrastructure.Persistance;
-using WebBudget.Infrastructure.Repositories;
 using X.PagedList;
 //
 namespace WebBudget.MVC.Controllers
 {
-    public class WebBudgetController : Controller
+	public class WebBudgetController : Controller
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
@@ -356,41 +352,54 @@ namespace WebBudget.MVC.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AddIncomeCategory(CreateIncomeCategoryCommand command)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
+		public async Task<IActionResult> AddIncomeCategory(CreateIncomeCategoryCommand command)
+		{
+			var userId = _userManager.GetUserId(User);
+			var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
 
-            var categoryName = command.CategoryName;
-            var userId = _userManager.GetUserId(User);
+			var categoryName = command.CategoryName;
 
-            var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+			var existingCategory = incomeCategories.FirstOrDefault(c => c.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
 
-            var existingCategory = incomeCategories.FirstOrDefault(c => c.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+			if (existingCategory != null)
+			{
+				ModelState.AddModelError("CreateIncomeCategoryCommand.CategoryName", "Category with this name already exists.");
+				var viewModel = new IncomeCategoryViewModel
+				{
+					CreateIncomeCategoryCommand = command,
+					IncomeCategories = incomeCategories
+				};
+				return View("ShowIncomeCategories3", viewModel);
+			}
 
-            if (existingCategory != null)
-            {
-                ModelState.AddModelError("CategoryName", "Category with this name already exists.");
-                return View(command);
-            }
+			if (ModelState.IsValid)
+			{
+				await _mediator.Send(command);
+			}
 
-            await _mediator.Send(command);
+			return RedirectToAction(nameof(ShowIncomeCategories3));
+		}
 
-            return RedirectToAction(nameof(ShowIncomeCategories));
-        }
 
-        [Authorize]
-        public async Task<IActionResult> ShowIncomeCategories()
-        {
-            var userId = _userManager.GetUserId(User);
-            var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+		[Authorize]
+		public async Task<IActionResult> ShowIncomeCategories3()
+		{
+			var userId = _userManager.GetUserId(User);
+			var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+			var newCategoryCommand = new CreateIncomeCategoryCommand();
 
-            return View(incomeCategories);
-        }
+			var viewModel = new IncomeCategoryViewModel
+			{
+				IncomeCategories = incomeCategories,
+				CreateIncomeCategoryCommand = newCategoryCommand
+			};
 
-        public IActionResult AddIncomeCategory()
+/*			var categoryViewModels = new List<IncomeCategoryViewModel> { viewModel };
+*/
+			return View(viewModel);
+		}
+
+		public IActionResult AddIncomeCategory()
         {
             return View();
         }
@@ -462,7 +471,7 @@ namespace WebBudget.MVC.Controllers
         {
             await _webBudgetRepository.DeleteIncomeCategoryAndRelatedIncomesAsync(categoryId);
 
-            return RedirectToAction(nameof(ManageIncome));
+            return RedirectToAction(nameof(ShowIncomeCategories3));
         }
         // ---------------------------------------- DELETE EXPENSE CATEGORY -------------------------------------------------- //
 
@@ -488,20 +497,20 @@ namespace WebBudget.MVC.Controllers
 			if (existingCategory != null)
 			{
 				ModelState.AddModelError("newCategoryName", "Category with the same name already exists.");
-				return View("ShowIncomeCategories", incomeCategories);
+				ViewBag.CategoryExistsError = true;
+				return RedirectToAction(nameof(ShowIncomeCategories3));
 			}
-
 			if (ModelState.IsValid)
 			{
 				await _webBudgetRepository.EditIncomeCategoryAsync(categoryIdToEdit, newCategoryName);
 
 				await _webBudgetRepository.UpdateIncomeCategoryInIncomes(categoryIdToEdit, newCategoryName);
 
-				return RedirectToAction(nameof(ShowIncomeCategories));
+				return RedirectToAction(nameof(ShowIncomeCategories3));
 			}
 
 			ViewBag.CategoryName = newCategoryName;
-			return View("ShowIncomeCategories", incomeCategories);
+			return RedirectToAction(nameof(ShowIncomeCategories3));
 		}
 
 
