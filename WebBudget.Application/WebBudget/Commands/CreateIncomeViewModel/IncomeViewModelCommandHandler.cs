@@ -37,7 +37,6 @@ namespace WebBudget.Application.WebBudget.Commands.CreateIncomeViewModel
 
             var domainIncome = _mapper.Map<Domain.Entities.WebBudgetIncome>(request.IncomeCommand);
             domainIncome.CreatedById = userId;
-            domainIncome.EncodeIncomeName();
 
             await _webBudgetRepository.CreateIncome(domainIncome);
 

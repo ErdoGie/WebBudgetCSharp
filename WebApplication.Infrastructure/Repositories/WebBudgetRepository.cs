@@ -76,9 +76,9 @@ namespace WebBudget.Infrastructure.Repositories
             return expense!;
         }
 
-        public async Task<WebBudgetIncome> RemoveIncome(string encodedIncomeName)
+        public async Task<WebBudgetIncome> RemoveIncome(int incomeId)
         {
-            var income = await _webBudgetDbContext.WebBudgetIncome.FirstAsync(i => i.EncodedIncomeName == encodedIncomeName);
+            var income = await _webBudgetDbContext.WebBudgetIncome.FirstAsync(i => i.IncomeId == incomeId);
 
             if (income != null)
             {
@@ -200,7 +200,6 @@ namespace WebBudget.Infrastructure.Repositories
             foreach (var income in incomesWithOldCategory)
             {
                 income.IncomeType = newCategoryName;
-                income.EncodeIncomeName();
                 _webBudgetDbContext.Entry(income).State = EntityState.Modified;
             }
 

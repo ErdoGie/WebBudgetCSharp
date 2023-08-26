@@ -34,12 +34,6 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWe
 			webBudget.IncomeValue = request.IncomeValue;
 			webBudget.IncomeType = request.IncomeType;
 			webBudget.IncomeDate = request.IncomeDate;
-			webBudget.EncodedIncomeName = request.EncodedIncomeName!;
-
-			// najpierw zapisuje metode EncodeIncomeName dla webBUdget, a następnie dla requesta
-			// inaczej nie będzie widzieć pierwotnie zapisanej metody.
-			webBudget.EncodeIncomeName();
-			request.EncodeIncomeName();
 
 
 			//normalnie powinienem tu już zapisać lepiej w repozytorium interfejsu dodać kolejną metode ktora będzie zapisywała zmiany

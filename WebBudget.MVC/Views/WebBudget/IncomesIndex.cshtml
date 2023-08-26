@@ -26,8 +26,8 @@
 						<h6 class="card-title"> @item.IncomeType</h6>
 						<h6 class="card-subtitle mb-2 text-muted">@item.IncomeDate.ToString("yyyy-MM-dd")</h6>
 						<h6 class="card-title"> @item.IncomeValue zł</h6>
-						<a asp-controller="WebBudget" asp-action="IncomeEdit" asp-route-encodedIncomeName="@item.EncodedIncomeName" class="btn btn-primary">Edit</a>
-						<a asp-controller="WebBudget" asp-action="IncomeDelete" asp-route-encodedIncomeName="@item.EncodedIncomeName" class="btn btn-primary">Delete</a>
+						<a asp-controller="WebBudget" asp-action="IncomeEdit" asp-route-IncomeId="@item.IncomeId" class="btn btn-primary">Edit</a>
+						<a asp-controller="WebBudget" asp-action="IncomeDelete" asp-route-IncomeId="@item.IncomeId" class="btn btn-primary">Delete</a>
 
 					</div>
 				</div>

@@ -19,7 +19,7 @@ namespace WebBudget.Domain.Interfaces
 
         Task<Domain.Entities.WebBudgetExpense> RemoveExpense(string endodedExpenseName);
 
-        Task<Domain.Entities.WebBudgetIncome> RemoveIncome(string encodedIncomeName);
+        Task<Domain.Entities.WebBudgetIncome> RemoveIncome(int incomeId);
 
         Task CommitChanges();
 
