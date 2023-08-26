@@ -31,7 +31,7 @@ namespace WebBudget.Application.WebBudget.Commands.CreateWebBudgetExpense
 
             webBudgetExpense.EncodeExpenseName();
 
-            webBudgetExpense.CreatedById = _userContext.GetCurrentlyLoggedUser().Id;
+            webBudgetExpense.CreatedById = _userContext.GetCurrentlyLoggedUser()!.Id;
 
             await _webBudgetRepository.CreateExpense(webBudgetExpense);
 

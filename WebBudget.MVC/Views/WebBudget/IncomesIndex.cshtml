@@ -15,6 +15,9 @@
 	<h4>Your incomes</h4>
 	<hr />
 	<div class="row">
+
+
+   
 		@foreach (var item in Model)
 		{
 			<div class="col-md-6 col-lg-4 small-card">
@@ -33,22 +36,6 @@
 		}
 	</div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<nav aria-label="Income navigation">
-				<pager class="pager-container" asp-action="IncomesIndex" asp-controller="WebBudget">
-					<ul class="pagination">
-						@for (int i = 1; i <= ViewBag.PageCount; i++)
-						{
-							<li class="page-item @(i == pageNumber ? "active" : "")">
-								<a class="page-link" asp-route-page="@i">@i</a>
-							</li>
-						}
-					</ul>
-				</pager>
-			</nav>
-		</div>
-	</div>
   }
 
 @section scripts {

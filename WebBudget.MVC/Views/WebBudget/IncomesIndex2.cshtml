@@ -1,0 +1,105 @@
+﻿@model WebBudget.Application.WebBudget.Commands.CategoryViewModels.CreateIncomeView
+
+
+
+@{
+	ViewData["Title"] = "IncomesIndex2";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section containerContent  {
+	<h4>Your incomes</h4>
+	<hr />
+
+
+    <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addIncomeModal">
+            Add Income
+        </button>
+    </div>
+
+    <div id="addIncomeModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addIncomeModalLabel">Add Income</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="CreateIncome" class="needs-validation" novalidate>
+                        <div class="form-group">
+                            <label for="IncomeCommand.IncomeType" class="control-label" style="color:white">Category</label>
+                            <div class="form-group">
+                                @if (Model.IncomeCommand.IncomeCategories.Any())
+                                {
+                                    <select id="IncomeCommand.IncomeType" name="IncomeCommand.IncomeType" class="form-control">
+                                        <option style="text-align:center" value="" selected disabled>Choose income category</option>
+                                        @foreach (var category in Model.IncomeCommand.IncomeCategories)
+                                        {
+                                            <option style="text-align:center" value="@category.CategoryName">@category.CategoryName</option>
+
+                                        }
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select id="IncomeCommand.IncomeType" name="IncomeCommand.IncomeType" class="form-control">
+                                        <option class="text-muted" selected disabled>No category available. Add some first.</option>
+                                    </select>
+                                }
+                                <span class="text-danger" asp-validation-for="IncomeCommand.IncomeCommand.IncomeType"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="IncomeCommand.IncomeDate" class="control-label" style="color:white">Date</label>
+                            <input id="IncomeCommand.IncomeDate" style="text-align:center" name="IncomeCommand.IncomeDate" class="form-control" type="date" required/>
+                            <span class="text-danger" asp-validation-for="IncomeCommand.IncomeCommand.IncomeDate"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="IncomeCommand.IncomeValue" class="control-label" style="color:white">Value</label>
+                            <input id="IncomeCommand.IncomeValue" name="IncomeCommand.IncomeValue" style="text-align:center" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="IncomeCommand.IncomeCommand.IncomeValue"></span>
+                        </div>
+                        <div class="form-group d-flex justify-content-center">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="row">
+		@foreach (var item in Model.Incomes)
+		{
+			<div class="col-md-6 col-lg-4 small-card">
+				<div class="card m-3 small-card">
+					<div class="card-body">
+						<h6 class="card-title"> @item.IncomeType</h6>
+						<h6 class="card-subtitle mb-2 text-muted">@item.IncomeDate.ToString("yyyy-MM-dd")</h6>
+						<h6 class="card-title"> @item.IncomeValue zł</h6>
+						<a asp-controller="WebBudget" asp-action="IncomeEdit" asp-route-encodedIncomeName="@item.EncodedIncomeName" class="btn btn-primary">Edit</a>
+						<a asp-controller="WebBudget" asp-action="IncomeDelete" asp-route-encodedIncomeName="@item.EncodedIncomeName" class="btn btn-primary">Delete</a>
+
+					</div>
+				</div>
+			</div>
+
+		}
+	</div>
+
+	
+  }
+
+@section scripts {
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $('#addIncomeModal').on('shown.bs.modal', function (e) {
+            $(document).off('focusin.modal');
+        })
+    </script>
+}

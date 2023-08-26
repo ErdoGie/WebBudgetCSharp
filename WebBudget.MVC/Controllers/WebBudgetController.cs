@@ -1,6 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -48,17 +46,21 @@ namespace WebBudget.MVC.Controllers
         [Authorize]
         public async Task<IActionResult> CreateIncome(IncomeViewModelCommand command)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
+			var userId = _userManager.GetUserId(User);
+			var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
 
-            var userId = _userManager.GetUserId(User);
-            var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+			if (!ModelState.IsValid)
+			{
+		
+				command.IncomeCategories = incomeCategories;
+
+                return RedirectToAction(nameof(IncomesIndex2));
+            }
 
             var viewModel = new IncomeViewModelCommand
             {
-                IncomeCategories = incomeCategories
+                IncomeCategories = incomeCategories,
+                IncomeCommand = command.IncomeCommand
             };
 
             int? categoryId = await _webBudgetRepository.GetIncomeCategoryIdByNameAsync(command.IncomeCommand.IncomeType);
@@ -69,7 +71,7 @@ namespace WebBudget.MVC.Controllers
 
             await _mediator.Send(command);
 
-            return RedirectToAction(nameof(IncomesIndex));
+            return RedirectToAction(nameof(IncomesIndex2));
         }
 
 
@@ -139,29 +141,33 @@ namespace WebBudget.MVC.Controllers
 
         // ------------------------------------------------- INDEXES--------------------------------------------- //
 
-        public async Task<IActionResult> IncomesIndex(int? page, string userId)
+        public async Task<IActionResult> IncomesIndex2()
         {
-            int pageSize = 6;
-            int pageNumber = page ?? 1;
+            var userId = _userManager.GetUserId(User);
+
             if (User.Identity!.IsAuthenticated)
             {
-                var webBudgetIncomeQuery = new GetAllWebBudgetIncomesForLoggedUserQuery(userId);
+                var webBudgetIncomeQuery = new GetAllWebBudgetIncomesForLoggedUserQuery(userId!);
                 var webBudgetIncome = await _mediator.Send(webBudgetIncomeQuery);
 
-                var paginatedIncomeData = webBudgetIncome.ToPagedList(pageNumber, pageSize);
+                var createIncomeView = new CreateIncomeView
+                {
+                    Incomes = webBudgetIncome,
+                    IncomeCommand = new IncomeViewModelCommand
+                    {
+                        IncomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!)
+                    }
+                };
 
-                int pageCount = (int)Math.Ceiling((double)webBudgetIncome.Count() / pageSize);
 
-                ViewBag.PageCount = pageCount;
-
-                return View(paginatedIncomeData);
+                return View(createIncomeView);
             }
-
             else
             {
                 return RedirectToAction("NoAccess", "Home");
             }
         }
+
 
         public async Task<IActionResult> ExpensesIndex(int? page, string userId)
         {
@@ -220,7 +226,7 @@ namespace WebBudget.MVC.Controllers
 
             TempData["IncomeAdded"] = true;
 
-            return RedirectToAction(nameof(IncomesIndex));
+            return RedirectToAction(nameof(IncomesIndex2));
         }
         // ---------------------------------------- EDIT EXPENSE -------------------------------------------------- //
 
@@ -319,7 +325,7 @@ namespace WebBudget.MVC.Controllers
 
             TempData["IncomeAdded"] = true;
 
-            return RedirectToAction(nameof(IncomesIndex));
+            return RedirectToAction(nameof(IncomesIndex2));
         }
 
         // ---------------------------------------- CALCULATE BALANCE -------------------------------------------------- //
@@ -353,32 +359,32 @@ namespace WebBudget.MVC.Controllers
         [HttpPost]
         [Authorize]
 		public async Task<IActionResult> AddIncomeCategory(CreateIncomeCategoryCommand command)
-		{
-			var userId = _userManager.GetUserId(User);
-			var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+{
+    var userId = _userManager.GetUserId(User);
+    var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
 
-			var categoryName = command.CategoryName;
+    var categoryName = command.CategoryName;
 
-			var existingCategory = incomeCategories.FirstOrDefault(c => c.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+    var existingCategory = incomeCategories.FirstOrDefault(c => c.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
 
-			if (existingCategory != null)
-			{
-				ModelState.AddModelError("CreateIncomeCategoryCommand.CategoryName", "Category with this name already exists.");
-				var viewModel = new IncomeCategoryViewModel
-				{
-					CreateIncomeCategoryCommand = command,
-					IncomeCategories = incomeCategories
-				};
-				return View("ShowIncomeCategories3", viewModel);
-			}
+    if (existingCategory != null)
+    {
+        ModelState.AddModelError("CreateIncomeCategoryCommand.CategoryName", "Category with this name already exists.");
+        var viewModel = new IncomeCategoryViewModel
+        {
+            CreateIncomeCategoryCommand = command,
+            IncomeCategories = incomeCategories
+        };
+        return View("ShowIncomeCategories3", viewModel);
+    }
 
-			if (ModelState.IsValid)
-			{
-				await _mediator.Send(command);
-			}
+    if (ModelState.IsValid)
+    {
+        await _mediator.Send(command);
+    }
 
-			return RedirectToAction(nameof(ShowIncomeCategories3));
-		}
+    return RedirectToAction(nameof(ShowIncomeCategories3));
+}
 
 
 		[Authorize]
