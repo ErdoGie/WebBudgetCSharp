@@ -296,41 +296,30 @@ namespace WebBudget.MVC.Controllers
             return RedirectToAction(nameof(ExpensesIndex));
         }
 
-        // ---------------------------------------- DELETE INCOME -------------------------------------------------- //
+		// ---------------------------------------- DELETE INCOME -------------------------------------------------- //
 
-        [Route("WebBudget/Income/{IncomeId}/Delete")]
-        public async Task<IActionResult> IncomeDelete(int incomeId)
-        {
-            var dto = await _mediator.Send(new GetWebBudgetIncomeByIDQuery(incomeId));
-            if (!dto.HasUserAccess)
-            {
-                return RedirectToAction("NoAccess", "Home");
-            }
-            DeleteWebBudgetIncomeeCommand model = _mapper.Map<DeleteWebBudgetIncomeeCommand>(dto);
+		[HttpPost]
+		public async Task<IActionResult> DeleteIncome(int incomeId)
+		{
+			var dto = await _mediator.Send(new GetWebBudgetIncomeByIDQuery(incomeId));
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 
+			var command = new DeleteWebBudgetIncomeeCommand
+			{
+				IncomeId = incomeId
+			};
 
-            return View(model);
-        }
+			await _mediator.Send(command);
 
-        [HttpPost]
-        [Route("WebBudget/Income/{IncomeId}/Delete")]
-        public async Task<IActionResult> IncomeDelete(int incomeId, DeleteWebBudgetIncomeeCommand command)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
+			return RedirectToAction(nameof(IncomesIndex2));
+		}
 
-            await _mediator.Send(command);
+		// ---------------------------------------- CALCULATE BALANCE -------------------------------------------------- //
 
-            TempData["IncomeAdded"] = true;
-
-            return RedirectToAction(nameof(IncomesIndex2));
-        }
-
-        // ---------------------------------------- CALCULATE BALANCE -------------------------------------------------- //
-
-        [HttpGet]
+		[HttpGet]
 
         public async Task<IActionResult> CalculateBalance(string userId, DateTime startDate, DateTime endDate)
         {
