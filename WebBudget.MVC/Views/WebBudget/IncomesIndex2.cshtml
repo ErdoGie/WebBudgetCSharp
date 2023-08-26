@@ -59,8 +59,8 @@
                             <span class="text-danger" asp-validation-for="IncomeCommand.IncomeCommand.IncomeDate"></span>
                         </div>
                         <div class="form-group">
-                            <label for="IncomeCommand.IncomeValue" class="control-label" style="color:white">Value</label>
-                            <input id="IncomeCommand.IncomeValue" name="IncomeCommand.IncomeValue" style="text-align:center" class="form-control" required />
+                            <label for="IncomeCommand.IncomeCommand.IncomeValue" class="control-label" style="color:white">Value</label>
+                            <input id="IncomeCommand.IncomeCommand.IncomeValue" name="IncomeCommand.IncomeValue" style="text-align:center" class="form-control" required />
                             <span class="text-danger" asp-validation-for="IncomeCommand.IncomeCommand.IncomeValue"></span>
                         </div>
                         <div class="form-group d-flex justify-content-center">
@@ -81,8 +81,8 @@
 						<h6 class="card-title"> @item.IncomeType</h6>
 						<h6 class="card-subtitle mb-2 text-muted">@item.IncomeDate.ToString("yyyy-MM-dd")</h6>
 						<h6 class="card-title"> @item.IncomeValue zł</h6>
-						<a asp-controller="WebBudget" asp-action="IncomeEdit" asp-route-encodedIncomeName="@item.EncodedIncomeName" class="btn btn-primary">Edit</a>
-						<a asp-controller="WebBudget" asp-action="IncomeDelete" asp-route-encodedIncomeName="@item.EncodedIncomeName" class="btn btn-primary">Delete</a>
+						<a asp-controller="WebBudget" asp-action="IncomeEdit" asp-route-IncomeId="@item.IncomeId" class="btn btn-primary">Edit</a>
+						<a asp-controller="WebBudget" asp-action="IncomeDelete" asp-route-IncomeId="@item.IncomeId" class="btn btn-primary">Delete</a>
 
 					</div>
 				</div>

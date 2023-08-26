@@ -197,11 +197,10 @@
 
 
 		document.getElementById('addCategoryForm').addEventListener('submit', async function (event) {
-			event.preventDefault(); // Zapobiegaj domyślnej akcji przesyłania formularza
+			event.preventDefault(); 
 
 			var categoryName = document.getElementById('CategoryName').value;
 
-			// Twórz obiekt z danymi do wysłania
 			var data = {
 				CreateIncomeCategoryCommand: {
 					CategoryName: categoryName
@@ -218,17 +217,15 @@
 			});
 
 			if (response.ok) {
-				// Jeśli odpowiedź jest poprawna, odśwież listę kategorii bez zamykania modalu
 				var newCategoriesHtml = await response.text();
 				var categoriesContainer = document.querySelector('.row');
 				categoriesContainer.innerHTML = newCategoriesHtml;
-				document.getElementById('CategoryName').value = ''; // Wyczyść pole wprowadzania po dodaniu kategorii
-				document.getElementById('categoryNameError').innerText = ''; // Wyczyść komunikat o błędzie
+				document.getElementById('CategoryName').value = ''; 
+				document.getElementById('categoryNameError').innerText = ''; 
 			} else {
-				// Jeśli odpowiedź zawiera błędy, wyświetl je wewnątrz modalu
 				const errors = await response.json();
 				var errorSpan = document.getElementById('categoryNameError');
-				errorSpan.innerText = errors["CategoryName"][0]; // Pobierz pierwszy błąd dla pola CategoryName
+				errorSpan.innerText = errors["CategoryName"][0]; 
 			}
 		});
 

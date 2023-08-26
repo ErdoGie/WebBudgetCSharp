@@ -198,10 +198,10 @@ namespace WebBudget.MVC.Controllers
         }
         // ------------------------------------------------- EDIT INCOME --------------------------------------------- //
 
-        [Route("WebBudget/Income/{encodedIncomeName}/Edit")]
-        public async Task<IActionResult> IncomeEdit(string encodedIncomeName)
+        [Route("WebBudget/Income/{IncomeId}/Edit")]
+        public async Task<IActionResult> IncomeEdit(int incomeId)
         {
-            var dto = await _mediator.Send(new GetWebBudgetIncomeByEncodedNameQuery(encodedIncomeName));
+            var dto = await _mediator.Send(new GetWebBudgetIncomeByIDQuery(incomeId));
 
             if (!dto.HasUserAccess)
             {
@@ -214,8 +214,8 @@ namespace WebBudget.MVC.Controllers
         }
 
         [HttpPost]
-        [Route("WebBudget/Income/{encodedIncomeName}/Edit")]
-        public async Task<IActionResult> IncomeEdit(string encodedIncomeName, EditWebBudgetIncomeCommand command)
+        [Route("WebBudget/Income/{IncomeId}/Edit")]
+        public async Task<IActionResult> IncomeEdit(int incomeId, EditWebBudgetIncomeCommand command)
         {
             if (!ModelState.IsValid)
             {
@@ -298,10 +298,10 @@ namespace WebBudget.MVC.Controllers
 
         // ---------------------------------------- DELETE INCOME -------------------------------------------------- //
 
-        [Route("WebBudget/Income/{encodedIncomeName}/Delete")]
-        public async Task<IActionResult> IncomeDelete(string encodedIncomeName)
+        [Route("WebBudget/Income/{IncomeId}/Delete")]
+        public async Task<IActionResult> IncomeDelete(int incomeId)
         {
-            var dto = await _mediator.Send(new GetWebBudgetIncomeByEncodedNameQuery(encodedIncomeName));
+            var dto = await _mediator.Send(new GetWebBudgetIncomeByIDQuery(incomeId));
             if (!dto.HasUserAccess)
             {
                 return RedirectToAction("NoAccess", "Home");
@@ -313,8 +313,8 @@ namespace WebBudget.MVC.Controllers
         }
 
         [HttpPost]
-        [Route("WebBudget/Income/{encodedIncomeName}/Delete")]
-        public async Task<IActionResult> IncomeDelete(string encodedIncomeName, DeleteWebBudgetIncomeeCommand command)
+        [Route("WebBudget/Income/{IncomeId}/Delete")]
+        public async Task<IActionResult> IncomeDelete(int incomeId, DeleteWebBudgetIncomeeCommand command)
         {
             if (!ModelState.IsValid)
             {

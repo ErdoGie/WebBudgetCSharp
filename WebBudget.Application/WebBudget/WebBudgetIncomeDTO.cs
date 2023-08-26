@@ -9,6 +9,7 @@ namespace WebBudget.Application.WebBudget
 {
 	public class WebBudgetIncomeDTO
 	{
+		public int IncomeId { get; set; }
 		public string IncomeType { get; set; } = default!;
 		public DateTime IncomeDate { get; set; }
 		public float IncomeValue { get; set; }

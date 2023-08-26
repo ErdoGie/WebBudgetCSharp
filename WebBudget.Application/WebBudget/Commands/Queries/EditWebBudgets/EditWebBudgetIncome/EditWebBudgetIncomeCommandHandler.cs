@@ -21,7 +21,7 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWe
 		}
 		public async Task<Unit> Handle(EditWebBudgetIncomeCommand request, CancellationToken cancellationToken)
 		{
-			var webBudget = await _webBudgetRepository.GetIncomeByEncodedName(request.EncodedIncomeName!);
+			var webBudget = await _webBudgetRepository.GetIncomeByIncomeId(request.IncomeId!);
 			var user = _userContext.GetCurrentlyLoggedUser();
 			var hasAccess = user != null && webBudget.CreatedById == user.Id;
 
