@@ -34,6 +34,7 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWe
 			webBudget.IncomeValue = request.IncomeValue;
 			webBudget.IncomeType = request.IncomeType;
 			webBudget.IncomeDate = request.IncomeDate;
+			webBudget.IncomeCategoryId= request.IncomeCategoryId;
 
 
 			//normalnie powinienem tu już zapisać lepiej w repozytorium interfejsu dodać kolejną metode ktora będzie zapisywała zmiany

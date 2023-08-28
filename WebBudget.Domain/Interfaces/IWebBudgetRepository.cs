@@ -44,6 +44,7 @@ namespace WebBudget.Domain.Interfaces
 
         Task EditIncomeCategoryAsync(int categoryId, string newCategoryName);
         Task UpdateIncomeCategoryInIncomes(int oldCategoryId, string newCategoryName);
-	
+
+
 	}
 }
