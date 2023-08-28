@@ -209,6 +209,30 @@ namespace WebBudget.Infrastructure.Repositories
         public async Task<WebBudgetIncome> GetIncomeByIncomeId(int incomeId)
         => await _webBudgetDbContext.WebBudgetIncome.FirstAsync(i => i.IncomeId == incomeId);
 
+		public async Task EditExpenseCategoryAsync(int categoryId, string newCategoryName)
+		{
+			var categoryToUpdate = await _webBudgetDbContext.ExpenseCategories.FirstOrDefaultAsync(c => c.CategoryId == categoryId);
 
-    }
+			if (categoryToUpdate != null)
+			{
+				categoryToUpdate.CategoryName = newCategoryName;
+				await _webBudgetDbContext.SaveChangesAsync();
+			}
+		}
+
+		public async Task UpdateExpenseCategoryInExpenses(int oldCategoryId, string newCategoryName)
+		{
+			var expensesWithOldCategory = await _webBudgetDbContext.WebBudgetExpense
+			   .Where(expense => expense.ExpenseCategoryId == oldCategoryId)
+			   .ToListAsync();
+
+			foreach (var expense in expensesWithOldCategory)
+			{
+				expense.ExpenseType = newCategoryName;
+				_webBudgetDbContext.Entry(expense).State = EntityState.Modified;
+			}
+
+			await _webBudgetDbContext.SaveChangesAsync();
+		}
+	}
 }

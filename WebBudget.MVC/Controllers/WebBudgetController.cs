@@ -75,7 +75,7 @@ namespace WebBudget.MVC.Controllers
 			return RedirectToAction(nameof(IncomesIndex2));
 		}
 
-	
+
 		// ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
 
 		[HttpPost]
@@ -360,7 +360,12 @@ namespace WebBudget.MVC.Controllers
 
 			return RedirectToAction(nameof(ShowIncomeCategories3));
 		}
+		public IActionResult AddIncomeCategory()
+		{
+			return View();
+		}
 
+		// ---------------------------------------- SHOW INCOME CATEGORY -------------------------------------------------- //
 
 		[Authorize]
 		public async Task<IActionResult> ShowIncomeCategories3()
@@ -378,23 +383,29 @@ namespace WebBudget.MVC.Controllers
 			return View(viewModel);
 		}
 
-		public IActionResult AddIncomeCategory()
-		{
-			return View();
-		}
 
 
-		// ---------------------------------------- ADD EXPENSE CATEGORY -------------------------------------------------- //
+
+		// ---------------------------------------- SHOW EXPENSE CATEGORY -------------------------------------------------- //
 
 		[Authorize]
-		public async Task<IActionResult> ShowExpenseCategories()
+		public async Task<IActionResult> ShowExpenseCategories1()
 		{
 			var userId = _userManager.GetUserId(User);
-			var incomeCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
+			var expenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
+			var newCategoryCommand = new CreateExpenseCategoryCommand();
 
-			return View(incomeCategories);
+			var viewModel = new ExpenseCategoryViewModel
+			{
+				ExpenseCategories = expenseCategories,
+				ExpenseCommand = newCategoryCommand
+			};
+
+			return View(viewModel);
+
 		}
 
+		// ---------------------------------------- ADD EXPENSE CATEGORY -------------------------------------------------- //
 
 		[HttpPost]
 		[Authorize]
@@ -422,7 +433,7 @@ namespace WebBudget.MVC.Controllers
 
 			await _mediator.Send(command);
 
-			return RedirectToAction(nameof(ShowExpenseCategories));
+			return RedirectToAction(nameof(ShowExpenseCategories1));
 		}
 
 		public IActionResult AddExpenseCategory()
@@ -430,6 +441,7 @@ namespace WebBudget.MVC.Controllers
 			return View();
 		}
 
+		// ---------------------------------------- MANAGEMENT -------------------------------------------------- //
 
 		public IActionResult ManageIncome()
 		{
@@ -492,9 +504,33 @@ namespace WebBudget.MVC.Controllers
 			return RedirectToAction(nameof(ShowIncomeCategories3));
 		}
 
+		// ---------------------------------------- EDIT EXPENSE CATEGORY -------------------------------------------------- //
 
+		[HttpPost]
+		public async Task<IActionResult> EditExpenseCategory(int categoryIdToEdit, string newCategoryName)
+		{
+			var userId = _userManager.GetUserId(User);
 
+			var expenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
 
+			var existingCategory = expenseCategories.FirstOrDefault(e => e.CategoryName.Equals(newCategoryName, StringComparison.OrdinalIgnoreCase));
+			if (existingCategory != null)
+			{
+				ModelState.AddModelError("newCategoryName", "Category with the same name already exists.");
+				ViewBag.CategoryExistsError = true;
+				return RedirectToAction(nameof(ShowExpenseCategories1));
+			}
+			if (ModelState.IsValid)
+			{
+				await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName);
 
+				await _webBudgetRepository.UpdateExpenseCategoryInExpenses(categoryIdToEdit, newCategoryName);
+
+				return RedirectToAction(nameof(ShowExpenseCategories1));
+			}
+
+			ViewBag.CategoryName = newCategoryName;
+			return RedirectToAction(nameof(ShowExpenseCategories1));
+		}
 	}
 }
