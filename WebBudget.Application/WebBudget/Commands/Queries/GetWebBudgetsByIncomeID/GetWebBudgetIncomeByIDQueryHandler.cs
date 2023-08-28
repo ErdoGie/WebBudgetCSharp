@@ -10,21 +10,21 @@ using WebBudget.Domain.Interfaces;
 
 namespace WebBudget.Application.WebBudget.Commands.Queries.GetWebBudgetsByEncodedName
 {
-    public class GetWebBudgetIncomeByEncodedNameQueryHandler : IRequestHandler<GetWebBudgetIncomeByEncodedNameQuery, WebBudgetIncomeDTO>
+    public class GetWebBudgetIncomeByIDQueryHandler : IRequestHandler<GetWebBudgetIncomeByIDQuery, WebBudgetIncomeDTO>
     {
 
         private readonly IWebBudgetRepository _webBudgetRepository;
         private readonly IMapper _mapper;
-        public GetWebBudgetIncomeByEncodedNameQueryHandler(IWebBudgetRepository webBudgetRepository, IMapper mapper )
+        public GetWebBudgetIncomeByIDQueryHandler(IWebBudgetRepository webBudgetRepository, IMapper mapper )
         {
             _webBudgetRepository = webBudgetRepository;
             _mapper = mapper;
         }
 
-        public async Task<WebBudgetIncomeDTO> Handle(GetWebBudgetIncomeByEncodedNameQuery request, CancellationToken cancellationToken)
+        public async Task<WebBudgetIncomeDTO> Handle(GetWebBudgetIncomeByIDQuery request, CancellationToken cancellationToken)
         {
 
-            var webBudget = await _webBudgetRepository.GetIncomeByEncodedName(request.EncodedIncomeName);
+            var webBudget = await _webBudgetRepository.GetIncomeByIncomeId(request.IncomeId);
 
 		
 			// musze posluzyc sie mapperem zeby przeksztalcic encje bazodanowa na obiekt DTO

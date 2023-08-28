@@ -1,17 +1,13 @@
 ﻿using AutoMapper;
-using Humanizer;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata;
-using WebBudget.Application.WebBudget;
+using WebBudget.Application.WebBudget.Commands.CategoryViewModels;
 using WebBudget.Application.WebBudget.Commands.CreateExpenseCategory;
 using WebBudget.Application.WebBudget.Commands.CreateExpenseViewModel;
 using WebBudget.Application.WebBudget.Commands.CreateIncomeCategory;
 using WebBudget.Application.WebBudget.Commands.CreateIncomeViewModel;
-using WebBudget.Application.WebBudget.Commands.CreateWebBudgetExpense;
-using WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetExpense;
@@ -22,462 +18,454 @@ using WebBudget.Application.WebBudget.Commands.Queries.GetAllWEbBudgetIncomes;
 using WebBudget.Application.WebBudget.Commands.Queries.GetWebBudgetsByEncodedName;
 using WebBudget.Domain.Entities;
 using WebBudget.Domain.Interfaces;
-using WebBudget.Infrastructure.Persistance;
-using WebBudget.Infrastructure.Repositories;
 using X.PagedList;
 //
 namespace WebBudget.MVC.Controllers
 {
-    public class WebBudgetController : Controller
-    {
-        private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly CalcualteBalance _calculateBalance;
-        private readonly IWebBudgetRepository _webBudgetRepository;
-
-        //przekazuje zależność 
-        public WebBudgetController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager, CalcualteBalance calcualteBalance, IWebBudgetRepository webBudgetRepository)
-        {
-            _mapper = mapper;
-            _mediator = mediator;
-            _userManager = userManager;
-            _calculateBalance = calcualteBalance;
-            _webBudgetRepository = webBudgetRepository;
-        }
-        // ------------------------------------------------- CREATE INCOME --------------------------------------------- //
-
-        // do tej metody przyjmuję dany typ budzetu
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> CreateIncome(IncomeViewModelCommand command)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
-
-            var userId = _userManager.GetUserId(User);
-            var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
-
-            var viewModel = new IncomeViewModelCommand
-            {
-                IncomeCategories = incomeCategories
-            };
-
-            int? categoryId = await _webBudgetRepository.GetIncomeCategoryIdByNameAsync(command.IncomeCommand.IncomeType);
-            if (categoryId != null)
-            {
-                command.IncomeCommand.IncomeCategoryId = categoryId.Value;
-            }
-
-            await _mediator.Send(command);
-
-            return RedirectToAction(nameof(IncomesIndex));
-        }
-
-
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> CreateIncome()
-        {
-            var userId = _userManager.GetUserId(User);
-            var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
-
-            var viewModel = new IncomeViewModelCommand
-            {
-                IncomeCategories = incomeCategories
-            };
+	public class WebBudgetController : Controller
+	{
+		private readonly IMediator _mediator;
+		private readonly IMapper _mapper;
+		private readonly UserManager<IdentityUser> _userManager;
+		private readonly CalcualteBalance _calculateBalance;
+		private readonly IWebBudgetRepository _webBudgetRepository;
 
-            return View(viewModel);
-        }
-        // ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
+		//przekazuje zależność 
+		public WebBudgetController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager, CalcualteBalance calcualteBalance, IWebBudgetRepository webBudgetRepository)
+		{
+			_mapper = mapper;
+			_mediator = mediator;
+			_userManager = userManager;
+			_calculateBalance = calcualteBalance;
+			_webBudgetRepository = webBudgetRepository;
+		}
+		// ------------------------------------------------- CREATE INCOME --------------------------------------------- //
+
+		// do tej metody przyjmuję dany typ budzetu
+		[HttpPost]
+		[Authorize]
+		public async Task<IActionResult> CreateIncome(IncomeViewModelCommand command)
+		{
+			var userId = _userManager.GetUserId(User);
+			var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+
+
+			if (!ModelState.IsValid)
+			{
+
+				command.IncomeCategories = incomeCategories;
+
+				return RedirectToAction(nameof(IncomesIndex2));
+			}
+
+			var viewModel = new IncomeViewModelCommand
+			{
+				IncomeCategories = incomeCategories,
+				IncomeCommand = command.IncomeCommand
+			};
+
+			int? categoryId = await _webBudgetRepository.GetIncomeCategoryIdByNameAsync(command.IncomeCommand.IncomeType);
+			if (categoryId != null)
+			{
+				command.IncomeCommand.IncomeCategoryId = categoryId.Value;
+			}
 
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> CreateExpense(ExpenseViewModelCommand command)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
+			await _mediator.Send(command);
 
-            var userId = _userManager.GetUserId(User);
-            var incomeCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
+			return RedirectToAction(nameof(IncomesIndex2));
+		}
 
-            var viewModel = new ExpenseViewModelCommand
-            {
+	
+		// ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
 
-                ExpenseCategories = incomeCategories
-            };
+		[HttpPost]
+		[Authorize]
+		public async Task<IActionResult> CreateExpense(ExpenseViewModelCommand command)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(command);
+			}
 
-            int? categoryId = await _webBudgetRepository.GetExpenseCategoryIdByNameAsync(command.ExpenseCommand.ExpenseType);
-            if (categoryId != null)
-            {
-                command.ExpenseCommand.ExpenseCategoryId = categoryId.Value;
-            }
+			var userId = _userManager.GetUserId(User);
+			var incomeCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
 
-            await _mediator.Send(command);
-
-
-            return RedirectToAction(nameof(ExpensesIndex));
-        }
+			var viewModel = new ExpenseViewModelCommand
+			{
 
+				ExpenseCategories = incomeCategories
+			};
 
+			int? categoryId = await _webBudgetRepository.GetExpenseCategoryIdByNameAsync(command.ExpenseCommand.ExpenseType);
+			if (categoryId != null)
+			{
+				command.ExpenseCommand.ExpenseCategoryId = categoryId.Value;
+			}
 
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> CreateExpense()
-        {
-            var userId = _userManager.GetUserId(User);
-            var incomeCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
+			await _mediator.Send(command);
 
-            var viewModel = new ExpenseViewModelCommand
-            {
-                ExpenseCategories = incomeCategories
-            };
 
-            return View(viewModel);
-        }
+			return RedirectToAction(nameof(ExpensesIndex));
+		}
 
 
-        // ------------------------------------------------- INDEXES--------------------------------------------- //
 
-        public async Task<IActionResult> IncomesIndex(int? page, string userId)
-        {
-            int pageSize = 6;
-            int pageNumber = page ?? 1;
-            if (User.Identity!.IsAuthenticated)
-            {
-                var webBudgetIncomeQuery = new GetAllWebBudgetIncomesForLoggedUserQuery(userId);
-                var webBudgetIncome = await _mediator.Send(webBudgetIncomeQuery);
+		[HttpGet]
+		[Authorize]
+		public async Task<IActionResult> CreateExpense()
+		{
+			var userId = _userManager.GetUserId(User);
+			var incomeCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
 
-                var paginatedIncomeData = webBudgetIncome.ToPagedList(pageNumber, pageSize);
+			var viewModel = new ExpenseViewModelCommand
+			{
+				ExpenseCategories = incomeCategories
+			};
 
-                int pageCount = (int)Math.Ceiling((double)webBudgetIncome.Count() / pageSize);
+			return View(viewModel);
+		}
 
-                ViewBag.PageCount = pageCount;
 
-                return View(paginatedIncomeData);
-            }
+		// ------------------------------------------------- INDEXES--------------------------------------------- //
 
-            else
-            {
-                return RedirectToAction("NoAccess", "Home");
-            }
-        }
+		public async Task<IActionResult> IncomesIndex2()
+		{
+			var userId = _userManager.GetUserId(User);
 
-        public async Task<IActionResult> ExpensesIndex(int? page, string userId)
-        {
-            int pageSize = 6;
-            int pageNumber = page ?? 1;
+			if (User.Identity!.IsAuthenticated)
+			{
+				var webBudgetIncomeQuery = new GetAllWebBudgetIncomesForLoggedUserQuery(userId!);
+				var webBudgetIncome = await _mediator.Send(webBudgetIncomeQuery);
 
-            if (User.Identity!.IsAuthenticated)
-            {
+				var createIncomeView = new CreateIncomeView
+				{
+					Incomes = webBudgetIncome,
+					IncomeCommand = new IncomeViewModelCommand
+					{
+						IncomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!)
+					}
+				};
 
-                var webBudgetExpeseQuery = new GetAllWebBudgetExpensesForLoggedusersQuery(userId);
-                var webBudgetExpense = await _mediator.Send(webBudgetExpeseQuery);
 
-                var paginatedExpenseData = webBudgetExpense.ToPagedList(pageNumber, pageSize);
+				return View(createIncomeView);
+			}
+			else
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
+		}
 
-                int pageCount = (int)Math.Ceiling((double)webBudgetExpense.Count() / pageSize);
 
-                ViewBag.PageCount = pageCount;
+		public async Task<IActionResult> ExpensesIndex(int? page, string userId)
+		{
+			int pageSize = 6;
+			int pageNumber = page ?? 1;
 
-                return View(paginatedExpenseData);
-            }
+			if (User.Identity!.IsAuthenticated)
+			{
 
-            else
-            {
-                return RedirectToAction("NoAccess", "Home");
-            }
+				var webBudgetExpeseQuery = new GetAllWebBudgetExpensesForLoggedusersQuery(userId);
+				var webBudgetExpense = await _mediator.Send(webBudgetExpeseQuery);
 
+				var paginatedExpenseData = webBudgetExpense.ToPagedList(pageNumber, pageSize);
 
-        }
-        // ------------------------------------------------- EDIT INCOME --------------------------------------------- //
+				int pageCount = (int)Math.Ceiling((double)webBudgetExpense.Count() / pageSize);
 
-        [Route("WebBudget/Income/{encodedIncomeName}/Edit")]
-        public async Task<IActionResult> IncomeEdit(string encodedIncomeName)
-        {
-            var dto = await _mediator.Send(new GetWebBudgetIncomeByEncodedNameQuery(encodedIncomeName));
+				ViewBag.PageCount = pageCount;
 
-            if (!dto.HasUserAccess)
-            {
-                return RedirectToAction("NoAccess", "Home");
-            }
+				return View(paginatedExpenseData);
+			}
 
-            EditWebBudgetIncomeCommand model = _mapper.Map<EditWebBudgetIncomeCommand>(dto);
+			else
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 
-            return View(model);
-        }
 
-        [HttpPost]
-        [Route("WebBudget/Income/{encodedIncomeName}/Edit")]
-        public async Task<IActionResult> IncomeEdit(string encodedIncomeName, EditWebBudgetIncomeCommand command)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
+		}
+		// ------------------------------------------------- EDIT INCOME --------------------------------------------- //
 
-            await _mediator.Send(command);
+		[HttpGet]
+		public async Task<IActionResult> IncomeEdit(int incomeId)
+		{
+			var dto = await _mediator.Send(new GetWebBudgetIncomeByIDQuery(incomeId));
 
-            TempData["IncomeAdded"] = true;
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 
-            return RedirectToAction(nameof(IncomesIndex));
-        }
-        // ---------------------------------------- EDIT EXPENSE -------------------------------------------------- //
+			EditWebBudgetIncomeCommand model = _mapper.Map<EditWebBudgetIncomeCommand>(dto);
 
+			return View(model);
+		}
 
-        [Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
-        public async Task<IActionResult> ExpenseEdit(string encodedExpenseName)
-        {
-            var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
+		[HttpPost]
+		public async Task<IActionResult> IncomeEdit(int incomeId, EditWebBudgetIncomeCommand command)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(command);
+			}
 
-            if (!dto.HasUserAccess)
-            {
-                return RedirectToAction("NoAccess", "Home");
-            }
+			await _mediator.Send(command);
 
-            EditWebBudgetExpenseCommand model = _mapper.Map<EditWebBudgetExpenseCommand>(dto);
+			return RedirectToAction(nameof(IncomesIndex2));
 
-            return View(model);
-        }
 
-        [HttpPost]
-        [Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
-        public async Task<IActionResult> ExpenseEdit(string encodedExpenseName, EditWebBudgetExpenseCommand command)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
+		}
+		// ---------------------------------------- EDIT EXPENSE -------------------------------------------------- //
 
-            await _mediator.Send(command);
 
-            TempData["IncomeAdded"] = true;
+		[Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
+		public async Task<IActionResult> ExpenseEdit(string encodedExpenseName)
+		{
+			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
 
-            return RedirectToAction(nameof(ExpensesIndex));
-        }
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 
-        // ---------------------------------------- DELETE EXPENSE -------------------------------------------------- //
+			EditWebBudgetExpenseCommand model = _mapper.Map<EditWebBudgetExpenseCommand>(dto);
 
-        [Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
-        public async Task<IActionResult> ExpenseDelete(string encodedExpenseName)
-        {
-            var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
+			return View(model);
+		}
 
-            if (!dto.HasUserAccess)
-            {
-                return RedirectToAction("NoAccess", "Home");
-            }
+		[HttpPost]
+		[Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
+		public async Task<IActionResult> ExpenseEdit(string encodedExpenseName, EditWebBudgetExpenseCommand command)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(command);
+			}
 
-            DeleteWebBudgetExpenseCommand model = _mapper.Map<DeleteWebBudgetExpenseCommand>(dto);
+			await _mediator.Send(command);
 
+			TempData["IncomeAdded"] = true;
 
-            return View(model);
-        }
+			return RedirectToAction(nameof(ExpensesIndex));
+		}
 
-        [HttpPost]
-        [Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
-        public async Task<IActionResult> ExpenseDelete(string encodedExpenseName, DeleteWebBudgetExpenseCommand command)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
+		// ---------------------------------------- DELETE EXPENSE -------------------------------------------------- //
 
-            await _mediator.Send(command);
+		[Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
+		public async Task<IActionResult> ExpenseDelete(string encodedExpenseName)
+		{
+			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
 
-            TempData["IncomeAdded"] = true;
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 
-            return RedirectToAction(nameof(ExpensesIndex));
-        }
+			DeleteWebBudgetExpenseCommand model = _mapper.Map<DeleteWebBudgetExpenseCommand>(dto);
 
-        // ---------------------------------------- DELETE INCOME -------------------------------------------------- //
 
-        [Route("WebBudget/Income/{encodedIncomeName}/Delete")]
-        public async Task<IActionResult> IncomeDelete(string encodedIncomeName)
-        {
-            var dto = await _mediator.Send(new GetWebBudgetIncomeByEncodedNameQuery(encodedIncomeName));
-            if (!dto.HasUserAccess)
-            {
-                return RedirectToAction("NoAccess", "Home");
-            }
-            DeleteWebBudgetIncomeeCommand model = _mapper.Map<DeleteWebBudgetIncomeeCommand>(dto);
+			return View(model);
+		}
 
+		[HttpPost]
+		[Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
+		public async Task<IActionResult> ExpenseDelete(string encodedExpenseName, DeleteWebBudgetExpenseCommand command)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(command);
+			}
 
-            return View(model);
-        }
+			await _mediator.Send(command);
 
-        [HttpPost]
-        [Route("WebBudget/Income/{encodedIncomeName}/Delete")]
-        public async Task<IActionResult> IncomeDelete(string encodedIncomeName, DeleteWebBudgetIncomeeCommand command)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
+			TempData["IncomeAdded"] = true;
 
-            await _mediator.Send(command);
+			return RedirectToAction(nameof(ExpensesIndex));
+		}
 
-            TempData["IncomeAdded"] = true;
+		// ---------------------------------------- DELETE INCOME -------------------------------------------------- //
 
-            return RedirectToAction(nameof(IncomesIndex));
-        }
+		[HttpPost]
+		public async Task<IActionResult> DeleteIncome(int incomeId)
+		{
+			var dto = await _mediator.Send(new GetWebBudgetIncomeByIDQuery(incomeId));
+			if (!dto.HasUserAccess)
+			{
+				return RedirectToAction("NoAccess", "Home");
+			}
 
-        // ---------------------------------------- CALCULATE BALANCE -------------------------------------------------- //
+			var command = new DeleteWebBudgetIncomeeCommand
+			{
+				IncomeId = incomeId
+			};
 
-        [HttpGet]
+			await _mediator.Send(command);
 
-        public async Task<IActionResult> CalculateBalance(string userId, DateTime startDate, DateTime endDate)
-        {
-            float balance = await _calculateBalance.CalculateUsersBalance(userId, startDate, endDate);
+			return RedirectToAction(nameof(IncomesIndex2));
+		}
 
-            ViewBag.Balance = balance;
+		// ---------------------------------------- CALCULATE BALANCE -------------------------------------------------- //
 
+		[HttpGet]
 
-            return View();
-        }
+		public async Task<IActionResult> CalculateBalance(string userId, DateTime startDate, DateTime endDate)
+		{
+			float balance = await _calculateBalance.CalculateUsersBalance(userId, startDate, endDate);
 
-        [HttpPost]
-        public async Task<IActionResult> Balance(DateTime startDate, DateTime endDate)
-        {
-            string userId = _userManager.GetUserId(User)!;
+			ViewBag.Balance = balance;
 
-            float balance = await _calculateBalance.CalculateUsersBalance(userId, startDate, endDate);
 
-            ViewBag.Balance = balance;
+			return View();
+		}
 
-            return View();
-        }
+		[HttpPost]
+		public async Task<IActionResult> Balance(DateTime startDate, DateTime endDate)
+		{
+			string userId = _userManager.GetUserId(User)!;
 
-        // ---------------------------------------- ADD INCOME CATEGORY -------------------------------------------------- //
+			float balance = await _calculateBalance.CalculateUsersBalance(userId, startDate, endDate);
 
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> AddIncomeCategory(CreateIncomeCategoryCommand command)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
+			ViewBag.Balance = balance;
 
-            var categoryName = command.CategoryName;
-            var userId = _userManager.GetUserId(User);
+			return View();
+		}
 
-            var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+		// ---------------------------------------- ADD INCOME CATEGORY -------------------------------------------------- //
 
-            var existingCategory = incomeCategories.FirstOrDefault(c => c.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+		[HttpPost]
+		[Authorize]
+		public async Task<IActionResult> AddIncomeCategory(CreateIncomeCategoryCommand command)
+		{
+			var userId = _userManager.GetUserId(User);
+			var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
 
-            if (existingCategory != null)
-            {
-                ModelState.AddModelError("CategoryName", "Category with this name already exists.");
-                return View(command);
-            }
+			var categoryName = command.CategoryName;
 
-            await _mediator.Send(command);
+			var existingCategory = incomeCategories.FirstOrDefault(c => c.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
 
-            return RedirectToAction(nameof(ShowIncomeCategories));
-        }
+			if (existingCategory != null)
+			{
+				ModelState.AddModelError("CreateIncomeCategoryCommand.CategoryName", "Category with this name already exists.");
+				var viewModel = new IncomeCategoryViewModel
+				{
+					CreateIncomeCategoryCommand = command,
+					IncomeCategories = incomeCategories
+				};
+				return View("ShowIncomeCategories3", viewModel);
+			}
 
-        [Authorize]
-        public async Task<IActionResult> ShowIncomeCategories()
-        {
-            var userId = _userManager.GetUserId(User);
-            var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+			if (ModelState.IsValid)
+			{
+				await _mediator.Send(command);
+			}
 
-            return View(incomeCategories);
-        }
+			return RedirectToAction(nameof(ShowIncomeCategories3));
+		}
 
-        public IActionResult AddIncomeCategory()
-        {
-            return View();
-        }
 
+		[Authorize]
+		public async Task<IActionResult> ShowIncomeCategories3()
+		{
+			var userId = _userManager.GetUserId(User);
+			var incomeCategories = await _webBudgetRepository.GetAllIncomeCategoriesForUser(userId!);
+			var newCategoryCommand = new CreateIncomeCategoryCommand();
 
-        // ---------------------------------------- ADD EXPENSE CATEGORY -------------------------------------------------- //
+			var viewModel = new IncomeCategoryViewModel
+			{
+				IncomeCategories = incomeCategories,
+				CreateIncomeCategoryCommand = newCategoryCommand
+			};
 
-        [Authorize]
-        public async Task<IActionResult> ShowExpenseCategories()
-        {
-            var userId = _userManager.GetUserId(User);
-            var incomeCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
+			return View(viewModel);
+		}
 
-            return View(incomeCategories);
-        }
+		public IActionResult AddIncomeCategory()
+		{
+			return View();
+		}
 
 
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> AddExpenseCategory(CreateExpenseCategoryCommand command)
-        {
+		// ---------------------------------------- ADD EXPENSE CATEGORY -------------------------------------------------- //
 
-            if (!ModelState.IsValid)
-            {
-                return View(command);
-            }
+		[Authorize]
+		public async Task<IActionResult> ShowExpenseCategories()
+		{
+			var userId = _userManager.GetUserId(User);
+			var incomeCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
 
-            var categoryName = command.CategoryName;
-            var userId = _userManager.GetUserId(User);
+			return View(incomeCategories);
+		}
 
-            var expenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
 
-            var existingCategory = expenseCategories.FirstOrDefault(e => e.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+		[HttpPost]
+		[Authorize]
+		public async Task<IActionResult> AddExpenseCategory(CreateExpenseCategoryCommand command)
+		{
 
-            if (existingCategory != null)
-            {
-                ModelState.AddModelError("CategoryName", "Category with this name already exists.");
-                return View(command);
-            }
+			if (!ModelState.IsValid)
+			{
+				return View(command);
+			}
 
+			var categoryName = command.CategoryName;
+			var userId = _userManager.GetUserId(User);
 
-            await _mediator.Send(command);
+			var expenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
 
-            return RedirectToAction(nameof(ShowExpenseCategories));
-        }
+			var existingCategory = expenseCategories.FirstOrDefault(e => e.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
 
-        public IActionResult AddExpenseCategory()
-        {
-            return View();
-        }
+			if (existingCategory != null)
+			{
+				ModelState.AddModelError("CategoryName", "Category with this name already exists.");
+				return View(command);
+			}
 
 
-        public IActionResult ManageIncome()
-        {
-            return View();
-        }
+			await _mediator.Send(command);
 
-        public IActionResult ManageExpense()
-        {
-            return View();
-        }
+			return RedirectToAction(nameof(ShowExpenseCategories));
+		}
 
+		public IActionResult AddExpenseCategory()
+		{
+			return View();
+		}
 
-        // ---------------------------------------- DELETE INCOME CATEGORY -------------------------------------------------- //
 
+		public IActionResult ManageIncome()
+		{
+			return View();
+		}
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteIncomeCategory(int categoryId)
-        {
-            await _webBudgetRepository.DeleteIncomeCategoryAndRelatedIncomesAsync(categoryId);
+		public IActionResult ManageExpense()
+		{
+			return View();
+		}
 
-            return RedirectToAction(nameof(ManageIncome));
-        }
-        // ---------------------------------------- DELETE EXPENSE CATEGORY -------------------------------------------------- //
 
+		// ---------------------------------------- DELETE INCOME CATEGORY -------------------------------------------------- //
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteExpenseCategory(int categoryId)
-        {
-            await _webBudgetRepository.DeleteExpenseCategoryAndRelateExpensesAsync(categoryId);
 
-            return RedirectToAction(nameof(ManageExpense));
-        }
+		[HttpPost]
+		public async Task<IActionResult> DeleteIncomeCategory(int categoryId)
+		{
+			await _webBudgetRepository.DeleteIncomeCategoryAndRelatedIncomesAsync(categoryId);
 
-        // ---------------------------------------- EDIT INCOME CATEGORY -------------------------------------------------- //
+			return RedirectToAction(nameof(ShowIncomeCategories3));
+		}
+		// ---------------------------------------- DELETE EXPENSE CATEGORY -------------------------------------------------- //
 
-        [HttpPost]
+
+		[HttpPost]
+		public async Task<IActionResult> DeleteExpenseCategory(int categoryId)
+		{
+			await _webBudgetRepository.DeleteExpenseCategoryAndRelateExpensesAsync(categoryId);
+
+			return RedirectToAction(nameof(ManageExpense));
+		}
+
+		// ---------------------------------------- EDIT INCOME CATEGORY -------------------------------------------------- //
+
+		[HttpPost]
 		public async Task<IActionResult> EditIncomeCategory(int categoryIdToEdit, string newCategoryName)
 		{
 			var userId = _userManager.GetUserId(User);
@@ -488,20 +476,20 @@ namespace WebBudget.MVC.Controllers
 			if (existingCategory != null)
 			{
 				ModelState.AddModelError("newCategoryName", "Category with the same name already exists.");
-				return View("ShowIncomeCategories", incomeCategories);
+				ViewBag.CategoryExistsError = true;
+				return RedirectToAction(nameof(ShowIncomeCategories3));
 			}
-
 			if (ModelState.IsValid)
 			{
 				await _webBudgetRepository.EditIncomeCategoryAsync(categoryIdToEdit, newCategoryName);
 
 				await _webBudgetRepository.UpdateIncomeCategoryInIncomes(categoryIdToEdit, newCategoryName);
 
-				return RedirectToAction(nameof(ShowIncomeCategories));
+				return RedirectToAction(nameof(ShowIncomeCategories3));
 			}
 
 			ViewBag.CategoryName = newCategoryName;
-			return View("ShowIncomeCategories", incomeCategories);
+			return RedirectToAction(nameof(ShowIncomeCategories3));
 		}
 
 

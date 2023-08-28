@@ -29,8 +29,6 @@ namespace WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome
 		{
 			var webBudgetIncome = _mapper.Map<Domain.Entities.WebBudgetIncome>(request);
 
-			webBudgetIncome.EncodeIncomeName();
-
 			webBudgetIncome.CreatedById = _userContext.GetCurrentlyLoggedUser()!.Id;
 			
 

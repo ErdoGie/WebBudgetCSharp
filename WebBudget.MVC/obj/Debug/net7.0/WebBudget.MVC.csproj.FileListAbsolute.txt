@@ -79,7 +79,6 @@ C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MV
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\FluentValidation.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
-C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\obj\Debug\net7.0\WebBudget.MVC.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\Microsoft.Build.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\Microsoft.Build.Framework.dll
@@ -277,3 +276,11 @@ C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MV
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.UI.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\System.Web.Mvc.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\System.Web.Razor.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\System.Web.Helpers.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\System.Web.WebPages.Deployment.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\System.Web.WebPages.Razor.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\System.Web.WebPages.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\bin\Debug\net7.0\Microsoft.Web.Infrastructure.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.MVC\obj\Debug\net7.0\WebBudget.MVC.MvcApplicationPartsAssemblyInfo.cs

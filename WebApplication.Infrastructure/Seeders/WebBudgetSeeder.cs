@@ -44,8 +44,6 @@ namespace WebBudget.Infrastructure.Seeders
 						ExpenseDate = new DateTime(2023, 01, 18)
 					};
 
-					income.EncodeIncomeName();
-					expense.EncodeExpenseName();
 
 					_dbContext.WebBudgetIncome.Add(income);
 					_dbContext.WebBudgetExpense.Add(expense);

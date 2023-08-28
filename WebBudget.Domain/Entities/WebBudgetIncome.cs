@@ -20,9 +20,6 @@ namespace WebBudget.Domain.Entities
 
 		public string? CreatedById { get; set; }
 		public IdentityUser? CreatedBy { get; set; }
-
-		public string EncodedIncomeName { get; set; } = default!;
-		public void EncodeIncomeName() => EncodedIncomeName = IncomeType.ToLower().Replace(" ", "-");
 		
 		public int ? IncomeCategoryId { get; set; }
 

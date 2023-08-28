@@ -1,0 +1,240 @@
+﻿@model WebBudget.Application.WebBudget.Commands.CategoryViewModels.IncomeCategoryViewModel
+
+@{
+	ViewData["Title"] = "ShowIncomeCategories";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+	bool categoryExistsError = ViewData["CategoryExistsError"] as bool? ?? false;
+
+}
+
+@section containerContent {
+	<h4>Manage your income categories </h4>
+
+	<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCategoryModal">
+		Create New Category
+	</button>
+
+	<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addCategoryModalLabel">Create New Category</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="addCategoryForm" asp-action="AddIncomeCategory" method="post">
+						<div class="form-group">
+							<label for="CreateIncomeCategoryCommand_CategoryName" style="color:white">New Category Name</label>
+							<input asp-for="CreateIncomeCategoryCommand.CategoryName" type="text" class="form-control" id="CategoryName" name="CategoryName" required title="This value cannot be empty" />
+							<span asp-validation-for="CreateIncomeCategoryCommand.CategoryName" class="text-danger"></span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Create</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="row">
+
+		@foreach (var category in Model.IncomeCategories)
+		{
+			<div class="col-md-6 col-lg-4 small-card">
+				<div class="card m-3 small-card">
+					<div class="card-body">
+						<h6 class="card-title"> @category.CategoryName</h6>
+						<button type="button" class="btn btn-info edit-btn" data-toggle="modal" data-target="#editCategoryModal" data-category-id="@category.CategoryId">Edit</button>
+						<button type="button" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteCategoryModal" data-category-id="@category.CategoryId">Delete</button>
+					</div>
+				</div>
+			</div>
+		}
+
+	</div>
+}
+
+<div class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+				<h5 class="modal-title mx-auto text-center" id="deleteCategoryModalLabel">Are you sure?</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body mx-auto text-center">
+				All incomes connected with this category will be deleted!
+			</div>
+			<div class="modal-footer mx-auto">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				<form id="deleteCategoryForm" asp-action="DeleteIncomeCategory" method="post">
+					<input type="hidden" name="categoryId" id="categoryIdInput" value="" />
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header text-center">
+				<h5 class="modal-title mx-auto" id="editCategoryModalLabel">Provide new category</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="editCategoryForm" asp-action="EditIncomeCategory" method="post">
+					<div class="form-group">
+						<label for="newCategoryName" style="text-align:center;">Providing new category name will result in changing all category names in your incomes!</label>
+						<input type="text" class="form-control" id="newCategoryName" name="newCategoryName" required title="This value cannot be empty" />
+						<input type="hidden" id="categoryId" value="" name="categoryIdToEdit" />
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-primary" id="EditBTN">Save Changes</button>
+					</div>
+					@if (categoryExistsError)
+					{
+						<div class="text-danger">Category with that name is taken!</div>
+					}
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
+
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+	<script>
+
+
+		var categoryIdToDelete;
+		var categoryIdToEdit;
+
+		document.querySelectorAll('.delete-btn').forEach(button => {
+			button.addEventListener('click', function () {
+				categoryIdToDelete = this.getAttribute('data-category-id');
+				document.getElementById('categoryIdInput').value = categoryIdToDelete;
+			});
+		});
+
+		document.querySelectorAll('.edit-btn').forEach(button => {
+			button.addEventListener('click', function () {
+				var categoryId = this.getAttribute('data-category-id');
+				console.log("Clicked Edit Button for Category ID: " + categoryId);
+				categoryIdToEdit = categoryId;
+			});
+		});
+
+		document.getElementById('EditBTN').addEventListener('click', function () {
+			if (categoryIdToEdit) {
+				var newCategoryName = document.getElementById('newCategoryName').value;
+				console.log("tutaj numer: " + categoryIdToEdit);
+				document.getElementById('categoryId').value = categoryIdToEdit;
+				editCategory(categoryIdToEdit, newCategoryName);
+				console.log("zakonczono edycje " + newCategoryName);
+				console.log(categoryIdToEdit + "kuniec");
+			}
+			$('#editCategoryModal').modal('hide');
+		});
+
+
+
+		//--------- DELETE --------------//
+
+
+		document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+			if (categoryIdToDelete) {
+				deleteCategory(categoryIdToDelete);
+				categoryIdToDelete = null;
+			}
+			$('#deleteCategoryModal').modal('hide');
+		});
+
+
+
+		function deleteCategory(categoryId) {
+			fetch(`/WebBudgetController/DeleteIncomeCategory/${categoryId}`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			});
+		}
+
+		function editCategory(categoryId, newCategoryName) {
+			fetch(`/WebBudgetController/EditIncomeCategory/${categoryIdToEdit}`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				body: JSON.stringify({ categoryId: categoryId, newCategoryName: newCategoryName })
+			}).then(response => {
+				if (response.ok) {
+				}
+			});
+		}
+
+
+		document.getElementById('addCategoryForm').addEventListener('submit', async function (event) {
+			event.preventDefault(); 
+
+			var categoryName = document.getElementById('CategoryName').value;
+
+			var data = {
+				CreateIncomeCategoryCommand: {
+					CategoryName: categoryName
+				}
+			};
+
+			const response = await fetch('/WebBudgetController/AddIncomeCategory', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				body: JSON.stringify(data)
+			});
+
+			if (response.ok) {
+				var newCategoriesHtml = await response.text();
+				var categoriesContainer = document.querySelector('.row');
+				categoriesContainer.innerHTML = newCategoriesHtml;
+				document.getElementById('CategoryName').value = ''; 
+				document.getElementById('categoryNameError').innerText = ''; 
+			} else {
+				const errors = await response.json();
+				var errorSpan = document.getElementById('categoryNameError');
+				errorSpan.innerText = errors["CategoryName"][0]; 
+			}
+		});
+
+
+
+
+	</script>
+}

@@ -19,9 +19,9 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.Delet
 
         public async Task<Unit> Handle(DeleteWebBudgetIncomeeCommand request, CancellationToken cancellationToken)
 		{
-			var webBudget = await _webBudgetRepository.GetIncomeByEncodedName(request.EncodedIncomeName!);
+			var webBudget = await _webBudgetRepository.GetIncomeByIncomeId(request.IncomeId!);
 
-			await _webBudgetRepository.RemoveIncome(webBudget.EncodedIncomeName);
+			await _webBudgetRepository.RemoveIncome(webBudget.IncomeId);
 
 			await _webBudgetRepository.CommitChanges();
 

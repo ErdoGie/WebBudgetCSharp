@@ -316,10 +316,6 @@ namespace WebBudget.Infrastructure.Migrations
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("EncodedIncomeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("IncomeCategoryId")
                         .HasColumnType("int");
 

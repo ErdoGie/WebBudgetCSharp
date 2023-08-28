@@ -21,7 +21,7 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWe
 		}
 		public async Task<Unit> Handle(EditWebBudgetIncomeCommand request, CancellationToken cancellationToken)
 		{
-			var webBudget = await _webBudgetRepository.GetIncomeByEncodedName(request.EncodedIncomeName!);
+			var webBudget = await _webBudgetRepository.GetIncomeByIncomeId(request.IncomeId!);
 			var user = _userContext.GetCurrentlyLoggedUser();
 			var hasAccess = user != null && webBudget.CreatedById == user.Id;
 
@@ -34,12 +34,7 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWe
 			webBudget.IncomeValue = request.IncomeValue;
 			webBudget.IncomeType = request.IncomeType;
 			webBudget.IncomeDate = request.IncomeDate;
-			webBudget.EncodedIncomeName = request.EncodedIncomeName!;
-
-			// najpierw zapisuje metode EncodeIncomeName dla webBUdget, a następnie dla requesta
-			// inaczej nie będzie widzieć pierwotnie zapisanej metody.
-			webBudget.EncodeIncomeName();
-			request.EncodeIncomeName();
+			webBudget.IncomeCategoryId= request.IncomeCategoryId;
 
 
 			//normalnie powinienem tu już zapisać lepiej w repozytorium interfejsu dodać kolejną metode ktora będzie zapisywała zmiany

@@ -12,9 +12,8 @@ namespace WebBudget.Application.WebBudget.Commands.CreateWebBudgetIncome
         public CreateWebBudgetIncomeCommandValidator()
         {
             RuleFor(i => i.IncomeType)
-                .NotEmpty().WithMessage("Cannot be empty")
-                .MinimumLength(3).WithMessage("Minimum text length is 3 characters")
-                .MaximumLength(15).WithMessage("Maximum text length is 15 characters");
+                .NotEmpty().WithMessage("Cannot be empty");
+
 
             RuleFor(i => i.IncomeValue)
                 .NotEmpty().WithMessage("Value cannot be empty")

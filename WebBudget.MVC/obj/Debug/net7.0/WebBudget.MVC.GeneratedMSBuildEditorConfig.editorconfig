@@ -120,10 +120,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEFkZEV4cGVuc2VDYXRlZ29yeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/AddIncomeCategory.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEFkZEluY29tZUNhdGVnb3J5LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/Balance.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEJhbGFuY2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -134,10 +130,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/CreateExpense.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XENyZWF0ZUV4cGVuc2UuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/CreateIncome.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XENyZWF0ZUluY29tZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ExpenseDelete.cshtml]
@@ -152,16 +144,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEV4cGVuc2VzSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/IncomeDelete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEluY29tZURlbGV0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/IncomeEdit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEluY29tZUVkaXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/IncomesIndex.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEluY29tZXNJbmRleC5jc2h0bWw=
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/IncomesIndex2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEluY29tZXNJbmRleDIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ManageExpense.cshtml]
@@ -176,12 +160,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XFNob3dFeHBlbnNlQ2F0ZWdvcmllcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ShowIncomeCategories.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XFNob3dJbmNvbWVDYXRlZ29yaWVzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/Success.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XFN1Y2Nlc3MuY3NodG1s
+[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ShowIncomeCategories3.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XFNob3dJbmNvbWVDYXRlZ29yaWVzMy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/_ViewImports.cshtml]
