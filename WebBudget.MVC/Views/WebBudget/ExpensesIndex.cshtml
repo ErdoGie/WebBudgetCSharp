@@ -13,28 +13,28 @@
 
 
 	<div class="d-flex justify-content-center">
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addIncomeModal">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addExpenseModal">
 			Add Expense
 		</button>
 	</div>
 
-	<div id="addIncomeModal" class="modal fade" role="dialog">
+	<div id="addExpenseModal" class="modal fade" role="dialog">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="addIncomeModalLabel">Add Expense</h5>
+					<h5 class="modal-title" id="addExpenseModalLabel">Add Expense</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form asp-action="CreateIncome">
+					<form asp-action="CreateExpense">
 						<div class="form-group">
-							<label for="IncomeCommand.IncomeType" class="control-label" style="color:white" style="margin-top:4%">Category</label>
+							<label for="ExpenseCommand.ExpenseType" class="control-label" style="color:white ;margin-top:4%">Category</label>
 							<div class="form-group">
 								@if (Model.ExpenseCommand.ExpenseCategories.Any())
 								{
-									<select id="ExpenseCommand.ExpenseType" name="ExpenseCommand.ExpenseType" class="form-control">
+									<select id="ExpenseCommand.ExpenseType" name="ExpenseCommand.ExpenseType" class="form-control" required>
 										<option style="text-align:center" value="" selected disabled>Choose expense category</option>
 										@foreach (var category in Model.ExpenseCommand.ExpenseCategories)
 										{
@@ -53,19 +53,19 @@
 						</div>
 
 						<div class="form-group">
-							<label for="ExpenseCommand.ExpenseDate" class="control-label" style="color:white; margin-top:4%">Date</label>
+							<label for="ExpenseCommand.ExpenseDate" class="control-label" style="color:white; margin-top:5%">Date</label>
 							<input id="ExpenseCommand.ExpenseDate" style="text-align:center" name="ExpenseCommand.ExpenseDate" class="form-control" type="date" required />
 							<span class="text-danger" id="dateValidationMessage"></span>
 						</div>
 						<div class="form-group">
 							<label for="ExpenseCommand.ExpenseValue" class="control-label" style="color:white ;margin-top:4%">Value</label>
-							<input id="ExpenseCommand.ExpenseValue" name="ExpenseCommand.ExpenseValue" style="text-align:center" class="form-control" type="number" />
+							<input id="ExpenseCommand.ExpenseValue" name="ExpenseCommand.ExpenseValue" style="text-align:center" class="form-control" type="number" required />
 
 							<span id="valueError" class="text-danger" style="display: none;">Value must be greater than zero</span>
 						</div>
 
 						<div class="form-group d-flex justify-content-center">
-							<input type="submit" value="Create Expense!" class="btn btn-primary" id="createButton" style="margin-top:4%" disabled />
+							<input type="submit" value="Create Expense!" class="btn btn-primary" id="createButton" style="margin-top:4%" disabled  />
 						</div>
 					</form>
 				</div>
@@ -82,7 +82,7 @@
 						<h6 class="card-title"> @income.ExpenseType</h6>
 						<h6 class="card-subtitle mb-2 text-muted">@income.ExpenseDate.ToString("yyyy-MM-dd")</h6>
 						<h6 class="card-title"> @income.ExpenseValue zł</h6>
-						<button type="button" class="btn btn-info edit-btn" data-toggle="modal" data-target="#editIncomeModal" data-income-id="@income.ExpenseId">Edit</button>
+						<button type="button" class="btn btn-info edit-btn" data-toggle="modal" data-target="#editExpenseModal" data-income-id="@income.ExpenseId">Edit</button>
 						<button type="button" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteExpenseModal" delete-income-id="@income.ExpenseId">Delete</button>
 					</div>
 				</div>
@@ -206,9 +206,31 @@
 			});
 		}
 
-		document.getElementById('IncomeCommand.IncomeValue').addEventListener('input', function () {
-			var valueInput = this;
-			var errorSpan = document.getElementById('valueError');
+
+
+
+
+
+		// AADDD EXPENSE //
+
+		var errorSpan = document.getElementById('valueError');
+		var createButton = document.getElementById('createButton');
+		var valueInput = document.getElementById('ExpenseCommand.ExpenseValue');
+
+
+		document.getElementById('ExpenseCommand.ExpenseType').addEventListener('change', function () {
+			var selectedValue = this.value;
+			var validationMessage = document.getElementById('categoryValidationMessage');
+
+			if (!selectedValue) {
+				validationMessage.textContent = 'Please choose an income category.';
+				document.getElementById('SaveChangesButton').disabled = true;
+			} else {
+				validationMessage.textContent = '';
+				document.getElementById('SaveChangesButton').disabled = true;
+			}
+		});
+		document.getElementById('ExpenseCommand.ExpenseValue').addEventListener('input', function () {
 
 			var value = parseFloat(valueInput.value);
 			if (isNaN(value) || value <= 0) {
@@ -217,5 +239,18 @@
 				errorSpan.style.display = 'none';
 			}
 		});
+		var createButton = document.getElementById('createButton');
+
+		valueInput.addEventListener('input', function () {
+			var value = parseFloat(valueInput.value);
+			if (isNaN(value) || value <= 0) {
+				errorSpan.style.display = 'inline';
+				createButton.disabled = true;
+			} else {
+				errorSpan.style.display = 'none';
+				createButton.disabled = false;
+			}
+		});
+
 	</script>
 }
