@@ -196,17 +196,7 @@
 			$('#deleteExpenseModal').modal('hide');
 		});
 
-		function deleteIncome(incomeId) {
-			fetch(`/WebBudget/ExpenseDelete/${incomeId}`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			});
-		}
-
-
+	
 
 
 

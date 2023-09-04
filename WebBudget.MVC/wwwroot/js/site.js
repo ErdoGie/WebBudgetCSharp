@@ -19,15 +19,7 @@ document.getElementById('ConfirmDeleteIncomeBtn').addEventListener('click', func
 	$('#deleteIncomeModal').modal('hide');
 });
 
-function deleteIncome(incomeId) {
-	fetch(`/WebBudget/DeleteIncome/${incomeId}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest'
-		}
-	});
-}
+
 
 document.getElementById('IncomeCommand.IncomeValue').addEventListener('input', function () {
 	var valueInput = this;
@@ -134,23 +126,6 @@ document.getElementById('EditIncomeBtn').addEventListener('click', function () {
 		IncomeValue: incomeValue
 	};
 
-	fetch(`/WebBudget/IncomeEdit/${incomeId}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest'
-		},
-		body: JSON.stringify(data)
-	})
-		.then(response => response.json())
-		.then(data => {
-			if (data.success) {
-				$('#editIncomeModal').modal('hide');
-				location.reload();
-			} else {
-				console.log(data.errors);
-			}
-		});
 });
 
 
@@ -200,30 +175,7 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', function (
 
 
 
-function deleteCategory(categoryId) {
-	fetch(`/WebBudgetController/DeleteIncomeCategory/${categoryId}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest'
-		}
-	});
-}
 //--------- EDIT CATEGORY --------------//
-
-function editCategory(categoryId, newCategoryName) {
-	fetch(`/WebBudgetController/EditIncomeCategory/${categoryIdToEdit}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest'
-		},
-		body: JSON.stringify({ categoryId: categoryId, newCategoryName: newCategoryName })
-	}).then(response => {
-		if (response.ok) {
-		}
-	});
-}
 
 
 document.getElementById('addCategoryForm').addEventListener('submit', async function (event) {
@@ -236,15 +188,6 @@ document.getElementById('addCategoryForm').addEventListener('submit', async func
 			CategoryName: categoryName
 		}
 	};
-
-	const response = await fetch('/WebBudgetController/AddIncomeCategory', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest'
-		},
-		body: JSON.stringify(data)
-	});
 
 	if (response.ok) {
 		var newCategoriesHtml = await response.text();
