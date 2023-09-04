@@ -55,17 +55,17 @@ namespace WebBudget.Infrastructure.Repositories
 
 
 
-        public async Task<Domain.Entities.WebBudgetExpense> GetExpenseByEncodedName(string encodedExpenseName)
-        => await _webBudgetDbContext.WebBudgetExpense.FirstAsync(e => e.EncodedExpenseName == encodedExpenseName);
+        public async Task<Domain.Entities.WebBudgetExpense> GetExpenseById(int expenseId)
+        => await _webBudgetDbContext.WebBudgetExpense.FirstAsync(e => e.ExpenseId == expenseId);
 
 
         public async Task CommitChanges()
         => await _webBudgetDbContext.SaveChangesAsync();
 
 
-        public async Task<WebBudgetExpense> RemoveExpense(string encodedExpenseName)
+        public async Task<WebBudgetExpense> RemoveExpense(int expenseId)
         {
-            var expense = await _webBudgetDbContext.WebBudgetExpense.FirstAsync(e => e.EncodedExpenseName == encodedExpenseName);
+            var expense = await _webBudgetDbContext.WebBudgetExpense.FirstAsync(e => e.ExpenseId == expenseId);
 
             if (expense != null)
             {
@@ -145,12 +145,12 @@ namespace WebBudget.Infrastructure.Repositories
             return selectedCategory?.CategoryId;
         }
 
-        public async Task DeleteIncomeCategoryAndRelatedIncomesAsync(int categoryId)
+        public async Task DeleteIncomeCategoryAndRelatedIncomesAsync(int categoryId, string loggedUserId)
         {
             var categoryToDelete = await _webBudgetDbContext.IncomeCategories.FindAsync(categoryId);
 
             var relatedIncomes = _webBudgetDbContext.WebBudgetIncome
-                .Where(income => income.IncomeCategoryId == categoryId)
+                .Where(income => income.IncomeCategoryId == categoryId && income.CreatedById == loggedUserId)
                 .ToList();
 
             _webBudgetDbContext.WebBudgetIncome.RemoveRange(relatedIncomes);
@@ -209,6 +209,30 @@ namespace WebBudget.Infrastructure.Repositories
         public async Task<WebBudgetIncome> GetIncomeByIncomeId(int incomeId)
         => await _webBudgetDbContext.WebBudgetIncome.FirstAsync(i => i.IncomeId == incomeId);
 
+		public async Task EditExpenseCategoryAsync(int categoryId, string newCategoryName)
+		{
+			var categoryToUpdate = await _webBudgetDbContext.ExpenseCategories.FirstOrDefaultAsync(c => c.CategoryId == categoryId);
 
-    }
+			if (categoryToUpdate != null)
+			{
+				categoryToUpdate.CategoryName = newCategoryName;
+				await _webBudgetDbContext.SaveChangesAsync();
+			}
+		}
+
+		public async Task UpdateExpenseCategoryInExpenses(int oldCategoryId, string newCategoryName)
+		{
+			var expensesWithOldCategory = await _webBudgetDbContext.WebBudgetExpense
+			   .Where(expense => expense.ExpenseCategoryId == oldCategoryId)
+			   .ToListAsync();
+
+			foreach (var expense in expensesWithOldCategory)
+			{
+				expense.ExpenseType = newCategoryName;
+				_webBudgetDbContext.Entry(expense).State = EntityState.Modified;
+			}
+
+			await _webBudgetDbContext.SaveChangesAsync();
+		}
+	}
 }

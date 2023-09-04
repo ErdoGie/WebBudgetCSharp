@@ -12,10 +12,10 @@ using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWeb
 using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetIncome;
-using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.GetWebBudgetByEncodedNameExpense;
 using WebBudget.Application.WebBudget.Commands.Queries.GetAllWebBudgetExpenses;
 using WebBudget.Application.WebBudget.Commands.Queries.GetAllWEbBudgetIncomes;
 using WebBudget.Application.WebBudget.Commands.Queries.GetWebBudgetsByEncodedName;
+using WebBudget.Application.WebBudget.Commands.Queries.GetWebBudgetsByExpenseID;
 using WebBudget.Domain.Entities;
 using WebBudget.Domain.Interfaces;
 using X.PagedList;
@@ -75,7 +75,7 @@ namespace WebBudget.MVC.Controllers
 			return RedirectToAction(nameof(IncomesIndex2));
 		}
 
-	
+
 		// ------------------------------------------------- CREATE EXPENSE --------------------------------------------- //
 
 		[HttpPost]
@@ -156,24 +156,28 @@ namespace WebBudget.MVC.Controllers
 		}
 
 
-		public async Task<IActionResult> ExpensesIndex(int? page, string userId)
+		public async Task<IActionResult> ExpensesIndex()
 		{
-			int pageSize = 6;
-			int pageNumber = page ?? 1;
+			var userId = _userManager.GetUserId(User);
+
 
 			if (User.Identity!.IsAuthenticated)
 			{
 
-				var webBudgetExpeseQuery = new GetAllWebBudgetExpensesForLoggedusersQuery(userId);
+				var webBudgetExpeseQuery = new GetAllWebBudgetExpensesForLoggedusersQuery(userId!);
 				var webBudgetExpense = await _mediator.Send(webBudgetExpeseQuery);
 
-				var paginatedExpenseData = webBudgetExpense.ToPagedList(pageNumber, pageSize);
+				var createExpenseView = new CreateExpenseView
+				{
+					Expenses = webBudgetExpense,
+					ExpenseCommand = new ExpenseViewModelCommand
+					{
+						ExpenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!)
+					}
+				};
 
-				int pageCount = (int)Math.Ceiling((double)webBudgetExpense.Count() / pageSize);
 
-				ViewBag.PageCount = pageCount;
-
-				return View(paginatedExpenseData);
+				return View(createExpenseView);
 			}
 
 			else
@@ -217,10 +221,10 @@ namespace WebBudget.MVC.Controllers
 		// ---------------------------------------- EDIT EXPENSE -------------------------------------------------- //
 
 
-		[Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
-		public async Task<IActionResult> ExpenseEdit(string encodedExpenseName)
+		[HttpGet]
+		public async Task<IActionResult> ExpenseEdit(int expenseId)
 		{
-			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
+			var dto = await _mediator.Send(new GetWebBudgetExpenseByIDQuery(expenseId));
 
 			if (!dto.HasUserAccess)
 			{
@@ -233,8 +237,7 @@ namespace WebBudget.MVC.Controllers
 		}
 
 		[HttpPost]
-		[Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
-		public async Task<IActionResult> ExpenseEdit(string encodedExpenseName, EditWebBudgetExpenseCommand command)
+		public async Task<IActionResult> ExpenseEdit(int expenseId, EditWebBudgetExpenseCommand command)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -242,45 +245,33 @@ namespace WebBudget.MVC.Controllers
 			}
 
 			await _mediator.Send(command);
-
-			TempData["IncomeAdded"] = true;
 
 			return RedirectToAction(nameof(ExpensesIndex));
 		}
 
 		// ---------------------------------------- DELETE EXPENSE -------------------------------------------------- //
 
-		[Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
-		public async Task<IActionResult> ExpenseDelete(string encodedExpenseName)
+		[HttpPost]
+		public async Task<IActionResult> ExpenseDelete(int expenseId)
 		{
-			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
+			var dto = await _mediator.Send(new GetWebBudgetExpenseByIDQuery(expenseId));
 
 			if (!dto.HasUserAccess)
 			{
 				return RedirectToAction("NoAccess", "Home");
 			}
 
-			DeleteWebBudgetExpenseCommand model = _mapper.Map<DeleteWebBudgetExpenseCommand>(dto);
-
-
-			return View(model);
-		}
-
-		[HttpPost]
-		[Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
-		public async Task<IActionResult> ExpenseDelete(string encodedExpenseName, DeleteWebBudgetExpenseCommand command)
-		{
-			if (!ModelState.IsValid)
+			var command = new DeleteWebBudgetExpenseCommand
 			{
-				return View(command);
-			}
+				ExpenseId = expenseId
+			};
 
 			await _mediator.Send(command);
 
-			TempData["IncomeAdded"] = true;
 
 			return RedirectToAction(nameof(ExpensesIndex));
 		}
+
 
 		// ---------------------------------------- DELETE INCOME -------------------------------------------------- //
 
@@ -360,7 +351,12 @@ namespace WebBudget.MVC.Controllers
 
 			return RedirectToAction(nameof(ShowIncomeCategories3));
 		}
+		public IActionResult AddIncomeCategory()
+		{
+			return View();
+		}
 
+		// ---------------------------------------- SHOW INCOME CATEGORY -------------------------------------------------- //
 
 		[Authorize]
 		public async Task<IActionResult> ShowIncomeCategories3()
@@ -378,23 +374,29 @@ namespace WebBudget.MVC.Controllers
 			return View(viewModel);
 		}
 
-		public IActionResult AddIncomeCategory()
-		{
-			return View();
-		}
 
 
-		// ---------------------------------------- ADD EXPENSE CATEGORY -------------------------------------------------- //
+
+		// ---------------------------------------- SHOW EXPENSE CATEGORY -------------------------------------------------- //
 
 		[Authorize]
-		public async Task<IActionResult> ShowExpenseCategories()
+		public async Task<IActionResult> ShowExpenseCategories1()
 		{
 			var userId = _userManager.GetUserId(User);
-			var incomeCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
+			var expenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
+			var newCategoryCommand = new CreateExpenseCategoryCommand();
 
-			return View(incomeCategories);
+			var viewModel = new ExpenseCategoryViewModel
+			{
+				ExpenseCategories = expenseCategories,
+				ExpenseCommand = newCategoryCommand
+			};
+
+			return View(viewModel);
+
 		}
 
+		// ---------------------------------------- ADD EXPENSE CATEGORY -------------------------------------------------- //
 
 		[HttpPost]
 		[Authorize]
@@ -422,7 +424,7 @@ namespace WebBudget.MVC.Controllers
 
 			await _mediator.Send(command);
 
-			return RedirectToAction(nameof(ShowExpenseCategories));
+			return RedirectToAction(nameof(ShowExpenseCategories1));
 		}
 
 		public IActionResult AddExpenseCategory()
@@ -430,6 +432,7 @@ namespace WebBudget.MVC.Controllers
 			return View();
 		}
 
+		// ---------------------------------------- MANAGEMENT -------------------------------------------------- //
 
 		public IActionResult ManageIncome()
 		{
@@ -448,7 +451,9 @@ namespace WebBudget.MVC.Controllers
 		[HttpPost]
 		public async Task<IActionResult> DeleteIncomeCategory(int categoryId)
 		{
-			await _webBudgetRepository.DeleteIncomeCategoryAndRelatedIncomesAsync(categoryId);
+			string loggedUserId = _userManager.GetUserId(User)!;
+
+			await _webBudgetRepository.DeleteIncomeCategoryAndRelatedIncomesAsync(categoryId, loggedUserId);
 
 			return RedirectToAction(nameof(ShowIncomeCategories3));
 		}
@@ -460,7 +465,7 @@ namespace WebBudget.MVC.Controllers
 		{
 			await _webBudgetRepository.DeleteExpenseCategoryAndRelateExpensesAsync(categoryId);
 
-			return RedirectToAction(nameof(ManageExpense));
+			return RedirectToAction(nameof(ShowExpenseCategories1));
 		}
 
 		// ---------------------------------------- EDIT INCOME CATEGORY -------------------------------------------------- //
@@ -492,9 +497,33 @@ namespace WebBudget.MVC.Controllers
 			return RedirectToAction(nameof(ShowIncomeCategories3));
 		}
 
+		// ---------------------------------------- EDIT EXPENSE CATEGORY -------------------------------------------------- //
 
+		[HttpPost]
+		public async Task<IActionResult> EditExpenseCategory(int categoryIdToEdit, string newCategoryName)
+		{
+			var userId = _userManager.GetUserId(User);
 
+			var expenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
 
+			var existingCategory = expenseCategories.FirstOrDefault(e => e.CategoryName.Equals(newCategoryName, StringComparison.OrdinalIgnoreCase));
+			if (existingCategory != null)
+			{
+				ModelState.AddModelError("newCategoryName", "Category with the same name already exists.");
+				ViewBag.CategoryExistsError = true;
+				return RedirectToAction(nameof(ShowExpenseCategories1));
+			}
+			if (ModelState.IsValid)
+			{
+				await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName);
 
+				await _webBudgetRepository.UpdateExpenseCategoryInExpenses(categoryIdToEdit, newCategoryName);
+
+				return RedirectToAction(nameof(ShowExpenseCategories1));
+			}
+
+			ViewBag.CategoryName = newCategoryName;
+			return RedirectToAction(nameof(ShowExpenseCategories1));
+		}
 	}
 }

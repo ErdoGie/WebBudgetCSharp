@@ -39,7 +39,6 @@ namespace WebBudget.Application.WebBudget.Commands.CreateExpenseViewModel
 
 			var domainExpense = _mapper.Map<Domain.Entities.WebBudgetExpense>(request.ExpenseCommand);
 			domainExpense.CreatedById = userId;
-			domainExpense.EncodeExpenseName();
 
 			await _webBudgetRepository.CreateExpense(domainExpense);
 

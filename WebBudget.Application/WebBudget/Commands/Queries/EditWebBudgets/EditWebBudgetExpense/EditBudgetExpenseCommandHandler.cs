@@ -25,7 +25,7 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWe
         public async Task<Unit> Handle(EditWebBudgetExpenseCommand request, CancellationToken cancellationToken)
 		{
 
-			var webBudget = await _webBudgetRepository.GetExpenseByEncodedName(request.EncodedExpenseName);
+			var webBudget = await _webBudgetRepository.GetExpenseById(request.ExpenseId);
 
             var user = _userContext.GetCurrentlyLoggedUser();
             var hasAccess = user != null && webBudget.CreatedById == user.Id;
@@ -39,10 +39,7 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWe
             webBudget.ExpenseType = request.ExpenseType;
 			webBudget.ExpenseValue = request.ExpenseValue;
 			webBudget.ExpenseDate = request.ExpenseDate;
-			webBudget.EncodedExpenseName = request.EncodedExpenseName!;
-
-			webBudget.EncodeExpenseName();
-			request.EncodeExpenseName();
+			webBudget.ExpenseCategoryId = request.ExpenseCategoryId;
 
 			await _webBudgetRepository.CommitChanges();
 

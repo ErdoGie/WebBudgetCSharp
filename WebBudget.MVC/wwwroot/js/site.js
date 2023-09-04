@@ -19,15 +19,7 @@ document.getElementById('ConfirmDeleteIncomeBtn').addEventListener('click', func
 	$('#deleteIncomeModal').modal('hide');
 });
 
-function deleteIncome(incomeId) {
-	fetch(`/WebBudget/DeleteIncome/${incomeId}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest'
-		}
-	});
-}
+
 
 document.getElementById('IncomeCommand.IncomeValue').addEventListener('input', function () {
 	var valueInput = this;
@@ -134,23 +126,6 @@ document.getElementById('EditIncomeBtn').addEventListener('click', function () {
 		IncomeValue: incomeValue
 	};
 
-	fetch(`/WebBudget/IncomeEdit/${incomeId}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest'
-		},
-		body: JSON.stringify(data)
-	})
-		.then(response => response.json())
-		.then(data => {
-			if (data.success) {
-				$('#editIncomeModal').modal('hide');
-				location.reload();
-			} else {
-				console.log(data.errors);
-			}
-		});
 });
 
 
@@ -200,30 +175,7 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', function (
 
 
 
-function deleteCategory(categoryId) {
-	fetch(`/WebBudgetController/DeleteIncomeCategory/${categoryId}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest'
-		}
-	});
-}
 //--------- EDIT CATEGORY --------------//
-
-function editCategory(categoryId, newCategoryName) {
-	fetch(`/WebBudgetController/EditIncomeCategory/${categoryIdToEdit}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest'
-		},
-		body: JSON.stringify({ categoryId: categoryId, newCategoryName: newCategoryName })
-	}).then(response => {
-		if (response.ok) {
-		}
-	});
-}
 
 
 document.getElementById('addCategoryForm').addEventListener('submit', async function (event) {
@@ -237,15 +189,6 @@ document.getElementById('addCategoryForm').addEventListener('submit', async func
 		}
 	};
 
-	const response = await fetch('/WebBudgetController/AddIncomeCategory', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest'
-		},
-		body: JSON.stringify(data)
-	});
-
 	if (response.ok) {
 		var newCategoriesHtml = await response.text();
 		var categoriesContainer = document.querySelector('.row');
@@ -256,5 +199,70 @@ document.getElementById('addCategoryForm').addEventListener('submit', async func
 		const errors = await response.json();
 		var errorSpan = document.getElementById('categoryNameError');
 		errorSpan.innerText = errors["CategoryName"][0];
+	}
+});
+
+// DELETE EXPENSE
+var expenseIdToDelete;
+
+document.querySelectorAll('.delete-btn').forEach(button => {
+	button.addEventListener('click', function () {
+		expenseIdToDelete = this.getAttribute('delete-income-id');
+		document.getElementById('DeleteExpense').value = expenseIdToDelete;
+		console.log(expenseIdToDelete);
+	});
+});
+
+
+document.getElementById('ConfirmDelete').addEventListener('click', function () {
+	if (expenseIdToDelete) {
+		document.getElementById('DeleteExpense').value = expenseIdToDelete;
+		document.getElementById('deleteExpenseForm').submit();
+		expenseIdToDelete = null;
+	}
+	$('#deleteExpenseModal').modal('hide');
+});
+
+
+
+
+// AADDD EXPENSE //
+
+var errorSpan = document.getElementById('valueError');
+var createButton = document.getElementById('createButton');
+var valueInput = document.getElementById('ExpenseCommand.ExpenseValue');
+var validationMessage = document.getElementById('categoryValidationMessage');
+
+document.getElementById('ExpenseCommand.ExpenseType').addEventListener('change', function () {
+	var selectedValue = this.value;
+
+
+	if (!selectedValue) {
+		validationMessage.textContent = 'Please choose an income category.';
+		document.getElementById('SaveChangesButton').disabled = true;
+	} else {
+		validationMessage.textContent = '';
+		document.getElementById('SaveChangesButton').disabled = true;
+	}
+});
+document.getElementById('ExpenseCommand.ExpenseValue').addEventListener('input', function () {
+
+	var value = parseFloat(valueInput.value);
+	if (isNaN(value) || value <= 0) {
+		errorSpan.style.display = 'inline';
+	} else {
+		errorSpan.style.display = 'none';
+	}
+});
+var createButton = document.getElementById('createButton');
+
+valueInput.addEventListener('input', function () {
+	var value = parseFloat(valueInput.value);
+	if (isNaN(value) || value <= 0) {
+		errorSpan.style.display = 'inline';
+		createButton.disabled = true;
+	} else {
+		errorSpan.style.display = 'none';
+		createButton.disabled = false;
 	}
 });

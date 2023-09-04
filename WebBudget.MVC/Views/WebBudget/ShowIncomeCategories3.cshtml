@@ -176,7 +176,7 @@
 
 
 		function deleteCategory(categoryId) {
-			fetch(`/WebBudgetController/DeleteIncomeCategory/${categoryId}`, {
+			fetch(`/WebBudgetController/DeleteExpenseCategory/${categoryId}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -186,7 +186,7 @@
 		}
 
 		function editCategory(categoryId, newCategoryName) {
-			fetch(`/WebBudgetController/EditIncomeCategory/${categoryIdToEdit}`, {
+			fetch(`/WebBudgetController/EditExpenseCategory/${categoryIdToEdit}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -211,7 +211,7 @@
 				}
 			};
 
-			const response = await fetch('/WebBudgetController/AddIncomeCategory', {
+			const response = await fetch('/WebBudgetController/AddExpenseCategory', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
