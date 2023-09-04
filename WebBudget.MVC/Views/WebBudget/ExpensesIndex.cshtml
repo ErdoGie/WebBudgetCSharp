@@ -8,7 +8,7 @@
 
 }
 @section containerContent  {
-	<h4>Your expenses</h4>
+	<h4>Manage your expenses</h4>
 	<hr />
 
 
@@ -65,7 +65,7 @@
 						</div>
 
 						<div class="form-group d-flex justify-content-center">
-							<input type="submit" value="Create Expense!" class="btn btn-primary" id="createButton" style="margin-top:4%" disabled  />
+							<input type="submit" value="Create Expense!" class="btn btn-primary" id="createButton" style="margin-top:4%"   />
 						</div>
 					</form>
 				</div>
@@ -114,9 +114,9 @@
 								}
 							</select>
 						</div>
-						<input type="hidden" id="IncomeId" name="IncomeId" value="" />
+						<input type="hidden" id="ExpenseId" name="ExpenseId" value="" />
 
-						<input type="hidden" id="IncomeCategoryId" name="IncomeCategoryId" value="" />
+						<input type="hidden" id="ExpenseCategoryId" name="ExpenseCategoryId" value="" />
 
 						<div class="form-group">
 							<label for="ExpenseDate" class="control-label" style="color:white">Date</label>
@@ -175,7 +175,7 @@
 	}
 
 	<script>
-		// DELETE INCOME
+		// DELETE EXPENSE
 		var expenseIdToDelete;
 
 		document.querySelectorAll('.delete-btn').forEach(button => {
@@ -196,51 +196,69 @@
 			$('#deleteExpenseModal').modal('hide');
 		});
 
-	
 
 
+		var expenseIdToEdit;
 
-
-		// AADDD EXPENSE //
-
-		var errorSpan = document.getElementById('valueError');
-		var createButton = document.getElementById('createButton');
-		var valueInput = document.getElementById('ExpenseCommand.ExpenseValue');
-
-
-		document.getElementById('ExpenseCommand.ExpenseType').addEventListener('change', function () {
-			var selectedValue = this.value;
-			var validationMessage = document.getElementById('categoryValidationMessage');
-
-			if (!selectedValue) {
-				validationMessage.textContent = 'Please choose an income category.';
-				document.getElementById('SaveChangesButton').disabled = true;
-			} else {
-				validationMessage.textContent = '';
-				document.getElementById('SaveChangesButton').disabled = true;
-			}
+		document.querySelectorAll('.edit-btn').forEach(button => {
+			button.addEventListener('click', function () {
+				expenseIdToEdit = this.getAttribute('data-income-id');
+				console.log("Edycja : " + expenseIdToEdit);
+			});
 		});
-		document.getElementById('ExpenseCommand.ExpenseValue').addEventListener('input', function () {
 
-			var value = parseFloat(valueInput.value);
-			if (isNaN(value) || value <= 0) {
-				errorSpan.style.display = 'inline';
-			} else {
-				errorSpan.style.display = 'none';
-			}
-		});
-		var createButton = document.getElementById('createButton');
 
-		valueInput.addEventListener('input', function () {
-			var value = parseFloat(valueInput.value);
-			if (isNaN(value) || value <= 0) {
-				errorSpan.style.display = 'inline';
-				createButton.disabled = true;
-			} else {
-				errorSpan.style.display = 'none';
-				createButton.disabled = false;
-			}
+		document.getElementById('ExpenseType').addEventListener('change', function () {
+			var editedCategory = this.value;
+			var selectedCategoryId = this.options[this.selectedIndex].getAttribute('data-category-id');
+			console.log("Edited Category: " + editedCategory);
+			console.log("Selected Category ID: " + selectedCategoryId);
 		});
+
+		document.getElementById('ExpenseDate').addEventListener('change', function () {
+			var editedDate = this.value;
+			console.log("Edited Date: " + editedDate);
+		});
+
+		document.getElementById('ExpenseValue').addEventListener('input', function () {
+			var editedValue = this.value;
+			console.log("Edited Value: " + editedValue);
+		});
+
+		document.getElementById('EditIncomeBtn').addEventListener('click', function () {
+
+			var expenseId = expenseIdToEdit;
+			var incomeType = document.getElementById('ExpenseType').value;
+			var incomeCategoryId = document.getElementById('ExpenseType').options[document.getElementById('ExpenseType').selectedIndex].getAttribute('data-category-id');
+			var incomeDate = document.getElementById('ExpenseDate').value;
+			var incomeValue = document.getElementById('ExpenseValue').value;
+
+			console.log("Expense ID: " + expenseId);
+			console.log("Income Type: " + incomeType);
+			console.log("Income Category ID: " + incomeCategoryId);
+			console.log("Income Date: " + incomeDate);
+			console.log("Income Value: " + incomeValue);
+
+			var incomeIdField = document.getElementById('ExpenseId');
+			console.log("Income ID FIELd: " + incomeIdField);
+
+			var incomeCategoryIdField = document.getElementById('ExpenseCategoryId');
+			console.log("Income CATEGORYFIELD: " + incomeCategoryIdField);
+
+			incomeIdField.value = expenseId;
+			incomeCategoryIdField.value = incomeCategoryId;
+
+			var data = {
+				IncomeId: incomeId,
+				IncomeType: incomeType,
+				IncomeCategoryId: incomeCategoryId,
+				IncomeDate: incomeDate,
+				IncomeValue: incomeValue
+			};
+
+		});
+
+
 
 	</script>
 }

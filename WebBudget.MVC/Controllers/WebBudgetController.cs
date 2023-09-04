@@ -237,7 +237,7 @@ namespace WebBudget.MVC.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> ExpenseEdit(string encodedExpenseName, EditWebBudgetExpenseCommand command)
+		public async Task<IActionResult> ExpenseEdit(int expenseId, EditWebBudgetExpenseCommand command)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -245,8 +245,6 @@ namespace WebBudget.MVC.Controllers
 			}
 
 			await _mediator.Send(command);
-
-			TempData["IncomeAdded"] = true;
 
 			return RedirectToAction(nameof(ExpensesIndex));
 		}

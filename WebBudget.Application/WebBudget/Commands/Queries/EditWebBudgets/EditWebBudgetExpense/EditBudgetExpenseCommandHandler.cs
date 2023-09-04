@@ -39,6 +39,7 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWe
             webBudget.ExpenseType = request.ExpenseType;
 			webBudget.ExpenseValue = request.ExpenseValue;
 			webBudget.ExpenseDate = request.ExpenseDate;
+			webBudget.ExpenseCategoryId = request.ExpenseCategoryId;
 
 			await _webBudgetRepository.CommitChanges();
 
