@@ -13,7 +13,6 @@ namespace WebBudget.Domain.Entities
         [Key]
         public int CategoryId { get; set; }
 
-		[Required(ErrorMessage = "Category name is required.")]
 		public string CategoryName { get; set; } = default!;
 
         public string UserId { get; set; } = default!;
