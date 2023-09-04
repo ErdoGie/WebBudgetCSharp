@@ -9,7 +9,6 @@ namespace WebBudget.Application.WebBudget
 {
     public class IncomeCategoryDTO
     {
-        [Required(ErrorMessage ="Category name required")]
         public string CategoryName { get; set; } = default!;
     }
 }

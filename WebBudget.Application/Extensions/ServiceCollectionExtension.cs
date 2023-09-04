@@ -49,13 +49,13 @@ namespace WebBudget.Application.Extensions
 			}).CreateMapper()
 			);
 
-			services.AddValidatorsFromAssemblyContaining<CreateWebBudgetIncomeCommandValidator>()
+		/*	services.AddValidatorsFromAssemblyContaining<CreateWebBudgetIncomeCommandValidator>()
 				.AddFluentValidationAutoValidation()
 				.AddFluentValidationClientsideAdapters();
 
 			services.AddValidatorsFromAssemblyContaining<CreateWebBudgetExpenseCommandValidator>()
 				.AddFluentValidationAutoValidation()
-				.AddFluentValidationClientsideAdapters();
+				.AddFluentValidationClientsideAdapters();*/
 
 			services.AddScoped<CalcualteBalance>();
 
