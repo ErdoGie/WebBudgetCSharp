@@ -12,10 +12,10 @@ using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWeb
 using WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.DeleteWebBudgetIncome;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetExpense;
 using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.EditWebBudgetIncome;
-using WebBudget.Application.WebBudget.Commands.Queries.EditWebBudgets.GetWebBudgetByEncodedNameExpense;
 using WebBudget.Application.WebBudget.Commands.Queries.GetAllWebBudgetExpenses;
 using WebBudget.Application.WebBudget.Commands.Queries.GetAllWEbBudgetIncomes;
 using WebBudget.Application.WebBudget.Commands.Queries.GetWebBudgetsByEncodedName;
+using WebBudget.Application.WebBudget.Commands.Queries.GetWebBudgetsByExpenseID;
 using WebBudget.Domain.Entities;
 using WebBudget.Domain.Interfaces;
 using X.PagedList;
@@ -156,24 +156,28 @@ namespace WebBudget.MVC.Controllers
 		}
 
 
-		public async Task<IActionResult> ExpensesIndex(int? page, string userId)
+		public async Task<IActionResult> ExpensesIndex()
 		{
-			int pageSize = 6;
-			int pageNumber = page ?? 1;
+			var userId = _userManager.GetUserId(User);
+
 
 			if (User.Identity!.IsAuthenticated)
 			{
 
-				var webBudgetExpeseQuery = new GetAllWebBudgetExpensesForLoggedusersQuery(userId);
+				var webBudgetExpeseQuery = new GetAllWebBudgetExpensesForLoggedusersQuery(userId!);
 				var webBudgetExpense = await _mediator.Send(webBudgetExpeseQuery);
 
-				var paginatedExpenseData = webBudgetExpense.ToPagedList(pageNumber, pageSize);
+				var createExpenseView = new CreateExpenseView
+				{
+					Expenses = webBudgetExpense,
+					ExpenseCommand = new ExpenseViewModelCommand
+					{
+						ExpenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!)
+					}
+				};
 
-				int pageCount = (int)Math.Ceiling((double)webBudgetExpense.Count() / pageSize);
 
-				ViewBag.PageCount = pageCount;
-
-				return View(paginatedExpenseData);
+				return View(createExpenseView);
 			}
 
 			else
@@ -217,10 +221,10 @@ namespace WebBudget.MVC.Controllers
 		// ---------------------------------------- EDIT EXPENSE -------------------------------------------------- //
 
 
-		[Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
-		public async Task<IActionResult> ExpenseEdit(string encodedExpenseName)
+		[HttpGet]
+		public async Task<IActionResult> ExpenseEdit(int expenseId)
 		{
-			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
+			var dto = await _mediator.Send(new GetWebBudgetExpenseByIDQuery(expenseId));
 
 			if (!dto.HasUserAccess)
 			{
@@ -233,7 +237,6 @@ namespace WebBudget.MVC.Controllers
 		}
 
 		[HttpPost]
-		[Route("WebBudget/Expense/{encodedExpenseName}/Edit")]
 		public async Task<IActionResult> ExpenseEdit(string encodedExpenseName, EditWebBudgetExpenseCommand command)
 		{
 			if (!ModelState.IsValid)
@@ -251,9 +254,9 @@ namespace WebBudget.MVC.Controllers
 		// ---------------------------------------- DELETE EXPENSE -------------------------------------------------- //
 
 		[Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
-		public async Task<IActionResult> ExpenseDelete(string encodedExpenseName)
+		public async Task<IActionResult> ExpenseDelete(int expenseId)
 		{
-			var dto = await _mediator.Send(new GetWebBudgetExpenseByEncodedNameQuery(encodedExpenseName));
+			var dto = await _mediator.Send(new GetWebBudgetExpenseByIDQuery(expenseId));
 
 			if (!dto.HasUserAccess)
 			{
@@ -460,7 +463,9 @@ namespace WebBudget.MVC.Controllers
 		[HttpPost]
 		public async Task<IActionResult> DeleteIncomeCategory(int categoryId)
 		{
-			await _webBudgetRepository.DeleteIncomeCategoryAndRelatedIncomesAsync(categoryId);
+			string loggedUserId = _userManager.GetUserId(User)!;
+
+			await _webBudgetRepository.DeleteIncomeCategoryAndRelatedIncomesAsync(categoryId, loggedUserId);
 
 			return RedirectToAction(nameof(ShowIncomeCategories3));
 		}
@@ -472,7 +477,7 @@ namespace WebBudget.MVC.Controllers
 		{
 			await _webBudgetRepository.DeleteExpenseCategoryAndRelateExpensesAsync(categoryId);
 
-			return RedirectToAction(nameof(ManageExpense));
+			return RedirectToAction(nameof(ShowExpenseCategories1));
 		}
 
 		// ---------------------------------------- EDIT INCOME CATEGORY -------------------------------------------------- //

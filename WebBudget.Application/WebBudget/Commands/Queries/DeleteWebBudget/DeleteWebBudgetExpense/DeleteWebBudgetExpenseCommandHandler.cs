@@ -22,9 +22,9 @@ namespace WebBudget.Application.WebBudget.Commands.Queries.DeleteWebBudget.Delet
         public async Task<Unit> Handle(DeleteWebBudgetExpenseCommand request, CancellationToken cancellationToken)
 		{
 
-			var webBudget = await _webBudgetRepository.GetExpenseByEncodedName(request.EncodedExpenseName);
+			var webBudget = await _webBudgetRepository.GetExpenseById(request.ExpenseId);
 
-			await _webBudgetRepository.RemoveExpense(webBudget.EncodedExpenseName);
+			await _webBudgetRepository.RemoveExpense(webBudget.ExpenseId);
 
 			await _webBudgetRepository.CommitChanges();
 

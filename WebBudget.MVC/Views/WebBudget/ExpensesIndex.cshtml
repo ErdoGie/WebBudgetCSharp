@@ -1,62 +1,176 @@
-﻿@using X.PagedList.Mvc.Core;
-@using X.PagedList;
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@model WebBudget.Application.WebBudget.Commands.CategoryViewModels.CreateExpenseView
 
-@model IEnumerable<WebBudget.Application.WebBudget.WebBudgetExpenseDTO>
+
 
 @{
 	ViewData["Title"] = "ExpensesIndex";
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	var pageNumber = ViewBag.PageNumber;
-	var PageCount = ViewBag.PageCount;
+
 }
 @section containerContent  {
 	<h4>Your expenses</h4>
+	<hr />
+
+
+	<div class="d-flex justify-content-center">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addIncomeModal">
+			Add Income
+		</button>
+	</div>
+
+	<div id="addIncomeModal" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addIncomeModalLabel">Add Income</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form asp-action="CreateIncome">
+						<div class="form-group">
+							<label for="IncomeCommand.IncomeType" class="control-label" style="color:white" style="margin-top:4%">Category</label>
+							<div class="form-group">
+								@if (Model.ExpenseCommand.ExpenseCategories.Any())
+								{
+									<select id="ExpenseCommand.ExpenseType" name="ExpenseCommand.ExpenseType" class="form-control">
+										<option style="text-align:center" value="" selected disabled>Choose expense category</option>
+										@foreach (var category in Model.ExpenseCommand.ExpenseCategories)
+										{
+											<option style="text-align:center" value="@category.CategoryName">@category.CategoryName</option>
+										}
+									</select>
+								}
+								else
+								{
+									<select id="ExpenseCommand.ExpenseType" name="ExpenseCommand.ExpenseType" class="form-control">
+										<option class="text-muted" selected disabled>No category available. Add some first.</option>
+									</select>
+								}
+								<span class="text-danger" id="categoryValidationMessage"></span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="ExpenseCommand.ExpenseDate" class="control-label" style="color:white; margin-top:4%">Date</label>
+							<input id="ExpenseCommand.ExpenseDate" style="text-align:center" name="ExpenseCommand.ExpenseDate" class="form-control" type="date" required />
+							<span class="text-danger" id="dateValidationMessage"></span>
+						</div>
+						<div class="form-group">
+							<label for="ExpenseCommand.ExpenseValue" class="control-label" style="color:white ;margin-top:4%">Value</label>
+							<input id="ExpenseCommand.ExpenseValue" name="ExpenseCommand.ExpenseValue" style="text-align:center" class="form-control" type="number" />
+
+							<span id="valueError" class="text-danger" style="display: none;">Value must be greater than zero</span>
+						</div>
+
+						<div class="form-group d-flex justify-content-center">
+							<input type="submit" value="Add income" class="btn btn-primary" id="createButton" style="margin-top:4%" disabled />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="row">
-
-		@foreach (var item in Model)
+		@foreach (var income in Model.Expenses)
 		{
-			
-				<div class="col-md-6 col-lg-4">
-					<div class="card m-3">
-						<div class="card-body">
-							<h5 class="card-title"> @item.ExpenseType</h5>
-							<h6 class="card-subtitle mb-2 text-muted">@item.ExpenseDate.ToString("yyyy-MM-dd")</h6>
-							<h5 class="card-title"> @item.ExpenseValue zł</h5>
-
-							<a asp-controller="WebBudget" asp-action="ExpenseEdit" asp-route-encodedExpenseName="@item.EncodedExpenseName" class="btn btn-primary">Edit</a>
-
-							<a asp-controller="WebBudget" asp-action="ExpenseDelete" asp-route-encodedExpenseName="@item.EncodedExpenseName" class="btn btn-primary">Delete</a>
-						</div>
+			<div class="col-md-6 col-lg-4 small-card">
+				<div class="card m-3 small-card">
+					<div class="card-body">
+						<h6 class="card-title"> @income.ExpenseType</h6>
+						<h6 class="card-subtitle mb-2 text-muted">@income.ExpenseDate.ToString("yyyy-MM-dd")</h6>
+						<h6 class="card-title"> @income.ExpenseValue zł</h6>
+						<button type="button" class="btn btn-info edit-btn" data-toggle="modal" data-target="#editIncomeModal" data-income-id="@income.ExpenseId">Edit</button>
+						<button type="button" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteIncomeModal" delete-income-id="@income.ExpenseId">Delete</button>
 					</div>
 				</div>
-			
-
-
+			</div>
 		}
 	</div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<nav aria-label="Expense navigation">
-				<pager class="pager-container" asp-action="ExpensesIndex" asp-controller="WebBudget">
-					<ul class="pagination">
-						@for (int i = 1; i <= ViewBag.PageCount; i++)
-						{
-							<li class="page-item @(i == pageNumber ? "active" : "")">
-								<a class="page-link" asp-route-page="@i">@i</a>
-							</li>
-						}
-					</ul>
-				</pager>
-			</nav>
+	<!-- Edit Modal -->
+	<div class="modal fade" id="editExpenseModal" tabindex="-1" role="dialog" aria-labelledby="editExpenseModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editModalLabel">Edit Income</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="editExpenseForm" asp-action="ExpenseEdit" method="post">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+						<div class="form-group">
+							<label for="ExpenseType" class="control-label" style="color:white">Category</label>
+							<select id="ExpenseType" name="ExpenseType" style="text-align:center" class="form-control" required>
+								<option value="" selected disabled>Choose income category</option>
+								@foreach (var category in Model.ExpenseCommand.ExpenseCategories)
+								{
+									<option value="@category.CategoryName" data-category-id="@category.CategoryId">@category.CategoryName</option>
+								}
+							</select>
+						</div>
+						<input type="hidden" id="IncomeId" name="IncomeId" value="" />
+
+						<input type="hidden" id="IncomeCategoryId" name="IncomeCategoryId" value="" />
+
+						<div class="form-group">
+							<label for="ExpenseDate" class="control-label" style="color:white">Date</label>
+							<input id="ExpenseDate" style="text-align:center" name="ExpenseDate" class="form-control" type="date" required />
+							<span class="text-danger" id="dateValidationMessage"></span>
+						</div>
+
+						<div class="form-group">
+							<label for="ExpenseValue" class="control-label" style="color:white">Value</label>
+							<input id="ExpenseValue" name="ExpenseValue" class="form-control" style="text-align:center" type="number" required />
+						</div>
+
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" id="EditIncomeBtn">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
+
+	<!-- Delete Modal -->
+
+	<div class="modal fade" id="deleteIncomeModal" tabindex="-1" role="dialog" aria-labelledby="deleteIncomeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h5 class="modal-title mx-auto" id="deleteModalLabel">Confirm Deletion</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" style="color:white">
+					Are you sure you want to delete this income?
+					<form id="deleteIncomeForm" asp-action="DeleteIncome" method="post">
+						<input type="hidden" id="DeleteIncomeId" name="IncomeId" value="" />
+					</form>
+				</div>
+				<div class="modal-footer mx-auto">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger" id="ConfirmDeleteIncomeBtn">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
   }
 
 @section scripts {
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }

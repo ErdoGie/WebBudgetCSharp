@@ -72,7 +72,7 @@
 			</div>
 			<div class="modal-footer mx-auto">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-				<form id="deleteCategoryForm" asp-action="DeleteIncomeCategory" method="post">
+				<form id="deleteCategoryForm" asp-action="DeleteExpenseCategory" method="post">
 					<input type="hidden" name="categoryId" id="categoryIdInput" value="" />
 					<button type="submit" class="btn btn-danger">Delete</button>
 				</form>
@@ -93,7 +93,7 @@
 			<div class="modal-body">
 				<form id="editCategoryForm" asp-action="EditExpenseCategory" method="post">
 					<div class="form-group">
-						<label for="newCategoryName" style="text-align:center;">Providing new category name will result in changing all category names in your incomes!</label>
+						<label for="newCategoryName" style="text-align:center;">Providing new category name will result in changing all category names in your Expenses!</label>
 						<input type="text" class="form-control" id="newCategoryName" name="newCategoryName" required title="This value cannot be empty" />
 						<input type="hidden" id="categoryId" value="" name="categoryIdToEdit" />
 					</div>

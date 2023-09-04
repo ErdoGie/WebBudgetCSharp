@@ -116,10 +116,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/AddExpenseCategory.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEFkZEV4cGVuc2VDYXRlZ29yeS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/Balance.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XEJhbGFuY2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -154,10 +150,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ManageIncome.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XE1hbmFnZUluY29tZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ShowExpenseCategories.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQnVkZ2V0XFNob3dFeHBlbnNlQ2F0ZWdvcmllcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/Documents/Dokumenty/PRogramowanie/C\#/Web_Budget_Project/WebBudget.MVC/Views/WebBudget/ShowExpenseCategories1.cshtml]

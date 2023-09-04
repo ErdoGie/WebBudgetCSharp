@@ -55,17 +55,17 @@ namespace WebBudget.Infrastructure.Repositories
 
 
 
-        public async Task<Domain.Entities.WebBudgetExpense> GetExpenseByEncodedName(string encodedExpenseName)
-        => await _webBudgetDbContext.WebBudgetExpense.FirstAsync(e => e.EncodedExpenseName == encodedExpenseName);
+        public async Task<Domain.Entities.WebBudgetExpense> GetExpenseById(int expenseId)
+        => await _webBudgetDbContext.WebBudgetExpense.FirstAsync(e => e.ExpenseId == expenseId);
 
 
         public async Task CommitChanges()
         => await _webBudgetDbContext.SaveChangesAsync();
 
 
-        public async Task<WebBudgetExpense> RemoveExpense(string encodedExpenseName)
+        public async Task<WebBudgetExpense> RemoveExpense(int expenseId)
         {
-            var expense = await _webBudgetDbContext.WebBudgetExpense.FirstAsync(e => e.EncodedExpenseName == encodedExpenseName);
+            var expense = await _webBudgetDbContext.WebBudgetExpense.FirstAsync(e => e.ExpenseId == expenseId);
 
             if (expense != null)
             {
@@ -145,12 +145,12 @@ namespace WebBudget.Infrastructure.Repositories
             return selectedCategory?.CategoryId;
         }
 
-        public async Task DeleteIncomeCategoryAndRelatedIncomesAsync(int categoryId)
+        public async Task DeleteIncomeCategoryAndRelatedIncomesAsync(int categoryId, string loggedUserId)
         {
             var categoryToDelete = await _webBudgetDbContext.IncomeCategories.FindAsync(categoryId);
 
             var relatedIncomes = _webBudgetDbContext.WebBudgetIncome
-                .Where(income => income.IncomeCategoryId == categoryId)
+                .Where(income => income.IncomeCategoryId == categoryId && income.CreatedById == loggedUserId)
                 .ToList();
 
             _webBudgetDbContext.WebBudgetIncome.RemoveRange(relatedIncomes);
