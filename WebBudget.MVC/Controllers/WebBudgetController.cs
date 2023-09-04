@@ -253,7 +253,7 @@ namespace WebBudget.MVC.Controllers
 
 		// ---------------------------------------- DELETE EXPENSE -------------------------------------------------- //
 
-		[Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
+		[HttpPost]
 		public async Task<IActionResult> ExpenseDelete(int expenseId)
 		{
 			var dto = await _mediator.Send(new GetWebBudgetExpenseByIDQuery(expenseId));
@@ -263,27 +263,17 @@ namespace WebBudget.MVC.Controllers
 				return RedirectToAction("NoAccess", "Home");
 			}
 
-			DeleteWebBudgetExpenseCommand model = _mapper.Map<DeleteWebBudgetExpenseCommand>(dto);
-
-
-			return View(model);
-		}
-
-		[HttpPost]
-		[Route("WebBudget/Expense/{encodedExpenseName}/Delete")]
-		public async Task<IActionResult> ExpenseDelete(string encodedExpenseName, DeleteWebBudgetExpenseCommand command)
-		{
-			if (!ModelState.IsValid)
+			var command = new DeleteWebBudgetExpenseCommand
 			{
-				return View(command);
-			}
+				ExpenseId = expenseId
+			};
 
 			await _mediator.Send(command);
 
-			TempData["IncomeAdded"] = true;
 
 			return RedirectToAction(nameof(ExpensesIndex));
 		}
+
 
 		// ---------------------------------------- DELETE INCOME -------------------------------------------------- //
 
