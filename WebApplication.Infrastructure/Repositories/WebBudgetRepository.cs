@@ -80,7 +80,7 @@ namespace WebBudget.Infrastructure.Repositories
         {
             var income = await _webBudgetDbContext.WebBudgetIncome.FirstAsync(i => i.IncomeId == incomeId);
 
-            if (income != null)
+            if (income != null)     
             {
                 _webBudgetDbContext.WebBudgetIncome.Remove(income);
                 await _webBudgetDbContext.SaveChangesAsync();
@@ -89,15 +89,7 @@ namespace WebBudget.Infrastructure.Repositories
             return income!;
         }
 
-        public async Task<IEnumerable<WebBudgetIncome>> GetAllUserIncomesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate)
-            => await _webBudgetDbContext.WebBudgetIncome
-            .Where(i => i.CreatedById == userId && i.IncomeDate >= beginningDate && i.IncomeDate <= endingDate)
-            .ToListAsync();
-
-        public async Task<IEnumerable<WebBudgetExpense>> GetAllUserExpensesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate)
-            => await _webBudgetDbContext.WebBudgetExpense
-            .Where(e => e.CreatedById == userId && e.ExpenseDate >= beginningDate && e.ExpenseDate <= endingDate)
-            .ToListAsync();
+     
 
         public bool CheckIfIncomeCategoryExists(string categoryName)
         {
@@ -234,5 +226,8 @@ namespace WebBudget.Infrastructure.Repositories
 
 			await _webBudgetDbContext.SaveChangesAsync();
 		}
+
+
+
 	}
 }

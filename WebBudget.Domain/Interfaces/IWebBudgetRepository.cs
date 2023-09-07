@@ -23,9 +23,7 @@ namespace WebBudget.Domain.Interfaces
 
         Task CommitChanges();
 
-        Task<IEnumerable<WebBudgetIncome>> GetAllUserIncomesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate);
-        Task<IEnumerable<WebBudgetExpense>> GetAllUserExpensesFromDateRange(string userId, DateTime beginningDate, DateTime endingDate);
-
+       
         Task AddIncomeCategory(IncomeCategory category);
 
         Task<List<IncomeCategory>> GetAllIncomeCategoriesForUser(string userId);

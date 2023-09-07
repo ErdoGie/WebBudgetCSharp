@@ -27,16 +27,14 @@ namespace WebBudget.MVC.Controllers
 		private readonly IMediator _mediator;
 		private readonly IMapper _mapper;
 		private readonly UserManager<IdentityUser> _userManager;
-		private readonly CalcualteBalance _calculateBalance;
 		private readonly IWebBudgetRepository _webBudgetRepository;
 
 		//przekazuje zależność 
-		public WebBudgetController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager, CalcualteBalance calcualteBalance, IWebBudgetRepository webBudgetRepository)
+		public WebBudgetController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager, IWebBudgetRepository webBudgetRepository)
 		{
 			_mapper = mapper;
 			_mediator = mediator;
 			_userManager = userManager;
-			_calculateBalance = calcualteBalance;
 			_webBudgetRepository = webBudgetRepository;
 		}
 		// ------------------------------------------------- CREATE INCOME --------------------------------------------- //
@@ -296,29 +294,7 @@ namespace WebBudget.MVC.Controllers
 
 		// ---------------------------------------- CALCULATE BALANCE -------------------------------------------------- //
 
-		[HttpGet]
-
-		public async Task<IActionResult> CalculateBalance(string userId, DateTime startDate, DateTime endDate)
-		{
-			float balance = await _calculateBalance.CalculateUsersBalance(userId, startDate, endDate);
-
-			ViewBag.Balance = balance;
-
-
-			return View();
-		}
-
-		[HttpPost]
-		public async Task<IActionResult> Balance(DateTime startDate, DateTime endDate)
-		{
-			string userId = _userManager.GetUserId(User)!;
-
-			float balance = await _calculateBalance.CalculateUsersBalance(userId, startDate, endDate);
-
-			ViewBag.Balance = balance;
-
-			return View();
-		}
+		
 
 		// ---------------------------------------- ADD INCOME CATEGORY -------------------------------------------------- //
 
