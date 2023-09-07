@@ -1,0 +1,113 @@
+﻿@model WebBudget.Application.Balance.BalanceModel
+
+@{
+	ViewData["Title"] = "CalculateBalance";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section containerContent{
+
+
+
+	@if (Model.Incomes != null && Model.Expenses != null)
+	{
+		<hr />
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead class="thead-dark">
+				</thead>
+				<tbody>
+					<tr>
+						<td>Total Income</td>
+						<td>@Model.TotalIncome zł</td>
+					</tr>
+					<tr>
+						<td>Total Expense</td>
+						<td>@Model.TotalExpense zł</td>
+					</tr>
+					<tr>
+						<td>Balance</td>
+						<td>@Model.Balance zł</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	}
+
+	<div style="text-align: center;">
+		<div style="display: inline-block; margin-right: 10px;">
+			<canvas id="incomeChart"></canvas>
+		</div>
+
+		<div style="display: inline-block;">
+			<canvas id="expenseChart"></canvas>
+		</div>
+	</div>
+
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+	function getRandomColor() {
+		const letters = '0123456789ABCDEF';
+		let color = '#';
+		for (let i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
+
+	window.addEventListener("load", function () {
+		// Pobierz dane z modelu BalanceModel
+		const incomeData = @Html.Raw(Json.Serialize(Model.IncomeChartData));
+		const expenseData = @Html.Raw(Json.Serialize(Model.ExpenseChartData));
+
+		console.log("Income Data:", incomeData);
+		console.log("Expense Data:", expenseData);
+
+		// Inicjalizacja wykresu dla przychodów
+		const incomeLabels = @Html.Raw(Json.Serialize(Model.IncomeChartData.Select(item => item.Label)));
+		const incomeValues = @Html.Raw(Json.Serialize(Model.IncomeChartData.Select(item => item.Value)));
+		const incomeColors = incomeData.map(item => getRandomColor());
+
+		console.log("Income Labels:", incomeLabels);
+		console.log("Income Values:", incomeValues);
+		console.log("Income Colors:", incomeColors);
+
+		new Chart(document.getElementById('incomeChart'), {
+			type: 'pie',
+			data: {
+				labels: incomeLabels,
+				datasets: [{
+					data: incomeValues,
+					backgroundColor: incomeColors,
+				}],
+			},
+		});
+
+		// Inicjalizacja wykresu dla wydatków
+		const expenseLabels = @Html.Raw(Json.Serialize(Model.ExpenseChartData.Select(item => item.Label)));
+		const expenseValues = @Html.Raw(Json.Serialize(Model.ExpenseChartData.Select(item => item.Value)));
+		const expenseColors = expenseData.map(item => getRandomColor());
+
+		console.log("Expense Labels:", expenseLabels);
+		console.log("Expense Values:", expenseValues);
+		console.log("Expense Colors:", expenseColors);
+
+		new Chart(document.getElementById('expenseChart'), {
+			type: 'pie',
+			data: {
+				labels: expenseLabels,
+				datasets: [{
+					data: expenseValues,
+					backgroundColor: expenseColors,
+				}],
+			},
+
+		});
+	});
+
+
+</script>
+

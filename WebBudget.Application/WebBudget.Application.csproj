@@ -19,8 +19,4 @@
     <ProjectReference Include="..\WebBudget.Domain\WebBudget.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Balance\" />
-  </ItemGroup>
-
 </Project>
