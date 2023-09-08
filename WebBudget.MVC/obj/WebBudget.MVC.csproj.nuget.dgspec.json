@@ -68,6 +68,10 @@
             "X.PagedList": {
               "target": "Package",
               "version": "[8.4.7, )"
+            },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13.3, )"
             }
           },
           "imports": [
@@ -153,6 +157,10 @@
             "X.PagedList": {
               "target": "Package",
               "version": "[8.4.7, )"
+            },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13.3, )"
             }
           },
           "imports": [
@@ -218,6 +226,10 @@
             "X.PagedList": {
               "target": "Package",
               "version": "[8.4.7, )"
+            },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13.3, )"
             }
           },
           "imports": [
@@ -320,6 +332,10 @@
             "X.PagedList.Mvc.Core": {
               "target": "Package",
               "version": "[8.4.7, )"
+            },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13.3, )"
             }
           },
           "imports": [

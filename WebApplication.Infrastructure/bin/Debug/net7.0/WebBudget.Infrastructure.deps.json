@@ -14,7 +14,8 @@
           "Microsoft.EntityFrameworkCore.Tools": "7.0.10",
           "WebBudget.Application": "1.0.0",
           "WebBudget.Domain": "1.0.0",
-          "X.PagedList": "8.4.7"
+          "X.PagedList": "8.4.7",
+          "iTextSharp": "5.5.13.3"
         },
         "runtime": {
           "WebBudget.Infrastructure.dll": {}
@@ -77,6 +78,14 @@
           }
         }
       },
+      "BouncyCastle/1.8.9": {
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.8.9.0",
+            "fileVersion": "1.8.20343.1"
+          }
+        }
+      },
       "FluentValidation/11.5.1": {
         "runtime": {
           "lib/net7.0/FluentValidation.dll": {
@@ -114,6 +123,17 @@
           "lib/net6.0/Humanizer.dll": {
             "assemblyVersion": "2.14.0.0",
             "fileVersion": "2.14.1.48190"
+          }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {
+            "assemblyVersion": "5.5.13.3",
+            "fileVersion": "5.5.13.3"
           }
         }
       },
@@ -873,7 +893,8 @@
           "Microsoft.AspNet.Mvc": "5.2.9",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
           "WebBudget.Domain": "1.0.0",
-          "X.PagedList": "8.4.7"
+          "X.PagedList": "8.4.7",
+          "iTextSharp": "5.5.13.3"
         },
         "runtime": {
           "WebBudget.Application.dll": {}
@@ -882,7 +903,8 @@
       "WebBudget.Domain/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Identity.Stores": "7.0.10",
-          "X.PagedList": "8.4.7"
+          "X.PagedList": "8.4.7",
+          "iTextSharp": "5.5.13.3"
         },
         "runtime": {
           "WebBudget.Domain.dll": {}
@@ -924,6 +946,13 @@
       "path": "azure.identity/1.6.0",
       "hashPath": "azure.identity.1.6.0.nupkg.sha512"
     },
+    "BouncyCastle/1.8.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-axnBgvdD5n+FnEG6efk/tfKuMFru7R/EoISH9zjh319yb3HD24TEHSAbNN/lTRT2ulOGRxDgOsCjkuk08iwWPg==",
+      "path": "bouncycastle/1.8.9",
+      "hashPath": "bouncycastle.1.8.9.nupkg.sha512"
+    },
     "FluentValidation/11.5.1": {
       "type": "package",
       "serviceable": true,
@@ -951,6 +980,13 @@
       "sha512": "sha512-lQKvtaTDOXnoVJ20ibTuSIOf2i0uO0MPbDhd1jm238I+U/2ZnRENj0cktKZhtchBMtCUSRQ5v4xBCUbKNmyVMw==",
       "path": "humanizer.core/2.14.1",
       "hashPath": "humanizer.core.2.14.1.nupkg.sha512"
+    },
+    "iTextSharp/5.5.13.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vtnMhTEJdZFCkLqaQLjD8aqTBIVKHPrSFuSXnxbLEJlvE/j/l88fvG9wtsejXTmhtErMo0lA9T2LdfdfbwplYw==",
+      "path": "itextsharp/5.5.13.3",
+      "hashPath": "itextsharp.5.5.13.3.nupkg.sha512"
     },
     "JetBrains.Annotations/2022.3.1": {
       "type": "package",

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -333,10 +335,14 @@ namespace WebBudget.MVC.Controllers
             float incomePercentage = (totalIncomes / (totalIncomes + totalExpenses)) * 100;
             float expensePercentage = (totalExpenses / (totalIncomes + totalExpenses)) * 100;
 
-            var incomeChartData = incomes.Select(item => new ChartData
+			var incomeNames = incomes.Select(i => i.IncomeType).ToList();
+			var expenseNames = expenses.Select(e => e.ExpenseType).ToList();
+
+			var incomeChartData = incomes.Select(item => new ChartData
             {
                 Label = item.IncomeType,
                 Value = item.IncomeValue,
+
             }).ToList();
 
             var expenseChartData = expenses.Select(item => new ChartData
@@ -354,7 +360,10 @@ namespace WebBudget.MVC.Controllers
                 Balance = balance,
 
                 IncomeChartData = incomeChartData,
-                ExpenseChartData = expenseChartData
+                ExpenseChartData = expenseChartData,
+
+                IncomeName = incomeNames,
+                ExpenseName = expenseNames
 
             };
             ViewBag.IncomePercentage = incomePercentage;
@@ -571,5 +580,25 @@ namespace WebBudget.MVC.Controllers
             ViewBag.CategoryName = newCategoryName;
             return RedirectToAction(nameof(ShowExpenseCategories1));
         }
-    }
+
+		// ---------------------------------------- PDF GENEREATE -------------------------------------------------- //
+
+		[HttpPost]
+		public IActionResult GeneratePDF(BalanceModel model)
+		{
+			var balanceModel = new BalanceModel();
+
+
+			byte[] pdfBytes = balanceModel.GeneratePdf(model);
+
+			if (pdfBytes != null)
+			{
+				return File(pdfBytes, "application/pdf", "Budget.pdf");
+			}
+			else
+			{
+				return RedirectToAction("Error");
+			}
+		}
+	}
 }

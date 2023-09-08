@@ -11,96 +11,145 @@
 
 
 	@if (Model.Incomes!.Count() > 0 && Model.Expenses!.Count() > 0)
-{
+	{
 
 
-	<div id="loading-spinner" class="spinner" style="">
-		<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
-	</div>
-	<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
+		<div id="loading-spinner" class="spinner" style="">
+			<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
+		</div>
+		<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
 
 
-	<div id="balanceContainer" style="visibility:hidden; padding:7%">
+		<div id="balanceContainer" style="visibility:hidden; padding:7%">
 
-		<div class="row justify-content-center">
+			<div class="row justify-content-center">
 
-			<div class="col-md-4" id="balanceContainer1" style="visibility:hidden">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">Total Income</h5>
-						<p class="card-text">@Model.TotalIncome zł </p>
+				<div class="col-md-4" id="balanceContainer1" style="visibility:hidden">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Total Income</h5>
+							<p class="card-text" style="color:green">@Model.TotalIncome zł </p>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-md-4" id="balanceContainer2" style="visibility:hidden">
+					<div class="card ">
+						<div class="card-body">
+							<h5 class="card-title">Total Expense</h5>
+							<p class="card-text" style="color:red">@Model.TotalExpense zł</p>
+						</div>
 					</div>
 				</div>
+				<div class="col-md-4" id="balanceContainer3" style="visibility:hidden">
+					<div class="card">
+						<div class="card-body">
 
-			</div>
-			<div class="col-md-4" id="balanceContainer2" style="visibility:hidden">
-				<div class="card ">
-					<div class="card-body">
-						<h5 class="card-title">Total Expense</h5>
-						<p class="card-text">@Model.TotalExpense zł</p>
+							@if (Model.Balance > 0)
+							{
+								<h5 class="card-title">Balance</h5>
+								<p class="card-text" style="color:green">@Model.Balance zł!</p>
+							}
+							else if (Model.Balance < 0)
+							{
+								<h5 class="card-title">Balance</h5>
+								<p class="card-text" style="color:red">@Model.Balance zł !</p>
+
+							}
+							else
+							{
+								<h5 class="card-title">Balance</h5>
+								<p class="card-text" style="color:orange">@Model.Balance zł !</p>
+							}
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4" id="balanceContainer3" style="visibility:hidden">
-				<div class="card">
-					<div class="card-body">
 
-						@if (Model.Balance > 0)
-						{
-							<h5 class="card-title">Balance</h5>
-							<p class="card-text" style="color:green">@Model.Balance zł!</p>
-						}
-						else if (Model.Balance < 0)
-						{
-							<h5 class="card-title">Balance</h5>
-							<p class="card-text" style="color:red">@Model.Balance zł !</p>
+			<div id="balanceContainer4" style="visibility:hidden; margin-top:4%">
+				<div style="text-align: center;">
+					<div style="display: inline-block; margin-right: 10px;">
+						<h4>Incomes</h4>
+						<canvas id="incomeChart"></canvas>
+					</div>
 
-						}
-						else
-						{
-							<h5 class="card-title">Balance</h5>
-							<p class="card-text" style="color:orange">@Model.Balance zł !</p>
-						}
+					<div style="display: inline-block;">
+						<h4>Expenses</h4>
+						<canvas id="expenseChart"></canvas>
 					</div>
 				</div>
 			</div>
+
+		</div>
+		<form asp-controller="WebBudget" asp-action="GeneratePDF" method="post">
+			<input type="hidden" name="TotalIncome" value="@Model.TotalIncome" />
+			<input type="hidden" name="TotalExpense" value="@Model.TotalExpense" />
+			<input type="hidden" name="Balance" value="@Model.Balance" />
+
+			@foreach (var income in Model.Incomes!)
+			{
+				<input type="hidden" name="IncomeName" value="@income.IncomeType" />
+				<input type="hidden" name="IncomeValue" value="@income.IncomeValue" />
+				<input type="hidden" name="IncomeDate" value="@income.IncomeDate" />
+			}
+
+			<button type="submit">Generate PDF</button>
+		</form>
+
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Income Name</th>
+					<th>Income Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var income in Model.Incomes!)
+				{
+					<tr>
+						<td>@income.IncomeType</td>
+						<td>@income.IncomeValue zł</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Expense Name</th>
+					<th>Expense Value</th>
+				</tr>
+			</thead>
+			<tbody>
+			@*	@for (int i = 0; i < Model.Expenses.Count(); i++)
+				{
+					<tr>
+						<td>@Model.ExpenseName[i]</td>
+						<td>@Model.Expenses[i].ExpenseValue zł</td>
+					</tr>
+				}*@
+			</tbody>
+		</table>
+
+
+	}
+	else
+	{
+		<div id="loading-spinner" class="spinner" style="">
+			<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
+		</div>
+		<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
+
+
+		<div id="balanceContainer" style="visibility:hidden; padding:7%">
+			<h3>Looks like you have no incomes and expenses in chosen date range.</h3>
 		</div>
 
-		<div id="balanceContainer4" style="visibility:hidden; margin-top:4%">
-			<div style="text-align: center;">
-				<div style="display: inline-block; margin-right: 10px;">
-					<h4>Incomes</h4>
-					<canvas id="incomeChart"></canvas>
-				</div>
-
-				<div style="display: inline-block;">
-					<h4>Expenses</h4>
-					<canvas id="expenseChart"></canvas>
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-}
-else
-{
-	<div id="loading-spinner" class="spinner" style="">
-		<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
-	</div>
-	<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
-
-
-	<div id="balanceContainer" style="visibility:hidden; padding:7%">
-		<h3>Looks like you have no incomes and expenses in chosen date range.</h3>
-	</div>
-			
+	}
 }
 
 
-}
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 	function getRandomColor() {
 		const letters = '0123456789ABCDEF';
@@ -197,7 +246,7 @@ else
 				messageElement.className = "alert alert-danger";
 				messageElement.innerText = "U-oh. You should take care of your wallet!";
 			}
-			else{
+			else {
 				messageElement.className = "alert alert-warning";
 				messageElement.innerText = "In given date range there are no incomes and expenses.";
 			}
