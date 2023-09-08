@@ -24,11 +24,6 @@ var app = builder.Build();
 // Extension'a 
 var scope = app.Services.CreateScope();
 
-/*var seeder = scope.ServiceProvider.GetRequiredService<WebBudgetSeeder>();
-
-
-//seeduje moje pierwsze dane;
-await seeder.Seed();*/
 
 
 if (!app.Environment.IsDevelopment())
@@ -46,7 +41,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+	pattern: "{controller=Home}/{action=Home}/{id?}");
 
 app.MapRazorPages();
 app.Run();

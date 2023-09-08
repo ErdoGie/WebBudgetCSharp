@@ -10,40 +10,93 @@
 
 
 
-	@if (Model.Incomes != null && Model.Expenses != null)
-	{
-		<hr />
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover">
-				<thead class="thead-dark">
-				</thead>
-				<tbody>
-					<tr>
-						<td>Total Income</td>
-						<td>@Model.TotalIncome zł</td>
-					</tr>
-					<tr>
-						<td>Total Expense</td>
-						<td>@Model.TotalExpense zł</td>
-					</tr>
-					<tr>
-						<td>Balance</td>
-						<td>@Model.Balance zł</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	}
+	@if (Model.Incomes!.Count() > 0 && Model.Expenses!.Count() > 0)
+{
 
-	<div style="text-align: center;">
-		<div style="display: inline-block; margin-right: 10px;">
-			<canvas id="incomeChart"></canvas>
-		</div>
 
-		<div style="display: inline-block;">
-			<canvas id="expenseChart"></canvas>
-		</div>
+	<div id="loading-spinner" class="spinner" style="">
+		<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
 	</div>
+	<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
+
+
+	<div id="balanceContainer" style="visibility:hidden; padding:7%">
+
+		<div class="row justify-content-center">
+
+			<div class="col-md-4" id="balanceContainer1" style="visibility:hidden">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Total Income</h5>
+						<p class="card-text">@Model.TotalIncome zł </p>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md-4" id="balanceContainer2" style="visibility:hidden">
+				<div class="card ">
+					<div class="card-body">
+						<h5 class="card-title">Total Expense</h5>
+						<p class="card-text">@Model.TotalExpense zł</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" id="balanceContainer3" style="visibility:hidden">
+				<div class="card">
+					<div class="card-body">
+
+						@if (Model.Balance > 0)
+						{
+							<h5 class="card-title">Balance</h5>
+							<p class="card-text" style="color:green">@Model.Balance zł!</p>
+						}
+						else if (Model.Balance < 0)
+						{
+							<h5 class="card-title">Balance</h5>
+							<p class="card-text" style="color:red">@Model.Balance zł !</p>
+
+						}
+						else
+						{
+							<h5 class="card-title">Balance</h5>
+							<p class="card-text" style="color:orange">@Model.Balance zł !</p>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="balanceContainer4" style="visibility:hidden; margin-top:4%">
+			<div style="text-align: center;">
+				<div style="display: inline-block; margin-right: 10px;">
+					<h4>Incomes</h4>
+					<canvas id="incomeChart"></canvas>
+				</div>
+
+				<div style="display: inline-block;">
+					<h4>Expenses</h4>
+					<canvas id="expenseChart"></canvas>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+}
+else
+{
+	<div id="loading-spinner" class="spinner" style="">
+		<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
+	</div>
+	<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
+
+
+	<div id="balanceContainer" style="visibility:hidden; padding:7%">
+		<h3>Looks like you have no incomes and expenses in chosen date range.</h3>
+	</div>
+			
+}
+
 
 }
 
@@ -59,16 +112,14 @@
 	}
 
 	window.addEventListener("load", function () {
-		// Pobierz dane z modelu BalanceModel
 		const incomeData = @Html.Raw(Json.Serialize(Model.IncomeChartData));
 		const expenseData = @Html.Raw(Json.Serialize(Model.ExpenseChartData));
 
 		console.log("Income Data:", incomeData);
 		console.log("Expense Data:", expenseData);
 
-		// Inicjalizacja wykresu dla przychodów
 		const incomeLabels = @Html.Raw(Json.Serialize(Model.IncomeChartData.Select(item => item.Label)));
-		const incomeValues = @Html.Raw(Json.Serialize(Model.IncomeChartData.Select(item => item.Value)));
+		const incomeValues = @Html.Raw(Json.Serialize(Model.IncomeChartData.Select(item => item.Value )));
 		const incomeColors = incomeData.map(item => getRandomColor());
 
 		console.log("Income Labels:", incomeLabels);
@@ -86,7 +137,6 @@
 			},
 		});
 
-		// Inicjalizacja wykresu dla wydatków
 		const expenseLabels = @Html.Raw(Json.Serialize(Model.ExpenseChartData.Select(item => item.Label)));
 		const expenseValues = @Html.Raw(Json.Serialize(Model.ExpenseChartData.Select(item => item.Value)));
 		const expenseColors = expenseData.map(item => getRandomColor());
@@ -105,9 +155,54 @@
 				}],
 			},
 
+
 		});
 	});
 
+
+	function showdiv(elementId, delay) {
+		setTimeout(function () {
+			document.getElementById(elementId).style.visibility = "visible";
+		}, delay);
+	}
+
+	setTimeout(function () {
+		document.getElementById('loading-spinner').style.display = 'none';
+	}, 12000);
+
+	showdiv("balanceContainer", 10000);
+	showdiv("balanceContainer1", 4000);
+	showdiv("balanceContainer2", 6000);
+	showdiv("balanceContainer3", 8000);
+	showdiv("balanceContainer4", 10000);
+
+
+	setTimeout(function () {
+		document.getElementById('loading-spinner').style.display = 'none';
+	}, 10000);
+
+
+
+	window.addEventListener("load", function () {
+		setTimeout(function () {
+			var balance = @Model.Balance;
+
+			var messageElement = document.getElementById("balanceMessage");
+			messageElement.style.visibility = "visible";
+
+			if (balance > 0) {
+				messageElement.className = "alert alert-success";
+				messageElement.innerHTML = "Good job! You are in the black!  &#128077;";
+			} else if (balance < 0) {
+				messageElement.className = "alert alert-danger";
+				messageElement.innerText = "U-oh. You should take care of your wallet!";
+			}
+			else{
+				messageElement.className = "alert alert-warning";
+				messageElement.innerText = "In given date range there are no incomes and expenses.";
+			}
+		}, 12000);
+	});
 
 </script>
 

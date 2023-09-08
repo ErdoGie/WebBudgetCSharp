@@ -38,10 +38,31 @@ namespace WebBudget.MVC.Controllers
             _userManager = userManager;
             _webBudgetRepository = webBudgetRepository;
         }
-        // ------------------------------------------------- CREATE INCOME --------------------------------------------- //
 
-        // do tej metody przyjmuję dany typ budzetu
-        [HttpPost]
+		public IActionResult Index()
+		{
+			return View();
+		}
+
+		public IActionResult About()
+		{
+
+			return View();
+		}
+
+		public IActionResult NoAccess()
+		{
+
+			return View();
+		}
+
+
+
+
+		// ------------------------------------------------- CREATE INCOME --------------------------------------------- //
+
+		// do tej metody przyjmuję dany typ budzetu
+		[HttpPost]
         [Authorize]
         public async Task<IActionResult> CreateIncome(IncomeViewModelCommand command)
         {
@@ -342,12 +363,7 @@ namespace WebBudget.MVC.Controllers
             return View(balanceModel);
         }
 
-		[HttpGet]
-		[Authorize]
-		public IActionResult SelectDateRange()
-		{
-			return View();
-		}
+
 
 
 		// ---------------------------------------- ADD INCOME CATEGORY -------------------------------------------------- //

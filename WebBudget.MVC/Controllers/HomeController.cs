@@ -18,19 +18,8 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult About()
-    {
-       
-        return View();
-    }
 
-    public IActionResult NoAccess()
-    {
-
-        return View();
-    }
-
-    public IActionResult Balance()
+    public IActionResult Home()
     {
         return View();
     }
