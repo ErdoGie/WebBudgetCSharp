@@ -93,6 +93,13 @@
 				<input type="hidden" name="IncomeDate" value="@income.IncomeDate" />
 			}
 
+			@foreach (var income in Model.Expenses!)
+			{
+				<input type="hidden" name="ExpenseName" value="@income.ExpenseType" />
+				<input type="hidden" name="ExpenseValue" value="@income.ExpenseValue" />
+				<input type="hidden" name="ExpenseDate" value="@income.ExpenseDate" />
+			}
+
 			<button type="submit">Generate PDF</button>
 		</form>
 
