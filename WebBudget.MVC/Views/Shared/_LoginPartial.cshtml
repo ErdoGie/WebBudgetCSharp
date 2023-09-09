@@ -6,7 +6,13 @@
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
 	{
+		<li class="nav-item">
+			<a class="nav-link text-dark text-white " asp-area="" asp-controller="WebBudget" asp-action="Index">Home</a>
+		</li>
 
+		<li class="nav-item">
+			<a class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="About">About Project</a>
+		</li>
 		<li class="nav-item">
 			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageExpense" title="ManageExpense">Manage Expenses</a>
 		</li>

@@ -32,7 +32,9 @@
 </head>
 <body>
 	<header class="text-center py-4">
-		<h2 class="WebBudget">Web Budget</h2>
+		<a href="/" style="text-decoration:none">
+			<h2 class="WebBudget">Web Budget</h2>
+		</a>
 	</header>
 
 	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3 custom-navbar">
@@ -42,16 +44,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link text-dark text-white " asp-area="" asp-controller="WebBudget" asp-action="Index">Home</a>
-					</li>
 
-					<li class="nav-item">
-						<a class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="About">About Project</a>
-					</li>
-
-				</ul>
 				<partial name="_LoginPartial" />
 			</div>
 		</div>
@@ -80,17 +73,20 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 	@await RenderSectionAsync("Scripts", required: false)
+
+	<footer class="border-top footer text-muted center-line ">
+		<div class="container">
+
+			<a href="https://radoslaw-gucwa.profesjonalnyprogramista.pl/?page_id=2292" target="_blank">
+				<i class="fa-solid fa-address-card fa-lg " style="color: white; margin-right:10px"></i>
+			</a>
+
+			<a href="https://github.com/ErdoGie?tab=repositories" target="_blank">
+				<i class="fa-brands fa-github fa-lg" style="color: white;"></i>
+			</a>
+		</div>
+	</footer>
+
 </body>
-<footer class="border-top footer text-muted center-line ">
-	<div class="container">
 
-		<a href="https://radoslaw-gucwa.profesjonalnyprogramista.pl/?page_id=2292">
-			<i class="fa-solid fa-address-card fa-lg " style="color: white; margin-right:10px"></i>
-		</a>
-
-		<a href="https://github.com/ErdoGie?tab=repositories">
-			<i class="fa-brands fa-github fa-lg" style="color: white;"></i>
-		</a>
-	</div>
-</footer>
 </html>

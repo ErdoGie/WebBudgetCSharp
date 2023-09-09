@@ -10,10 +10,10 @@
             <section>
                 <form id="account" method="post">
                     <h4>Welcome back!</h4>
-                    <hr style="margin-bottom:30%" />
+                    <hr style="margin-bottom:25%" />
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                     <div class="form-floating mb-3">
-                        <input asp-for="Input.Login" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                        <input asp-for="Input.Login" class="form-control" autocomplete="username" aria-required="true" />
                         <label asp-for="Input.Login" class="form-label">Login</label>
                         <span asp-validation-for="Input.Login" class="text-danger"></span>
                     </div>
