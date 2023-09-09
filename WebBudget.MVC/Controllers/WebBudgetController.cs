@@ -23,6 +23,10 @@ using WebBudget.Domain.Entities;
 using WebBudget.Domain.Interfaces;
 using X.PagedList;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
+using System.Web.Helpers;
+using WebBudget.Application.Email;
 //
 namespace WebBudget.MVC.Controllers
 {
@@ -582,7 +586,7 @@ namespace WebBudget.MVC.Controllers
             return RedirectToAction(nameof(ShowExpenseCategories1));
         }
 
-		// ---------------------------------------- PDF GENEREATE -------------------------------------------------- //
+		// ----------------------------------------  GENEREATE PDF / CSV  -------------------------------------------------- //
 
 		[HttpPost]
 		public IActionResult GeneratePDF(BalanceModel model)
@@ -620,17 +624,61 @@ namespace WebBudget.MVC.Controllers
 
 		}
 
+        // ----------------------------------------  FORGOTTEN PASSWORD -------------------------------------------------- //
 
-        public async Task<IActionResult> Greetings()
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgottenPassword()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user != null)
+			return RedirectToPage("/ForgotPassword");
+		}
+
+
+		[HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task <IActionResult> ForgottenPassword(ForgotPasswordModel model)
+        {
+            if (ModelState.IsValid)
             {
-                ViewBag.UserName = user.UserName;
+                var user = await _userManager.FindByEmailAsync(model.Input.Email);
+                if (user != null)
+                {
+                    var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var callbackUrl = Url.Page(
+                        "Account/ResetPassword",
+                        pageHandler: null,
+                        values: new { code },
+                        protocol: Request.Scheme);
+                    return RedirectToPage("./ForgottenPasswordConfirmation");
+                }
+                return RedirectToPage("./ForgotPasswordConfirmation");
             }
+			return RedirectToPage("/ForgotPassword");
+		}
 
-            return View();
-        }
+        public async Task SendEmail()
+        {
 
-    }
+			var emailReceiver = "rgucwa318@gmail.com";
+
+			var email = new SendEmail(new EmailParams
+			{
+				HostSmtp = "smtp.gmail.com",
+				Port = 587,
+				EnableSsl = true,
+				SenderName = "Radosław Gucwa",
+				SenderEmail = "radoslaw.gucwa.programista@gmail.com",
+				SenderEmailPassword = "quzdmkwomsfqfeau"
+			});
+
+			await email.Send(
+				"Hello, it's me - an e-mail exmaple",
+				"Some greetings content :)",
+				emailReceiver);
+
+		}
+
+	}
 }
