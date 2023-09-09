@@ -100,44 +100,30 @@
 				<input type="hidden" name="ExpenseDate" value="@income.ExpenseDate" />
 			}
 
-			<button type="submit">Generate PDF</button>
+			<button  type="submit" class="btn btn-light">Generate PDF</button>
 		</form>
 
-		<table border="1">
-			<thead>
-				<tr>
-					<th>Income Name</th>
-					<th>Income Value</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var income in Model.Incomes!)
-				{
-					<tr>
-						<td>@income.IncomeType</td>
-						<td>@income.IncomeValue zł</td>
-					</tr>
-				}
-			</tbody>
-		</table>
+		<form asp-controller="WebBudget" asp-action="GenerateCSV" method="post">
+			<input type="hidden" name="TotalIncome" value="@Model.TotalIncome" />
+			<input type="hidden" name="TotalExpense" value="@Model.TotalExpense" />
+			<input type="hidden" name="Balance" value="@Model.Balance" />
 
-		<table border="1">
-			<thead>
-				<tr>
-					<th>Expense Name</th>
-					<th>Expense Value</th>
-				</tr>
-			</thead>
-			<tbody>
-			@*	@for (int i = 0; i < Model.Expenses.Count(); i++)
-				{
-					<tr>
-						<td>@Model.ExpenseName[i]</td>
-						<td>@Model.Expenses[i].ExpenseValue zł</td>
-					</tr>
-				}*@
-			</tbody>
-		</table>
+			@foreach (var income in Model.Incomes!)
+			{
+				<input type="hidden" name="IncomeName" value="@income.IncomeType" />
+				<input type="hidden" name="IncomeValue" value="@income.IncomeValue" />
+				<input type="hidden" name="IncomeDate" value="@income.IncomeDate" />
+			}
+
+			@foreach (var income in Model.Expenses!)
+			{
+				<input type="hidden" name="ExpenseName" value="@income.ExpenseType" />
+				<input type="hidden" name="ExpenseValue" value="@income.ExpenseValue" />
+				<input type="hidden" name="ExpenseDate" value="@income.ExpenseDate" />
+			}
+
+			<button type="submit" class="btn btn-light">Generate CSV</button>
+		</form>
 
 
 	}
@@ -183,7 +169,7 @@
 		console.log("Income Colors:", incomeColors);
 
 		new Chart(document.getElementById('incomeChart'), {
-			type: 'pie',
+			type: 'doughnut',
 			data: {
 				labels: incomeLabels,
 				datasets: [{
@@ -202,7 +188,7 @@
 		console.log("Expense Colors:", expenseColors);
 
 		new Chart(document.getElementById('expenseChart'), {
-			type: 'pie',
+			type: 'doughnut',
 			data: {
 				labels: expenseLabels,
 				datasets: [{

@@ -22,6 +22,7 @@ using WebBudget.Application.WebBudget.Commands.Queries.GetWebBudgetsByExpenseID;
 using WebBudget.Domain.Entities;
 using WebBudget.Domain.Interfaces;
 using X.PagedList;
+using System.Text;
 //
 namespace WebBudget.MVC.Controllers
 {
@@ -600,5 +601,24 @@ namespace WebBudget.MVC.Controllers
 				return RedirectToAction("Error");
 			}
 		}
+
+        [HttpPost]
+        public IActionResult GenerateCSV(BalanceModel model)
+        {
+            string csvData = model.GenerateCsv(model);
+
+            byte[] csvBytes = Encoding.UTF8.GetBytes(csvData);
+
+			if (csvBytes != null)
+			{
+				return File(csvBytes, "text/csv", "Budget.csv");
+			}
+			else
+			{
+				return RedirectToAction("Error");
+			}
+
+		}
+
 	}
 }
