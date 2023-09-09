@@ -17,3 +17,5 @@ C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplicati
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\obj\Debug\net7.0\ref\WebBudget.Infrastructure.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\WebBudget.Application.dll
 C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\WebBudget.Application.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\Microsoft.Azure.Documents.ServiceInterop.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebApplication.Infrastructure\bin\Debug\net7.0\Cosmos.CRTCompat.dll

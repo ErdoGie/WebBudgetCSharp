@@ -116,7 +116,7 @@ namespace WebBudget.Application.Balance
 
 			// nagłówki kolumn, kolejno kategoria/wartosc/data
 
-			csv.AppendLine("INCOMES");
+			csv.AppendLine("Incomes");
 			csv.AppendLine("Category,Value,Date");
 
 			for (int i = 0; i< model.IncomeName?.Count; i++)
@@ -132,8 +132,16 @@ namespace WebBudget.Application.Balance
 				csv.AppendLine($"{model.ExpenseName[i]}, {model.ExpenseValue![i].ToString("F2")}, {model.ExpenseDate?[i].ToString("yyyy-MM-dd")}");
 			}
 
+
+			csv.AppendLine("");
+			csv.AppendLine("Total Incomes, Total Expenses, Balance");
+			csv.AppendLine($"{model.TotalIncome},{model.TotalExpense},{model.Balance}");
+
 			return csv.ToString();
 		}
+
+
+
 
 	}
 }

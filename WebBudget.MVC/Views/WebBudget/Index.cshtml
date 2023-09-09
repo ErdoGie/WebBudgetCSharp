@@ -1,6 +1,13 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using WebBudget.MVC.Areas.Identity
+@using WebBudget.MVC.Areas.Identity.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
 	Layout = "_Layout";
 }
+@inject UserManager<IdentityUser> UserManager
 
 @section containerContent  {
 	<style>
@@ -10,6 +17,7 @@
 		}
 
 	</style>
+	<h4> Hello there @UserManager.GetUserName(User)!</h4>
 
 	<h4 style="margin-bottom: 20px;"> Inflation, "high" interest rates, uncertainty, fear, and volatitly. </h4>
 

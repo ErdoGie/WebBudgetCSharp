@@ -620,5 +620,17 @@ namespace WebBudget.MVC.Controllers
 
 		}
 
-	}
+
+        public async Task<IActionResult> Greetings()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                ViewBag.UserName = user.UserName;
+            }
+
+            return View();
+        }
+
+    }
 }
