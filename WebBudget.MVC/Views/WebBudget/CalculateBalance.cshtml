@@ -1,0 +1,248 @@
+﻿@model WebBudget.Application.Balance.BalanceModel
+
+@{
+	ViewData["Title"] = "CalculateBalance";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section containerContent{
+
+
+
+	@if (Model.Incomes!.Count() > 0 && Model.Expenses!.Count() > 0)
+	{
+
+
+		<div id="loading-spinner" class="spinner" style="">
+			<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
+		</div>
+		<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
+
+
+		<div id="balanceContainer" style="visibility:hidden; padding:7%">
+
+			<div class="row justify-content-center">
+
+				<div class="col-md-4" id="balanceContainer1" style="visibility:hidden">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Total Income</h5>
+							<p class="card-text" style="color:green">@Model.TotalIncome zł </p>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-md-4" id="balanceContainer2" style="visibility:hidden">
+					<div class="card ">
+						<div class="card-body">
+							<h5 class="card-title">Total Expense</h5>
+							<p class="card-text" style="color:red">@Model.TotalExpense zł</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" id="balanceContainer3" style="visibility:hidden">
+					<div class="card">
+						<div class="card-body">
+
+							@if (Model.Balance > 0)
+							{
+								<h5 class="card-title">Balance</h5>
+								<p class="card-text" style="color:green">@Model.Balance zł!</p>
+							}
+							else if (Model.Balance < 0)
+							{
+								<h5 class="card-title">Balance</h5>
+								<p class="card-text" style="color:red">@Model.Balance zł !</p>
+
+							}
+							else
+							{
+								<h5 class="card-title">Balance</h5>
+								<p class="card-text" style="color:orange">@Model.Balance zł !</p>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<div style="text-align: center;visibility:hidden" id="balanceContainer4" >
+					<div style="display: inline-block; margin-right: 10px;">
+						<h4>Incomes</h4>
+						<canvas id="incomeChart"></canvas>
+					</div>
+
+					<div style="display: inline-block;visibility:hidden" id="balanceContainer6" >
+						<h4>Expenses</h4>
+						<canvas id="expenseChart"></canvas>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div>
+			<form asp-controller="WebBudget" asp-action="GeneratePDF" method="post" style="display: inline-block;">
+				<input type="hidden" name="TotalIncome" value="@Model.TotalIncome" />
+				<input type="hidden" name="TotalExpense" value="@Model.TotalExpense" />
+				<input type="hidden" name="Balance" value="@Model.Balance" />
+
+				@foreach (var income in Model.Incomes!)
+				{
+					<input type="hidden" name="IncomeName" value="@income.IncomeType" />
+					<input type="hidden" name="IncomeValue" value="@income.IncomeValue" />
+					<input type="hidden" name="IncomeDate" value="@income.IncomeDate" />
+				}
+
+				@foreach (var income in Model.Expenses!)
+				{
+					<input type="hidden" name="ExpenseName" value="@income.ExpenseType" />
+					<input type="hidden" name="ExpenseValue" value="@income.ExpenseValue" />
+					<input type="hidden" name="ExpenseDate" value="@income.ExpenseDate" />
+				}
+
+				<button type="submit" class="btn btn-light">Generate PDF</button>
+			</form>
+
+			<form asp-controller="WebBudget" asp-action="GenerateCSV" method="post" style="display: inline-block;">
+				<input type="hidden" name="TotalIncome" value="@Model.TotalIncome" />
+				<input type="hidden" name="TotalExpense" value="@Model.TotalExpense" />
+				<input type="hidden" name="Balance" value="@Model.Balance" />
+
+				@foreach (var income in Model.Incomes!)
+				{
+					<input type="hidden" name="IncomeName" value="@income.IncomeType" />
+					<input type="hidden" name="IncomeValue" value="@income.IncomeValue" />
+					<input type="hidden" name="IncomeDate" value="@income.IncomeDate" />
+				}
+
+				@foreach (var income in Model.Expenses!)
+				{
+					<input type="hidden" name="ExpenseName" value="@income.ExpenseType" />
+					<input type="hidden" name="ExpenseValue" value="@income.ExpenseValue" />
+					<input type="hidden" name="ExpenseDate" value="@income.ExpenseDate" />
+				}
+
+				<button type="submit" class="btn btn-light">Generate CSV</button>
+			</form>
+		</div>
+
+
+	}
+	else
+	{
+		<div id="loading-spinner" class="spinner" style="">
+			<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
+		</div>
+		<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
+
+
+		<div id="balanceContainer" style="visibility:hidden; padding:7%">
+			<h3>Looks like you have no incomes and expenses in chosen date range.</h3>
+		</div>
+
+	}
+}
+
+
+<script>
+	function getRandomColor() {
+		const letters = '0123456789ABCDEF';
+		let color = '#';
+		for (let i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
+
+	window.addEventListener("load", function () {
+		const incomeData = @Html.Raw(Json.Serialize(Model.IncomeChartData));
+		const expenseData = @Html.Raw(Json.Serialize(Model.ExpenseChartData));
+
+		console.log("Income Data:", incomeData);
+		console.log("Expense Data:", expenseData);
+
+		const incomeLabels = @Html.Raw(Json.Serialize(Model.IncomeChartData.Select(item => item.Label)));
+		const incomeValues = @Html.Raw(Json.Serialize(Model.IncomeChartData.Select(item => item.Value )));
+		const incomeColors = incomeData.map(item => getRandomColor());
+
+		console.log("Income Labels:", incomeLabels);
+		console.log("Income Values:", incomeValues);
+		console.log("Income Colors:", incomeColors);
+
+		new Chart(document.getElementById('incomeChart'), {
+			type: 'doughnut',
+			data: {
+				labels: incomeLabels,
+				datasets: [{
+					data: incomeValues,
+					backgroundColor: incomeColors,
+				}],
+			},
+		});
+
+		const expenseLabels = @Html.Raw(Json.Serialize(Model.ExpenseChartData.Select(item => item.Label)));
+		const expenseValues = @Html.Raw(Json.Serialize(Model.ExpenseChartData.Select(item => item.Value)));
+		const expenseColors = expenseData.map(item => getRandomColor());
+
+		console.log("Expense Labels:", expenseLabels);
+		console.log("Expense Values:", expenseValues);
+		console.log("Expense Colors:", expenseColors);
+
+		new Chart(document.getElementById('expenseChart'), {
+			type: 'doughnut',
+			data: {
+				labels: expenseLabels,
+				datasets: [{
+					data: expenseValues,
+					backgroundColor: expenseColors,
+				}],
+			},
+
+
+		});
+	});
+
+
+	function showdiv(elementId, delay) {
+		setTimeout(function () {
+			document.getElementById(elementId).style.visibility = "visible";
+		}, delay);
+	}
+
+	setTimeout(function () {
+		document.getElementById('loading-spinner').style.display = 'none';
+	}, 12000);
+
+	showdiv("balanceContainer", 11000);
+	showdiv("balanceContainer1", 4000);
+	showdiv("balanceContainer2", 6000);
+	showdiv("balanceContainer3", 8000);
+	showdiv("balanceContainer4", 10000);
+	showdiv("balanceContainer6", 11000);
+
+
+
+	window.addEventListener("load", function () {
+		setTimeout(function () {
+			var balance = @Model.Balance;
+
+			var messageElement = document.getElementById("balanceMessage");
+			messageElement.style.visibility = "visible";
+
+			if (balance > 0) {
+				messageElement.className = "alert alert-success";
+				messageElement.innerHTML = "Good job! You are in the black!  &#128077;";
+			} else if (balance < 0) {
+				messageElement.className = "alert alert-danger";
+				messageElement.innerText = "U-oh. You should take care of your wallet!";
+			}
+			else {
+				messageElement.className = "alert alert-warning";
+				messageElement.innerText = "In given date range there are no incomes and expenses.";
+			}
+		}, 12000);
+	});
+
+</script>
+

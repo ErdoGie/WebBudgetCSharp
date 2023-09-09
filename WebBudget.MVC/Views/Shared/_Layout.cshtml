@@ -44,11 +44,11 @@
 			<div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link text-dark text-white " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+						<a class="nav-link text-dark text-white " asp-area="" asp-controller="WebBudget" asp-action="Index">Home</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link text-dark text-white" asp-area="" asp-controller="Home" asp-action="About">About Project</a>
+						<a class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="About">About Project</a>
 					</li>
 
 				</ul>
@@ -77,6 +77,8 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 <footer class="border-top footer text-muted center-line ">

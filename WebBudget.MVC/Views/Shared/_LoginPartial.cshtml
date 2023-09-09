@@ -4,35 +4,88 @@
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
+	@if (SignInManager.IsSignedIn(User))
+	{
 
-        <li class="nav-item">
-            <a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageExpense" title="ManageExpense">Manage Expenses</a>
-        </li>
-        <li class="nav-item">
-            <a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageIncome" title="ManageIncome">Manage Incomes</a>
-        </li>
-        <li class="nav-item">
-            <a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="CalculateBalance" title="CalculateBalance">Balance</a>
-        </li>
+		<li class="nav-item">
+			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageExpense" title="ManageExpense">Manage Expenses</a>
+		</li>
+		<li class="nav-item">
+			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageIncome" title="ManageIncome">Manage Incomes</a>
+		</li>
 
-    <li class="nav-item">
-            <a id="manage" class="nav-link text-dark text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello  @UserManager.GetUserName(User)!</a>
-    </li>
-    <li class="nav-item">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark text-white border-0">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-            <a class="nav-link text-dark text-white " id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-            <a class="nav-link text-dark text-white " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+		<li class="nav-item">
+			<a id="calculate" class="nav-link text-dark text-white" onclick="showCalculateModal()" style="cursor: pointer;">Calculate Balance</a>
+		</li>
+
+
+		<li class="nav-item">
+			<a id="manage" class="nav-link text-dark text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello  @UserManager.GetUserName(User)!</a>
+		</li>
+		<li class="nav-item">
+			<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+				<button id="logout" type="submit" class="nav-link btn btn-link text-dark text-white border-0">Logout</button>
+			</form>
+		</li>
+	}
+	else
+	{
+		<li class="nav-item">
+			<a class="nav-link text-dark text-white " id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link text-dark text-white " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+		</li>
+	}
 </ul>
+
+<div id="calculateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="calculateModalLabel" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content ">
+			<div class="modal-header">
+				<h5 class="modal-title" id="calculateModalLabel " style="text-align:center">Calculate Balance</h5>
+				<button type="button" class="close" id="cancelButton2" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="text-align:center">
+				<form method="get" asp-action="CalculateBalance">
+					<div class="form-group">
+						<label for="startDate" style="color:white">Beginning Date:</label>
+						<input style="text-align:center" type="date" class="form-control" id="startDate" name="startDate" required />
+					</div>
+					<div class="form-group">
+						<label for="endDate" style="color:white">End Date:</label>
+						<input style="text-align:center"  type="date" class="form-control" id="endDate" name="endDate" required />
+					</div>
+					<div class="text-center" style="margin-top: 10%; margin-bottom: 10%">
+						<button type="submit" class="btn btn-primary">Calculate</button>
+						<button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+<script>
+	function showCalculateModal() {
+		$('#startDate').val('');
+		$('#endDate').val('');
+
+		$('#calculateModal').modal('show');
+	}
+	$(document).ready(function () {
+		$("#cancelButton").click(function () {
+			$("#calculateModal").modal("hide");
+		});
+	});
+	$(document).ready(function () {
+		$("#cancelButton2").click(function () {
+			$("#calculateModal").modal("hide");
+		});
+	});
+</script>
