@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Azure.Documents.Client;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -117,8 +118,18 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
+                // Sprawdź, czy adres e-mail jest już w użyciu
+                var existingUser = await _userManager.FindByEmailAsync(Input.Email);
+                if (existingUser != null)
+                {
+                    ModelState.AddModelError(string.Empty, $"Email {Input.Email} is already taken!");
+                    return Page();
+                }
+
+                // Kontynuuj proces rejestracji, ponieważ adres e-mail jest unikalny
                 var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Login, CancellationToken.None);
@@ -160,6 +171,7 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
         private IdentityUser CreateUser()
         {

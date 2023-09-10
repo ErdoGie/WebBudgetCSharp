@@ -10,7 +10,7 @@
 			<section>
 				<form id="account" method="post">
 					<h4>Welcome back!</h4>
-					<hr style="margin-bottom:20%" />
+					<hr style="margin-bottom:15%" />
 					<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 					<div class="form-floating mb-3">
 						<input asp-for="Input.Login" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
@@ -32,12 +32,14 @@
 								Forgotten Password ? <i class="far fa-frown"></i>
 							</button>
 						</div>
-						<label>
-							<input type="checkbox" name="remember_me">
-							Remember me
-						</label>
+						<div class="checkbox mb-3">
+							<label asp-for="Input.RememberMe" class="form-label">
+								<input class="form-check-input" asp-for="Input.RememberMe" />
+								@Html.DisplayNameFor(m => m.Input.RememberMe)
+							</label>
+						</div>
 						<p style="margin-top:5%">
-							<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Don't have an account?</a>
+							<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Don't have account?</a>
 						</p>
 
 					</div>
