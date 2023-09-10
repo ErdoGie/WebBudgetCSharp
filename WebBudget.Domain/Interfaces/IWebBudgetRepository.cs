@@ -49,6 +49,7 @@ namespace WebBudget.Domain.Interfaces
 		Task<IEnumerable<Domain.Entities.WebBudgetIncome>> GetIncomesData(DateTime startDate, DateTime endDate, string userId);
 		Task<IEnumerable<Domain.Entities.WebBudgetExpense>> GetExpensesData(DateTime startDate, DateTime endDate, string userId);
 
+        Task DeleteEverythingConnectedWithUser(string userId);
 
 	}
 }
