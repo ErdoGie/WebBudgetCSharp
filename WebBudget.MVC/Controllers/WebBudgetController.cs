@@ -627,41 +627,16 @@ namespace WebBudget.MVC.Controllers
         // ----------------------------------------  FORGOTTEN PASSWORD -------------------------------------------------- //
 
 
-        [HttpGet]
+     /*   [HttpGet]
         [AllowAnonymous]
-        public IActionResult ForgottenPassword()
+        public IActionResult ForgotPassword()
         {
-			return RedirectToPage("/ForgotPassword");
-		}
+            return View();
+        }
 
-
-		[HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task <IActionResult> ForgottenPassword(ForgotPasswordModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(model.Input.Email);
-                if (user != null)
-                {
-                    var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    var callbackUrl = Url.Page(
-                        "Account/ResetPassword",
-                        pageHandler: null,
-                        values: new { code },
-                        protocol: Request.Scheme);
-                    return RedirectToPage("./ForgottenPasswordConfirmation");
-                }
-                return RedirectToPage("./ForgotPasswordConfirmation");
-            }
-			return RedirectToPage("/ForgotPassword");
-		}
-
-        public async Task SendEmail()
-        {
-
-			var emailReceiver = "rgucwa318@gmail.com";
+        public async Task SendPasswordResetEmail(string userEmail, string resetLink)
+		{
+			var emailReceiver = userEmail;
 
 			var email = new SendEmail(new EmailParams
 			{
@@ -673,12 +648,11 @@ namespace WebBudget.MVC.Controllers
 				SenderEmailPassword = "quzdmkwomsfqfeau"
 			});
 
-			await email.Send(
-				"Hello, it's me - an e-mail exmaple",
-				"Some greetings content :)",
-				emailReceiver);
+			var subject = "Reset Password";
+			var body = $"Click the link below to reset your password:<br/><a href=\"{resetLink}\">{resetLink}</a>";
 
-		}
+			await email.Send(subject, body, emailReceiver);
+		}*/
 
 	}
 }

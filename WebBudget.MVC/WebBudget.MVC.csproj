@@ -37,4 +37,9 @@
 		<ProjectReference Include="..\WebBudget.Domain\WebBudget.Domain.csproj" />
 	</ItemGroup>
 
+
+	<ItemGroup>
+	  <Folder Include="Areas\Identity\Data\" />
+	</ItemGroup>
+
 </Project>
