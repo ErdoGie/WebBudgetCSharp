@@ -73,7 +73,7 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> DeleteAccount()
         {
             var user = await _userManager.GetUserAsync(User);
             var userId = await _userManager.GetUserIdAsync(user);
@@ -84,8 +84,7 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
 
             var userPosts = _webBudgetRepository.DeleteEverythingConnectedWithUser(userId);
                 
-             /*   .Where(p => p.UserId == user.Id);
-            _webBudgetRepository.Posts.RemoveRange(userPosts);*/
+            
 
             RequirePassword = await _userManager.HasPasswordAsync(user);
             if (RequirePassword)

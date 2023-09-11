@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using WebBudget.Application.Email;
 
 namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
 {
@@ -163,9 +164,33 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
                 email,
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            await SendConfirmationEmail(user.Email, callbackUrl);
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
         }
+
+
+        public async Task SendConfirmationEmail(string userEmail, string callbackUrl)
+        {
+            var emailReceiver = userEmail;
+
+            var email = new SendEmail(new EmailParams
+            {
+                HostSmtp = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                SenderName = "Radosław Gucwa",
+                SenderEmail = "radoslaw.gucwa.programista@gmail.com",
+                SenderEmailPassword = "quzdmkwomsfqfeau"
+            });
+
+            var subject = "Confirm e-mail in WebBudget application";
+            var body = $"Please confirm an e-mail:<br/><a href=\"{callbackUrl}\">{callbackUrl}</a>";
+
+            await email.Send(subject, body, emailReceiver);
+        }
+
+
     }
 }

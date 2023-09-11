@@ -20,12 +20,14 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -114,6 +116,13 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var user = await _userManager.FindByNameAsync(Input.Login);
+                if (user != null && !await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    // Użytkownik nie potwierdził jeszcze swojego adresu e-mail, więc nie możemy go zalogować
+                    ModelState.AddModelError(string.Empty, "You must confirm your email before logging in.");
+                    return Page();
+                }
                 var result = await _signInManager.PasswordSignInAsync(Input.Login, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {

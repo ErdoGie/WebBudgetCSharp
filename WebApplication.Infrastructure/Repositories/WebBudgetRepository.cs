@@ -248,10 +248,6 @@ namespace WebBudget.Infrastructure.Repositories
             var userExpenses = _webBudgetDbContext.WebBudgetExpense.Where(i => i.CreatedById == userId);
             _webBudgetDbContext.RemoveRange(userExpenses);
 
-
-
-
-
             await _webBudgetDbContext.SaveChangesAsync();
         }
     }
