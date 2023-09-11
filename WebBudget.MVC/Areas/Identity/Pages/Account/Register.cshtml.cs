@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using WebBudget.Application.Email;
 
 namespace WebBudget.MVC.Areas.Identity.Pages.Account
 {
@@ -114,66 +115,87 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
-            returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+		public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+		{
+			returnUrl ??= Url.Content("~/");
+			ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            if (ModelState.IsValid)
-            {
-                // Sprawdź, czy adres e-mail jest już w użyciu
-                var existingUser = await _userManager.FindByEmailAsync(Input.Email);
-                if (existingUser != null)
-                {
-                    ModelState.AddModelError(string.Empty, $"Email {Input.Email} is already taken!");
-                    return Page();
-                }
+			if (ModelState.IsValid)
+			{
+				var existingUser = await _userManager.FindByEmailAsync(Input.Email);
+				if (existingUser != null)
+				{
+					ModelState.AddModelError(string.Empty, $"Email {Input.Email} is already taken!");
+					return Page();
+				}
 
-                // Kontynuuj proces rejestracji, ponieważ adres e-mail jest unikalny
-                var user = CreateUser();
+				var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Login, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+				await _userStore.SetUserNameAsync(user, Input.Login, CancellationToken.None);
+				await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+				var result = await _userManager.CreateAsync(user, Input.Password);
 
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
+				if (result.Succeeded)
+				{
+					_logger.LogInformation("User created a new account with password.");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+					var userId = await _userManager.GetUserIdAsync(user);
+					var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+					code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+					var callbackUrl = Url.Page(
+						"/Account/ConfirmEmail",
+						pageHandler: null,
+						values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+						protocol : Request.Scheme); 
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+					await SendConfirmationEmail(Input.Email, callbackUrl);
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-            }
+					if (_userManager.Options.SignIn.RequireConfirmedEmail)
+					{
+						return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+					}
+					else
+					{
+						await _signInManager.SignOutAsync();
+						return Page();
+					}
+				}
+				foreach (var error in result.Errors)
+				{
+					ModelState.AddModelError(string.Empty, error.Description);
+				}
+			}
 
-            // If we got this far, something failed, redisplay form
-            return Page();
-        }
+			// If we got this far, something failed, redisplay form
+			return Page();
+		}
 
 
-        private IdentityUser CreateUser()
+
+
+		public async Task SendConfirmationEmail(string userEmail, string callbackUrl)
+		{
+			var emailReceiver = userEmail;
+
+			var email = new SendEmail(new EmailParams
+			{
+				HostSmtp = "smtp.gmail.com",
+				Port = 587,
+				EnableSsl = true,
+				SenderName = "Radosław Gucwa",
+				SenderEmail = "radoslaw.gucwa.programista@gmail.com",
+				SenderEmailPassword = "quzdmkwomsfqfeau"
+			});
+
+			var subject = "Confirm e-mail in WebBudget application";
+			var body = $"Please confirm an e-mail:<br/><a href=\"{callbackUrl}\">{callbackUrl}</a>";
+
+			await email.Send(subject, body, emailReceiver);
+		}
+
+
+
+		private IdentityUser CreateUser()
         {
             try
             {

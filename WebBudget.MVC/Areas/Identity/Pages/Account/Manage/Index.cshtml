@@ -7,9 +7,8 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h4> Hello there @UserManager.GetUserName(User)!</h4>
-<partial name="_StatusMessage" for="StatusMessage" />
-
+<h4>@UserManager.GetUserName(User)!</h4>
+<p> Here is an opportunity for you to change your e-mail, password, or even delete account.</p>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

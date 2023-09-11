@@ -119,8 +119,7 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
                 var user = await _userManager.FindByNameAsync(Input.Login);
                 if (user != null && !await _userManager.IsEmailConfirmedAsync(user))
                 {
-                    // Użytkownik nie potwierdził jeszcze swojego adresu e-mail, więc nie możemy go zalogować
-                    ModelState.AddModelError(string.Empty, "You must confirm your email before logging in.");
+                    ModelState.AddModelError(string.Empty, "User email not cofirmed.");
                     return Page();
                 }
                 var result = await _signInManager.PasswordSignInAsync(Input.Login, Input.Password, Input.RememberMe, lockoutOnFailure: false);
