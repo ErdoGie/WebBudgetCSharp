@@ -6,35 +6,44 @@
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
 	{
-
 		<li class="nav-item">
-			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageExpense" title="ManageExpense">Manage Expenses</a>
-		</li>
-		<li class="nav-item">
-			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageIncome" title="ManageIncome">Manage Incomes</a>
+			<a class="nav-link text-dark text-white " asp-area="" asp-controller="WebBudget" asp-action="Index"> Home  <i class="fa-solid fa-house-user"></i></a>
 		</li>
 
 		<li class="nav-item">
-			<a id="calculate" class="nav-link text-dark text-white" onclick="showCalculateModal()" style="cursor: pointer;">Calculate Balance</a>
+			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageExpense" title="ManageExpense">Expenses <i class="fa-solid fa-receipt"></i></a>
+		</li>
+		<li class="nav-item">
+			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageIncome" title="ManageIncome"> Incomes <i class="fa-solid fa-money-bill-wave"></i></a>
+		</li>
+
+		<li class="nav-item">
+			<a id="calculate" class="nav-link text-dark text-white" onclick="showCalculateModal()" style="cursor: pointer;"> Balance <i class="fa-solid fa-calculator"></i></a>
 		</li>
 
 
 		<li class="nav-item">
-			<a id="manage" class="nav-link text-dark text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello  @UserManager.GetUserName(User)!</a>
+			<a id="manage" class="nav-link text-dark text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"> Settings <i class="fa-solid fa-gear fa-spin"></i> </a>
 		</li>
 		<li class="nav-item">
 			<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-				<button id="logout" type="submit" class="nav-link btn btn-link text-dark text-white border-0">Logout</button>
+				<button id="logout" type="submit" class="nav-link btn btn-link text-dark text-white border-0">Logout  <i class="fa-sharp fa-solid fa-power-off fa-fade"></i></button>
 			</form>
 		</li>
 	}
 	else
 	{
 		<li class="nav-item">
-			<a class="nav-link text-dark text-white " id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+			<a class="nav-link text-dark text-white " asp-area="" asp-controller="Home" asp-action="Home">Home <i class="fa-solid fa-house-user"></i></a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link text-dark text-white " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+			<a class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="About"> About <i class="fa-solid fa-question"></i></a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link text-dark text-white " id="register" asp-area="Identity" asp-page="/Account/Register">Register <i class="fa-solid fa-user-plus"></i> </a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link text-dark text-white " id="login" asp-area="Identity" asp-page="/Account/Login">Login <i class="fa-solid fa-right-to-bracket"></i></a>
 		</li>
 	}
 </ul>
@@ -43,7 +52,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content ">
 			<div class="modal-header">
-				<h5 class="modal-title" id="calculateModalLabel " style="text-align:center">Calculate Balance</h5>
+				<h5 class="modal-title" id="calculateModalLabel " style="text-align:center">Choose period of time:</h5>
 				<button type="button" class="close" id="cancelButton2" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>

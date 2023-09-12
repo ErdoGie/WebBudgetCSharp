@@ -5,9 +5,10 @@
     ViewData["ActivePage"] = ManageNavPages.Email;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h4>Change your e-mail</h4>
+<hr />
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
+<div class="row" style="justify-content:center">
     <div class="col-md-6">
         <form id="email-form" method="post">
             <div asp-validation-summary="All" class="text-danger" role="alert"></div>
@@ -21,14 +22,7 @@
                     <label asp-for="Email" class="form-label"></label>
                 </div>
             }
-            else
-            {
-                <div class="form-floating mb-3">
-                    <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
-                    <label asp-for="Email" class="form-label"></label>
-                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-                </div>
-            }
+         
             <div class="form-floating mb-3">
                 <input asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="Please enter new email." />
                 <label asp-for="Input.NewEmail" class="form-label"></label>

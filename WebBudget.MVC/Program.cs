@@ -28,8 +28,8 @@ var scope = app.Services.CreateScope();
 
 if (!app.Environment.IsDevelopment())
 {
-	app.UseExceptionHandler("/Home/Error");
-	app.UseHsts();
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -40,8 +40,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-	name: "default",
-	pattern: "{controller=Home}/{action=Home}/{id?}");
+    name: "default",
+    pattern: "{controller=Home}/{action=Home}/{id?}");
 
 app.MapRazorPages();
 app.Run();

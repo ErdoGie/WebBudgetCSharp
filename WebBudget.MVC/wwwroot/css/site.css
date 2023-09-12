@@ -157,6 +157,22 @@ footer {
   z-index: -1;
 }
 
+.warning-button {
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .warning-button:hover {
+        background-color: #ff6b6b; 
+    }
+
+    .warning-button .fa-exclamation {
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        transform: translate(-50%, -50%);
+        margin-left: 10px; 
+    }
 
 
 /*animations*/

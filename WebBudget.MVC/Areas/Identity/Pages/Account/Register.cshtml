@@ -9,16 +9,17 @@
 	<div class="row justify-content-center align-items-center">
 		<div class="col-md-4">
 			<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-				<h4 >Register account.</h4>
-				<hr style="margin-bottom:20%"  />
+				<h4>Register account.</h4>
+				<hr style="margin-bottom:10%" />
 				<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 				<div class="form-floating mb-3">
-					<input asp-for="Input.Login" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+					<input asp-for="Input.Login" class="form-control" autocomplete="username" aria-required="true" placeholder="RdoG" autocomplete = "off" />
 					<label asp-for="Input.Login">Login</label>
+
 					<span asp-validation-for="Input.Login" class="text-danger"></span>
 				</div>
 				<div class="form-floating mb-3">
-					<input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+					<input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" autocomplete="off" />
 					<label asp-for="Input.Email">Email</label>
 					<span asp-validation-for="Input.Email" class="text-danger"></span>
 				</div>
@@ -43,5 +44,10 @@
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
 }
+
+
+
+
+
 
 

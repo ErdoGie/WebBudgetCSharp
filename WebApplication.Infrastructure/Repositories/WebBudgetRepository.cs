@@ -240,5 +240,15 @@ namespace WebBudget.Infrastructure.Repositories
 		.Where(e => e.ExpenseDate >= startDate && e.ExpenseDate <= endDate && e.CreatedById == userId)
 		.ToListAsync();
 
-	}
+        public async Task DeleteEverythingConnectedWithUser(string userId)
+        {
+            var userIncomes = _webBudgetDbContext.WebBudgetIncome.Where(i => i.CreatedById == userId);
+			_webBudgetDbContext.RemoveRange(userIncomes);
+
+            var userExpenses = _webBudgetDbContext.WebBudgetExpense.Where(i => i.CreatedById == userId);
+            _webBudgetDbContext.RemoveRange(userExpenses);
+
+            await _webBudgetDbContext.SaveChangesAsync();
+        }
+    }
 }
