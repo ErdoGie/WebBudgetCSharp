@@ -116,6 +116,15 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
 			var email = await _userManager.GetEmailAsync(user);
 			if (Input.NewEmail != email)
 			{
+
+				var allUsers = _userManager.Users.ToList();
+
+				if (allUsers.Any(u => u.Id != user.Id && u.Email == Input.NewEmail))
+				{
+					ModelState.AddModelError(string.Empty, "This email address is already in use. Choose other one.");
+					return Page();
+				}
+
 				var userId = await _userManager.GetUserIdAsync(user);
 				var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
 				code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -125,7 +134,7 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
 				var callbackUrl = Url.Page(
 					"/Account/ConfirmEmailChange",
 					pageHandler: null,
-					values: new { area = "Identity", userId = userId, UserName = currentUserName,  email = Input.NewEmail, code = code },
+					values: new { area = "Identity", userId = userId, UserName = currentUserName, email = Input.NewEmail, code = code },
 					protocol: Request.Scheme);
 				await _emailSender.SendEmailAsync(
 					Input.NewEmail,
@@ -137,6 +146,13 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
 				StatusMessage = "Confirmation link to change email sent. Please check your email.";
 				return RedirectToPage();
 			}
+			else
+			{
+
+				ModelState.AddModelError(string.Empty, "This email address is taken!");
+				return Page();
+			}
+
 
 			StatusMessage = "Your email is unchanged.";
 			return RedirectToPage();

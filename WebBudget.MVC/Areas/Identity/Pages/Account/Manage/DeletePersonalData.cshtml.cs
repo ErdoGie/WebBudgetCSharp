@@ -73,7 +73,7 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> DeleteAccount()
+        public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
             var userId = await _userManager.GetUserIdAsync(user);
