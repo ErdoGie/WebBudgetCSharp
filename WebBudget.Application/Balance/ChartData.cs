@@ -11,6 +11,6 @@ namespace WebBudget.Application.Balance
         public string? Label { get; set; }
         public float Value { get; set; }
 
-        public string Color { get; set; }
+        public string? Color { get; set; }
     }
 }

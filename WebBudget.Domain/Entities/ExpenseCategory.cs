@@ -8,15 +8,19 @@ using System.Threading.Tasks;
 
 namespace WebBudget.Domain.Entities
 {
-    public class ExpenseCategory
-    {
-        [Key]
-        public int CategoryId { get; set; }
+	public class ExpenseCategory
+	{
+		[Key]
+		public int CategoryId { get; set; }
 
-        [Required]
-        public string CategoryName { get; set; } = default!;
+		[Required]
+		public string CategoryName { get; set; } = default!;
 
-        public string UserId { get; set; } = default!;
-        public IdentityUser User { get; set; } = default!;
-    }
+		public float Limit { get; set; }
+
+		public bool IsLimitSet { get; set; }
+
+		public string UserId { get; set; } = default!;
+		public IdentityUser User { get; set; } = default!;
+	}
 }
