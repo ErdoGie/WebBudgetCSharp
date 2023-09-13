@@ -481,10 +481,16 @@ namespace WebBudget.MVC.Controllers
 
 			if (existingCategory != null)
 			{
-				ModelState.AddModelError("CategoryName", "Category with this name already exists.");
-				return View(command);
+				ViewBag.ErrorMessage = "Category with this name already exists.";
+				return RedirectToAction(nameof(ShowExpenseCategories1));
 			}
 
+			if (command.Limit == null)
+			{
+				command.Limit = 0;
+			}
+
+	
 
 			await _mediator.Send(command);
 
@@ -564,7 +570,7 @@ namespace WebBudget.MVC.Controllers
 		// ---------------------------------------- EDIT EXPENSE CATEGORY -------------------------------------------------- //
 
 		[HttpPost]
-		public async Task<IActionResult> EditExpenseCategory(int categoryIdToEdit, string newCategoryName)
+		public async Task<IActionResult> EditExpenseCategory(int categoryIdToEdit, string newCategoryName, float newLimit)
 		{
 			var userId = _userManager.GetUserId(User);
 
@@ -579,7 +585,7 @@ namespace WebBudget.MVC.Controllers
 			}
 			if (ModelState.IsValid)
 			{
-				await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName);
+				await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName, newLimit);
 
 				await _webBudgetRepository.UpdateExpenseCategoryInExpenses(categoryIdToEdit, newCategoryName);
 

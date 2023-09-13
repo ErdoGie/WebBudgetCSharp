@@ -202,13 +202,22 @@ namespace WebBudget.Infrastructure.Repositories
 		public async Task<WebBudgetIncome> GetIncomeByIncomeId(int incomeId)
 		=> await _webBudgetDbContext.WebBudgetIncome.FirstAsync(i => i.IncomeId == incomeId);
 
-		public async Task EditExpenseCategoryAsync(int categoryId, string newCategoryName)
+		public async Task EditExpenseCategoryAsync(int categoryId, string newCategoryName, float newLimit)
 		{
 			var categoryToUpdate = await _webBudgetDbContext.ExpenseCategories.FirstOrDefaultAsync(c => c.CategoryId == categoryId);
 
 			if (categoryToUpdate != null)
 			{
 				categoryToUpdate.CategoryName = newCategoryName;
+				categoryToUpdate.Limit = newLimit;
+				if(categoryToUpdate.Limit > 0)
+				{
+					categoryToUpdate.IsLimitSet = true;
+				}
+				else
+				{
+					categoryToUpdate.IsLimitSet = false;
+				}
 				await _webBudgetDbContext.SaveChangesAsync();
 			}
 		}

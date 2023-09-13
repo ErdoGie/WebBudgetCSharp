@@ -16,7 +16,7 @@ namespace WebBudget.Domain.Entities
 		[Required]
 		public string CategoryName { get; set; } = default!;
 
-		public float Limit { get; set; }
+		public float? Limit { get; set; }
 
 		public bool IsLimitSet { get; set; }
 

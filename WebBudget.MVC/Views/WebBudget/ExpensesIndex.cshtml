@@ -38,7 +38,8 @@
 										<option style="text-align:center" value="" selected disabled>Choose expense category</option>
 										@foreach (var category in Model.ExpenseCommand.ExpenseCategories)
 										{
-											<option style="text-align:center" value="@category.CategoryName">@category.CategoryName</option>
+											<option style="text-align:center" value="@category.CategoryName" data-limit="@category.Limit">@category.CategoryName</option>
+
 										}
 									</select>
 								}
@@ -48,6 +49,7 @@
 										<option class="text-muted" selected disabled>No category available. Add some first.</option>
 									</select>
 								}
+								
 								<span class="text-danger" id="categoryValidationMessage"></span>
 							</div>
 						</div>
@@ -57,11 +59,19 @@
 							<input id="ExpenseCommand.ExpenseDate" style="text-align:center" name="ExpenseCommand.ExpenseDate" class="form-control" type="date" required />
 							<span class="text-danger" id="dateValidationMessage"></span>
 						</div>
-						<div class="form-group">
-							<label for="ExpenseCommand.ExpenseValue" class="control-label" style="color:white ;margin-top:4%">Value</label>
-							<input id="ExpenseCommand.ExpenseValue" name="ExpenseCommand.ExpenseValue" style="text-align:center" class="form-control" type="number" required />
 
-							<span id="valueError" class="text-danger" style="display: none;">Value must be greater than zero</span>
+						<div id="categoryLimit" style="color:white; margin-top:4%;">
+							<label for="ExpenseCommand.Limit" class="control-label" style="color:white; margin-top:4%">Limit:</label>
+							<span id="limitValue"></span> zł
+						</div>
+
+
+						<div class="form-group">
+							<span class="text-success" id="categoryLimitInfo" style="display: none;"></span>
+
+							<label for="ExpenseCommand.ExpenseValue" class="control-label" style="color:white ;margin-top:4%">Value</label>
+							<input id="ExpenseCommand.ExpenseValue" name="ExpenseCommand.ExpenseValue" style="text-align:center" class="form-control" type="number" min="0" required />
+
 						</div>
 
 						<div class="form-group d-flex justify-content-center">
@@ -252,6 +262,24 @@
 		});
 
 
+		document.getElementById('ExpenseCommand.ExpenseType').addEventListener('change', function () {
+			var selectElement = this;
+			var selectedOption = selectElement.options[selectElement.selectedIndex];
+			var categoryLimit = selectedOption.getAttribute('data-limit');
+			var limitValueElement = document.getElementById('limitValue');
+			var categoryLimitElement = document.getElementById('categoryLimit');
+
+			if (categoryLimit !== null) {
+				if (parseFloat(categoryLimit) === 0) {
+					limitValueElement.innerText = "No limitations :)";
+				} else {
+					limitValueElement.innerText = categoryLimit;
+				}
+				categoryLimitElement.style.display = 'block';
+			} else {
+				categoryLimitElement.style.display = 'none';
+			}
+		});
 
 	</script>
 }
