@@ -35,7 +35,7 @@
 								@if (Model.IncomeCommand.IncomeCategories.Any())
 								{
 									<select id="IncomeCommand.IncomeType" name="IncomeCommand.IncomeType" class="form-control">
-										<option style="text-align:center" value="" selected disabled>Choose income category</option>
+										<option style="text-align:center" value="" selected disabled>Choose category</option>
 										@foreach (var category in Model.IncomeCommand.IncomeCategories)
 										{
 											<option style="text-align:center" value="@category.CategoryName">@category.CategoryName</option>

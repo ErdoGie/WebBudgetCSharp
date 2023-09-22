@@ -200,11 +200,15 @@ namespace WebBudget.MVC.Controllers
 
 				var createExpenseView = new CreateExpenseView
 				{
+
 					Expenses = webBudgetExpense,
+
 					ExpenseCommand = new ExpenseViewModelCommand
 					{
 						ExpenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!)
-					}
+
+					},
+
 				};
 
 
@@ -489,8 +493,6 @@ namespace WebBudget.MVC.Controllers
 			{
 				command.Limit = 0;
 			}
-
-	
 
 			await _mediator.Send(command);
 

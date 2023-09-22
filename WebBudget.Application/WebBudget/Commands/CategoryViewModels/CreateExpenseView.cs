@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebBudget.Application.WebBudget.Commands.CreateExpenseViewModel;
 using WebBudget.Application.WebBudget.Commands.CreateIncomeViewModel;
+using WebBudget.Domain.Entities;
 
 namespace WebBudget.Application.WebBudget.Commands.CategoryViewModels
 {
@@ -14,7 +15,7 @@ namespace WebBudget.Application.WebBudget.Commands.CategoryViewModels
 		public IEnumerable<WebBudgetExpenseDTO> Expenses { get; set; } = new List<WebBudgetExpenseDTO>();
 		public ExpenseViewModelCommand ExpenseCommand { get; set; } = new ExpenseViewModelCommand();
 
-
+	
 
 	}
 }

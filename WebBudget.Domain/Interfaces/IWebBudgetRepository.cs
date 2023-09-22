@@ -51,5 +51,6 @@ namespace WebBudget.Domain.Interfaces
 
         Task DeleteEverythingConnectedWithUser(string userId);
 
+
 	}
 }
