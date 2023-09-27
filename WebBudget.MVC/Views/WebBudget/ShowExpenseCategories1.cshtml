@@ -11,39 +11,6 @@
 		Create New Category
 	</button>
 
-	<!-- ADD MODAL -->
-
-	<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="addCategoryModalLabel">Create New Category</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form id="addCategoryForm" asp-action="AddExpenseCategory" method="post">
-						<div class="form-group">
-							<label for="CategoryName" style="color:white">New Category Name</label>
-							<input asp-for="ExpenseCommand.CategoryName" type="text" class="form-control" id="CategoryName" name="CategoryName" placeholder="Example: Petrol" style="margin-bottom:3%" required />
-							<span asp-validation-for="ExpenseCommand.CategoryName" class="text-danger"></span>
-							<label for="Limit" style="color:white">Provide Limit</label>
-							<input asp-for="ExpenseCommand.Limit" type="number" min="1" class="form-control" id="Limit" name="Limit" placeholder="Optionally" />
-
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-							<button type="submit" class="btn btn-primary">Create</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
 
 	<div class="row">
 
@@ -75,6 +42,40 @@
 
 	</div>
 }
+
+<!-- ADD MODAL -->
+
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true" style="text-align:center">
+
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addCategoryModalLabel">Create New Category</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="addCategoryForm" asp-action="AddExpenseCategory" method="post">
+					<div class="form-group">
+						<label for="CategoryName" style="color:white">New Category Name</label>
+						<input asp-for="ExpenseCommand.CategoryName" type="text" class="form-control" id="CategoryName" name="CategoryName" placeholder="Example: Petrol" style="margin-bottom:3%" required />
+						<span asp-validation-for="ExpenseCommand.CategoryName" class="text-danger"></span>
+						<label for="Limit" style="color:white">Provide Limit</label>
+						<input asp-for="ExpenseCommand.Limit" type="number" min="1" class="form-control" id="Limit" name="Limit" placeholder="Optionally" />
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-primary">Create</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <!-- DELETE MODAL -->
 
 <div class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
@@ -115,7 +116,7 @@
 					<div class="form-group" style="text-align:center;">
 						<h6 for="newCategoryName" style="text-align:center; color:#f73131">Changing category will result in changing all categories in your Expenses!</h6>
 						<h6 style="margin-top:3%">Provide new category</h6>
-						<input type="text" class="form-control" id="newCategoryName" name="newCategoryName" required />
+						<input type="text" class="form-control" id="newCategoryName" name="newCategoryName" required placeholder="Provide new category title" />
 						<h6 for="newLimit" style="margin-top:3%"> Change Limit </h6>
 						<input type="number" min="0" class="form-control" id="newLimit" name="newLimit" placeholder="Optionally" />
 						<input type="hidden" id="categoryId" value="" name="categoryIdToEdit" />

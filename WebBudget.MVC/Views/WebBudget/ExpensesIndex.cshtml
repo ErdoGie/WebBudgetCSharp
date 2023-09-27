@@ -57,7 +57,7 @@
 			<div class="modal-body">
 				<form asp-action="CreateExpense">
 					<div class="form-group">
-						<label for="ExpenseCommand.ExpenseType" class="control-label" style="color:white ;margin-top:4%">Category</label>
+						<label  for="ExpenseCommand.ExpenseType" class="control-label; modal_category">Category</label>
 						<div class="form-group">
 							@if (Model.ExpenseCommand.ExpenseCategories.Any())
 							{
@@ -81,7 +81,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="ExpenseCommand.ExpenseDate" class="control-label" style="color:white; margin-top:5%">Date</label>
+						<label for="ExpenseCommand.ExpenseDate" class="control-label; modal_date">Date</label>
 						<input id="ExpenseCommand.ExpenseDate" style="text-align:center" name="ExpenseCommand.ExpenseDate" class="form-control" type="date" required />
 						<span class="text-danger" id="dateValidationMessage"></span>
 					</div>
@@ -102,9 +102,9 @@
 
 
 					<div class="form-group">
-						<label for="ExpenseCommand.ExpenseValue" class="control-label" style="color:white ;margin-top:4%">Value</label>
-						<input id="ExpenseCommand.ExpenseValue" name="ExpenseCommand.ExpenseValue" style="text-align:center" class="form-control" type="number" min="0" oninput="validity.valid||(value='');" required />
-						<div id="valueMinusLimit" style="color:white; margin-top:4%; display:none;"></div>
+						<label for="ExpenseCommand.ExpenseValue" class="control-label; modal_value">Value</label>
+						<input id="ExpenseCommand.ExpenseValue" name="ExpenseCommand.ExpenseValue" style="text-align:center" class="form-control" step="0.01" type="number" min="0" oninput="validity.valid||(value='');" required />
+						<div id="valueMinusLimit1" style="color:white; margin-top:4%; display:none;"></div>
 					</div>
 
 					<div class="form-group d-flex justify-content-center">
@@ -124,6 +124,7 @@
 		<div class="modal-content">
 			<div class="modal-header text-center">
 				<h5 class="modal-title mx-auto" id="deleteModalLabel">Confirm Deletion</h5>
+
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -159,10 +160,10 @@
 					<div class="form-group">
 						<label for="ExpenseType" class="control-label" style="color:white">Category</label>
 						<select id="ExpenseType" name="ExpenseType" style="text-align:center" class="form-control" required>
-							<option value="" selected disabled>Choose expense category</option>
+							<option value="" selected disabled>Choose income category</option>
 							@foreach (var category in Model.ExpenseCommand.ExpenseCategories)
 							{
-								<option value="@category.CategoryName" data-category-id="@category.CategoryId">@category.CategoryName</option>
+								<option value="@category.CategoryName" data-category-id="@category.CategoryId" data-limit="@category.Limit">@category.CategoryName</option>
 							}
 						</select>
 					</div>
@@ -176,12 +177,26 @@
 						<span class="text-danger" id="dateValidationMessage"></span>
 					</div>
 
-					<div class="form-group">
-						<label for="ExpenseValue" class="control-label" style="color:white">Value</label>
-						<input id="ExpenseValue" name="ExpenseValue" class="form-control" style="text-align:center" type="number" required />
+					<div class="form-group" id="expenseTypeLimit" style="color:white;">
+						<label class="control-label" style="color:white; margin-top:4%;"> Limit: </label>
+						<br />
+						<strong style="color:white"><span id="categoryLimitValue2"></span></strong>
+					</div>
+
+					<div class="form-group" id="expenseTypeSum" style="color:white;">
+						<label class="control-label" style="color:white; margin-top:4%;"> Money to spend:  </label>
+						<br />
+						<strong style="color:white"> <span id="totalExpenseForSelectedCategory2"></span> </strong>
 					</div>
 
 
+					<div class="form-group">
+						<label for="ExpenseValue" class="control-label" style="color:white">Value</label>
+						<input id="ExpenseValue" name="ExpenseValue" style="text-align:center" class="form-control" step="0.01" type="number" min="0" required />
+						<div id="valueMinusLimit2" style="color:white; margin-top:4%; display:none;"></div>
+
+					</div>
+				
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 						<button type="submit" class="btn btn-primary" id="EditIncomeBtn">Save Changes</button>
@@ -303,7 +318,7 @@
 		@foreach (var category in Model.Expenses)
 		{
 			<text>
-									var expenseType = "@category.ExpenseType";
+			var expenseType = "@category.ExpenseType";
 			var expenseValue = parseFloat("@category.ExpenseValue");
 			if (isNaN(expenseTotals[expenseType])) {
 				expenseTotals[expenseType] = expenseValue;
@@ -343,16 +358,16 @@
 		});
 
 		function calculateTotalExpenseForCategory(categoryName) {
-			var totalExpense = 0;
+		var totalExpense = 0;
 		@foreach (var expense in Model.Expenses)
 		{
 			<text>
-												if ("@expense.ExpenseType" === categoryName) {
-					totalExpense += parseFloat("@expense.ExpenseValue");
+				if ("@expense.ExpenseType" === categoryName) {
+				totalExpense += parseFloat("@expense.ExpenseValue");
 				}
 			</text>
 		}
-								return totalExpense;
+			return totalExpense;
 		}
 
 
@@ -373,7 +388,7 @@
 
 		var remainingLimit = null;
 
-		function updateRemainingLimit() {
+		function updateRemainingLimit2() {
 			var selectElement = document.getElementById('ExpenseCommand.ExpenseType');
 			var selectedOption = selectElement.options[selectElement.selectedIndex];
 			var categoryLimit = parseFloat(selectedOption.getAttribute('data-limit'));
@@ -390,38 +405,29 @@
 			} else {
 				remainingLimit = null;
 				totalExpenseForSelectedCategoryElement.textContent = "Something went wrong...";
-				totalExpenseForSelectedCategoryElement.style.color = "oragne";
+				totalExpenseForSelectedCategoryElement.style.color = "orange";
 			}
 
 			updateValueInput();
 		}
 
 		document.getElementById('ExpenseCommand.ExpenseType').addEventListener('change', function () {
-			updateRemainingLimit();
+			updateRemainingLimit2();
 		});
 
 		document.getElementById('ExpenseCommand.ExpenseValue').addEventListener('input', function () {
-			updateValueInput();
+			updateValueInput2();
 		});
 
-		document.querySelector('form').addEventListener('submit', function (e) {
-			updateValueInput();
-
-			if (remainingLimit === null || isNaN(remainingLimit) || remainingLimit < 0) {
-				e.preventDefault();
-				alert('The total expenses will exceed the limit! Unable to add another expense.');
-			}
-		});
-
-		function updateValueInput() {
+		function updateValueInput2() {
 			var expenseValueInput = document.getElementById('ExpenseCommand.ExpenseValue');
-			var valueMinusLimit = document.getElementById('valueMinusLimit');
+			var valueMinusLimit = document.getElementById('valueMinusLimit1');
 
-			if (remainingLimit !== 0 && !isNaN(remainingLimit) && remainingLimit >= 0) {
-				var enteredValue = parseFloat(expenseValueInput.value);
-				var newValue = remainingLimit - enteredValue;
+			var enteredValue = parseFloat(expenseValueInput.value);
+			var newValue = remainingLimit - enteredValue;
 
-				valueMinusLimit.style.display = 'block';
+			valueMinusLimit.style.display = 'block';
+			if (remainingLimit > 0) {
 				if (newValue > 0) {
 					valueMinusLimit.textContent = 'After adding this expense, you will have ' + newValue.toFixed(2) + ' zł left.';
 					valueMinusLimit.style.color = 'green';
@@ -429,14 +435,138 @@
 					valueMinusLimit.textContent = 'You will exceed the limit by ' + Math.abs(newValue).toFixed(2) + ' zł!';
 					valueMinusLimit.style.color = 'red';
 				}
-
-			} else {
-				valueMinusLimit.style.display = 'none';
+				else if (newValue === 0) {
+					valueMinusLimit.textContent = 'You are break even! ' + Math.abs(newValue).toFixed(2) + ' zł!';;
+					valueMinusLimit.style.color = 'yellow';
+				}
+			} else if(remainingLimit < 0) {
+				valueMinusLimit.textContent = 'You will have a negative balance of ' + Math.abs(newValue).toFixed(2) + ' zł!';
+				valueMinusLimit.style.color = 'red';
 			}
+			else if(remainingLimit === 0){
+				valueMinusLimit.textContent = 'Free to go';
+				valueMinusLimit.style.color = 'gold';
 
+			}
 		}
 
-		// CATEGORY WHILE EDITING
+		// EXPENSE CATEGORY WHILE EDITING
+		
+		document.getElementById('ExpenseType').addEventListener('change', function () {
+			var selectElement = this;
+			var selectedOption = selectElement.options[selectElement.selectedIndex];
+			var selectedCategory = selectedOption.value;
+			var categoryLimit = parseFloat(selectedOption.getAttribute('data-limit'));
 
+			var totalExpenseForSelectedCategory = calculateTotalExpenseForCategory(selectedCategory);
+
+			var totalExpenseForSelectedCategoryElement = document.getElementById('totalExpenseForSelectedCategory2');
+
+			if (!isNaN(totalExpenseForSelectedCategory) && !isNaN(categoryLimit)) {
+				var remainingLimit = categoryLimit - totalExpenseForSelectedCategory;
+				totalExpenseForSelectedCategoryElement.textContent = remainingLimit.toFixed(2) + " zł";
+			} else {
+				totalExpenseForSelectedCategoryElement.textContent = remainingLimit.toFixed(2) + " zł";
+			}
+
+		});
+
+		document.getElementById('ExpenseType').addEventListener('change', function () {
+			var selectElement = this;
+			var selectedOption = selectElement.options[selectElement.selectedIndex];
+			var categoryLimit = parseFloat(selectedOption.getAttribute('data-limit'));
+			var categoryLimitValueElement = document.getElementById('categoryLimitValue2');
+
+			if (!isNaN(categoryLimit) && categoryLimit !== 0) {
+				categoryLimitValueElement.textContent = categoryLimit.toFixed(2);
+			} else {
+				categoryLimitValueElement.textContent = 'No limitations :)';
+				categoryLimitValueElement.style.color = "gold";
+			}
+		});
+
+		document.getElementById('ExpenseType').addEventListener('change', function () {
+			var selectElement = this;
+			var selectedOption = selectElement.options[selectElement.selectedIndex];
+			var categoryLimit = selectedOption.getAttribute('data-limit');
+			var limitValueElement = document.getElementById('limitValue');
+			var categoryLimitElement = document.getElementById('categoryLimitValue2');
+
+			if (categoryLimit !== null) {
+				if (parseFloat(categoryLimit) === 0) {
+					limitValueElement.innerText = "No limitations :)";
+				} else {
+					limitValueElement.innerText = categoryLimit;
+				}
+				categoryLimitElement.style.display = 'block';
+			} else {
+				categoryLimitElement.style.display = 'none';
+			}
+		});
+
+		var remainingLimit = null;
+
+		function updateRemainingLimit() {
+			var selectElement = document.getElementById('ExpenseType');
+			var selectedOption = selectElement.options[selectElement.selectedIndex];
+			var categoryLimit = parseFloat(selectedOption.getAttribute('data-limit'));
+
+			var totalExpenseForSelectedCategoryElement = document.getElementById('totalExpenseForSelectedCategory2');
+
+			if (!isNaN(categoryLimit) && categoryLimit !== 0) {
+				remainingLimit = categoryLimit - calculateTotalExpenseForCategory(selectedOption.value);
+				totalExpenseForSelectedCategoryElement.textContent = remainingLimit.toFixed(2) + " zł";
+			} else if (categoryLimit === 0) {
+				remainingLimit = 0;
+				totalExpenseForSelectedCategoryElement.textContent = "No limitations :)";
+				totalExpenseForSelectedCategoryElement.style.color = "gold";
+			} else {
+				remainingLimit = null;
+				totalExpenseForSelectedCategoryElement.textContent = "Something went wrong...";
+				totalExpenseForSelectedCategoryElement.style.color = "orange";
+			}
+
+			updateValueInput();
+		}
+
+		document.getElementById('ExpenseType').addEventListener('change', function () {
+			updateRemainingLimit();
+		});
+
+		document.getElementById('ExpenseValue').addEventListener('input', function () {
+			updateValueInput();
+		});
+
+		function updateValueInput() {
+			var expenseValueInput = document.getElementById('ExpenseValue');
+			var valueMinusLimit = document.getElementById('valueMinusLimit2');
+
+			var enteredValue = parseFloat(expenseValueInput.value);
+			var newValue = remainingLimit - enteredValue;
+
+			valueMinusLimit.style.display = 'block';
+			if (remainingLimit > 0) {
+				if (newValue > 0) {
+					valueMinusLimit.textContent = 'After adding this expense, you will have ' + newValue.toFixed(2) + ' zł left.';
+					valueMinusLimit.style.color = 'green';
+				} else if (newValue < 0) {
+					valueMinusLimit.textContent = 'You will exceed the limit by ' + Math.abs(newValue).toFixed(2) + ' zł!';
+					valueMinusLimit.style.color = 'red';
+				}
+				else if (newValue === 0) {
+					valueMinusLimit.textContent = 'You are break even! ' + Math.abs(newValue).toFixed(2) + ' zł!';;
+					valueMinusLimit.style.color = 'yellow';
+				}
+			} else if (remainingLimit < 0) {
+				valueMinusLimit.textContent = 'You will have a negative balance of ' + Math.abs(newValue).toFixed(2) + ' zł!';
+				valueMinusLimit.style.color = 'red';
+			}
+			else if (remainingLimit === 0) {
+				valueMinusLimit.textContent = 'Free to go';
+				valueMinusLimit.style.color = 'gold';
+
+			}
+		}
+		
 	</script>
 }
