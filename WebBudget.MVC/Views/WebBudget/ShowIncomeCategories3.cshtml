@@ -15,6 +15,8 @@
 		Create New Category
 	</button>
 
+	<!-- ADD MODAL -->
+
 	<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
 
 		<div class="modal-dialog modal-dialog-centered" role="document">
@@ -61,11 +63,12 @@
 
 	</div>
 }
+<!-- DELETE MODAL -->
 
 <div class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header text-center">
+		<div class="modal-content">
+			<div class="modal-header text-center">
 				<h5 class="modal-title mx-auto text-center" id="deleteCategoryModalLabel">Are you sure?</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -84,6 +87,7 @@
 		</div>
 	</div>
 </div>
+<!-- EDIT MODAL -->
 
 <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -186,7 +190,7 @@
 		}
 
 		function editCategory(categoryId, newCategoryName) {
-			fetch(`/WebBudgetController/EditExpenseCategory/${categoryIdToEdit}`, {
+			fetch(`/WebBudgetController/EditIncomeCategory/${categoryIdToEdit}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -201,7 +205,7 @@
 
 
 		document.getElementById('addCategoryForm').addEventListener('submit', async function (event) {
-			event.preventDefault(); 
+			event.preventDefault();
 
 			var categoryName = document.getElementById('CategoryName').value;
 
@@ -211,7 +215,7 @@
 				}
 			};
 
-			const response = await fetch('/WebBudgetController/AddExpenseCategory', {
+			const response = await fetch('/WebBudgetController/AddIncomeCategory', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -224,12 +228,12 @@
 				var newCategoriesHtml = await response.text();
 				var categoriesContainer = document.querySelector('.row');
 				categoriesContainer.innerHTML = newCategoriesHtml;
-				document.getElementById('CategoryName').value = ''; 
-				document.getElementById('categoryNameError').innerText = ''; 
+				document.getElementById('CategoryName').value = '';
+				document.getElementById('categoryNameError').innerText = '';
 			} else {
 				const errors = await response.json();
 				var errorSpan = document.getElementById('categoryNameError');
-				errorSpan.innerText = errors["CategoryName"][0]; 
+				errorSpan.innerText = errors["CategoryName"][0];
 			}
 		});
 

@@ -14,7 +14,5 @@ namespace WebBudget.Application.WebBudget.Commands.CreateExpenseViewModel
 	{
 		public CreateWebBudgetExpenseCommand ExpenseCommand { get; set; } = new CreateWebBudgetExpenseCommand();
 		public List<ExpenseCategory> ExpenseCategories { get; set; } = new List<ExpenseCategory>();
-
-
 	}
 }

@@ -32,8 +32,19 @@ namespace WebBudget.Application.WebBudget.Commands.CreateExpenseCategory
 			var expenseCategory = _mapper.Map<Domain.Entities.ExpenseCategory>(request);
 
 			expenseCategory.CategoryName = request.CategoryName;
+			expenseCategory.Limit = request.Limit;
+
+			if (expenseCategory.Limit > 0)
+			{
+				expenseCategory.IsLimitSet = true;
+			}
+			else
+			{
+				expenseCategory.IsLimitSet = false;
+			}
 
 			expenseCategory.UserId = _userContext.GetCurrentlyLoggedUser()!.Id;
+
 
 			await _webBudgetRepository.AddExpenseCategory(expenseCategory);
 

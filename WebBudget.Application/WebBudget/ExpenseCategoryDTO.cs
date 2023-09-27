@@ -9,6 +9,7 @@ namespace WebBudget.Application.WebBudget
     public class ExpenseCategoryDTO
     {
         public string CategoryName { get; set; } = default!;
+        public float? Limit { get; set; } = default!;
 
     }
 }

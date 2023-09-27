@@ -1,8 +1,8 @@
 ﻿@model WebBudget.Application.WebBudget.Commands.CategoryViewModels.ExpenseCategoryViewModel
 
 @{
-    ViewData["Title"] = "ShowExpenseCategories1";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "ShowExpenseCategories1";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section containerContent {
 	<h4>Manage your expense categories </h4>
@@ -10,34 +10,6 @@
 	<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCategoryModal">
 		Create New Category
 	</button>
-
-	<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="addCategoryModalLabel">Create New Category</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form id="addCategoryForm" asp-action="AddExpenseCategory" method="post">
-						<div class="form-group">
-							<label for="CategoryName" style="color:white">New Category Name</label>
-							<input asp-for="ExpenseCommand.CategoryName" type="text" class="form-control" id="CategoryName" name="CategoryName" required title="This value cannot be empty" />
-							<span asp-validation-for="ExpenseCommand.CategoryName" class="text-danger"></span>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-							<button type="submit" class="btn btn-primary">Create</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
 
 
 	<div class="row">
@@ -47,7 +19,20 @@
 			<div class="col-md-6 col-lg-4 small-card">
 				<div class="card m-3 small-card">
 					<div class="card-body">
-						<h6 class="card-title"> @category.CategoryName</h6>
+						<h6 class="card-title">Category: <span style="color:#fffff0">@category.CategoryName</span></h6>
+						<p>
+							Limit:
+							<span style="color:#fffff0">
+								@if (category.Limit == 0)
+								{
+									@: ---
+								}
+								else
+								{
+									@($"{category.Limit} zł")
+								}
+							</span>
+						</p>
 						<button type="button" class="btn btn-info edit-btn" data-toggle="modal" data-target="#editCategoryModal" data-category-id="@category.CategoryId">Edit</button>
 						<button type="button" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteCategoryModal" data-category-id="@category.CategoryId">Delete</button>
 					</div>
@@ -57,6 +42,41 @@
 
 	</div>
 }
+
+<!-- ADD MODAL -->
+
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true" style="text-align:center">
+
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addCategoryModalLabel">Create New Category</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="addCategoryForm" asp-action="AddExpenseCategory" method="post">
+					<div class="form-group">
+						<label for="CategoryName" style="color:white">New Category Name</label>
+						<input asp-for="ExpenseCommand.CategoryName" type="text" class="form-control" id="CategoryName" name="CategoryName" placeholder="Example: Petrol" style="margin-bottom:3%" required />
+						<span asp-validation-for="ExpenseCommand.CategoryName" class="text-danger"></span>
+						<label for="Limit" style="color:white">Provide Limit</label>
+						<input asp-for="ExpenseCommand.Limit" type="number" min="1" class="form-control" id="Limit" name="Limit" placeholder="Optionally" />
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-primary">Create</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- DELETE MODAL -->
 
 <div class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -68,7 +88,7 @@
 				</button>
 			</div>
 			<div class="modal-body mx-auto text-center">
-				All incomes connected with this category will be deleted!
+				All expenses connected with this category will be deleted!
 			</div>
 			<div class="modal-footer mx-auto">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -81,6 +101,7 @@
 	</div>
 </div>
 
+<!-- EDIT MODAL -->
 <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
@@ -91,20 +112,20 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form id="editCategoryForm" asp-action="EditExpenseCategory" method="post">
-					<div class="form-group">
-						<label for="newCategoryName" style="text-align:center;">Providing new category name will result in changing all category names in your Expenses!</label>
-						<input type="text" class="form-control" id="newCategoryName" name="newCategoryName" required title="This value cannot be empty" />
+				<form id="editCategoryForm" asp-action="EditExpenseCategory" method="post" onsubmit="setDefaultLimit()">
+					<div class="form-group" style="text-align:center;">
+						<h6 for="newCategoryName" style="text-align:center; color:#f73131">Changing category will result in changing all categories in your Expenses!</h6>
+						<h6 style="margin-top:3%">Provide new category</h6>
+						<input type="text" class="form-control" id="newCategoryName" name="newCategoryName" required placeholder="Provide new category title" />
+						<h6 for="newLimit" style="margin-top:3%"> Change Limit </h6>
+						<input type="number" min="0" class="form-control" id="newLimit" name="newLimit" placeholder="Optionally" />
 						<input type="hidden" id="categoryId" value="" name="categoryIdToEdit" />
 					</div>
-					<div class="modal-footer">
+					<div class="modal-footer" style="justify-content:center">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 						<button type="submit" class="btn btn-primary" id="EditBTN">Save Changes</button>
 					</div>
-				@*	@if (categoryExistsError)
-					{
-						<div class="text-danger">Category with that name is taken!</div>
-					}*@
+
 				</form>
 			</div>
 		</div>
@@ -147,14 +168,20 @@
 		document.getElementById('EditBTN').addEventListener('click', function () {
 			if (categoryIdToEdit) {
 				var newCategoryName = document.getElementById('newCategoryName').value;
+				var newLimit = document.getElementById('newLimit').value;
 				console.log("tutaj numer: " + categoryIdToEdit);
 				document.getElementById('categoryId').value = categoryIdToEdit;
-				editCategory(categoryIdToEdit, newCategoryName);
+				editCategory(categoryIdToEdit, newCategoryName, newLimit);
 				console.log("zakonczono edycje " + newCategoryName);
 				console.log(categoryIdToEdit + "kuniec");
 			}
-			$('#editCategoryModal').modal('hide');
 		});
+		function setDefaultLimit() {
+			var newLimitField = document.getElementById('newLimit');
+			if (newLimitField.value === "") {
+				newLimitField.value = "0";
+			}
+		}
 
 
 
@@ -181,14 +208,14 @@
 			});
 		}
 
-		function editCategory(categoryId, newCategoryName) {
-			fetch(`/WebBudgetController/EditIncomeCategory/${categoryIdToEdit}`, {
+		function editCategory(categoryId, newCategoryName, newLimit) {
+			fetch(`/WebBudgetController/EditExpenseCategory/${categoryIdToEdit}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Requested-With': 'XMLHttpRequest'
 				},
-				body: JSON.stringify({ categoryId: categoryId, newCategoryName: newCategoryName })
+				body: JSON.stringify({ categoryId: categoryId, newCategoryName: newCategoryName, newLimit: newLimit })
 			}).then(response => {
 				if (response.ok) {
 				}

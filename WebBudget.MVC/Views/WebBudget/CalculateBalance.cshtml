@@ -5,65 +5,16 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+<div id="loading-spinner" class="spinner" style="">
+	<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
+</div>
+
 
 @section containerContent{
 
-
-
 	@if (Model.Incomes!.Count() > 0 && Model.Expenses!.Count() > 0)
 	{
-
-
-		<div id="loading-spinner" class="spinner" style="">
-			<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
-		</div>
 		<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
-
-		<div>
-			<form asp-controller="WebBudget" asp-action="GeneratePDF" method="post" style="display: inline-block;">
-				<input type="hidden" name="TotalIncome" value="@Model.TotalIncome" />
-				<input type="hidden" name="TotalExpense" value="@Model.TotalExpense" />
-				<input type="hidden" name="Balance" value="@Model.Balance" />
-
-				@foreach (var income in Model.Incomes!)
-				{
-					<input type="hidden" name="IncomeName" value="@income.IncomeType" />
-					<input type="hidden" name="IncomeValue" value="@income.IncomeValue" />
-					<input type="hidden" name="IncomeDate" value="@income.IncomeDate" />
-				}
-
-				@foreach (var income in Model.Expenses!)
-				{
-					<input type="hidden" name="ExpenseName" value="@income.ExpenseType" />
-					<input type="hidden" name="ExpenseValue" value="@income.ExpenseValue" />
-					<input type="hidden" name="ExpenseDate" value="@income.ExpenseDate" />
-				}
-
-				<button type="submit" class="btn btn-light">Generate PDF</button>
-			</form>
-
-			<form asp-controller="WebBudget" asp-action="GenerateCSV" method="post" style="display: inline-block;">
-				<input type="hidden" name="TotalIncome" value="@Model.TotalIncome" />
-				<input type="hidden" name="TotalExpense" value="@Model.TotalExpense" />
-				<input type="hidden" name="Balance" value="@Model.Balance" />
-
-				@foreach (var income in Model.Incomes!)
-				{
-					<input type="hidden" name="IncomeName" value="@income.IncomeType" />
-					<input type="hidden" name="IncomeValue" value="@income.IncomeValue" />
-					<input type="hidden" name="IncomeDate" value="@income.IncomeDate" />
-				}
-
-				@foreach (var income in Model.Expenses!)
-				{
-					<input type="hidden" name="ExpenseName" value="@income.ExpenseType" />
-					<input type="hidden" name="ExpenseValue" value="@income.ExpenseValue" />
-					<input type="hidden" name="ExpenseDate" value="@income.ExpenseDate" />
-				}
-
-				<button type="submit" class="btn btn-light">Generate CSV</button>
-			</form>
-		</div>
 
 		<div id="balanceContainer" style="visibility:hidden; padding:7%">
 
@@ -112,13 +63,13 @@
 			</div>
 
 			<div>
-				<div style="text-align: center;visibility:hidden" id="balanceContainer4" >
+				<div style="text-align: center;visibility:hidden" id="balanceContainer4">
 					<div style="display: inline-block; margin-right: 10px;">
 						<h4>Incomes</h4>
 						<canvas id="incomeChart"></canvas>
 					</div>
 
-					<div style="display: inline-block;visibility:hidden" id="balanceContainer6" >
+					<div style="display: inline-block;visibility:hidden" id="balanceContainer6">
 						<h4>Expenses</h4>
 						<canvas id="expenseChart"></canvas>
 					</div>
@@ -126,15 +77,14 @@
 			</div>
 
 		</div>
-	
+
 
 
 	}
+	// SKONCZYC JEZELI JEST PRZYCHOD LUB WYDATEK ELSE IF 
 	else
 	{
-		<div id="loading-spinner" class="spinner" style="">
-			<i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i> Calculating, please be patient...
-		</div>
+		
 		<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
 
 
@@ -143,6 +93,53 @@
 		</div>
 
 	}
+
+	<div>
+		<form asp-controller="WebBudget" asp-action="GeneratePDF" method="post" style="display: inline-block;">
+			<input type="hidden" name="TotalIncome" value="@Model.TotalIncome" />
+			<input type="hidden" name="TotalExpense" value="@Model.TotalExpense" />
+			<input type="hidden" name="Balance" value="@Model.Balance" />
+
+			@foreach (var income in Model.Incomes!)
+			{
+				<input type="hidden" name="IncomeName" value="@income.IncomeType" />
+				<input type="hidden" name="IncomeValue" value="@income.IncomeValue" />
+				<input type="hidden" name="IncomeDate" value="@income.IncomeDate" />
+			}
+
+			@foreach (var income in Model.Expenses!)
+			{
+				<input type="hidden" name="ExpenseName" value="@income.ExpenseType" />
+				<input type="hidden" name="ExpenseValue" value="@income.ExpenseValue" />
+				<input type="hidden" name="ExpenseDate" value="@income.ExpenseDate" />
+			}
+
+			<button type="submit" class="btn btn-light">Generate PDF</button>
+		</form>
+
+		<form asp-controller="WebBudget" asp-action="GenerateCSV" method="post" style="display: inline-block;">
+			<input type="hidden" name="TotalIncome" value="@Model.TotalIncome" />
+			<input type="hidden" name="TotalExpense" value="@Model.TotalExpense" />
+			<input type="hidden" name="Balance" value="@Model.Balance" />
+
+			@foreach (var income in Model.Incomes!)
+			{
+				<input type="hidden" name="IncomeName" value="@income.IncomeType" />
+				<input type="hidden" name="IncomeValue" value="@income.IncomeValue" />
+				<input type="hidden" name="IncomeDate" value="@income.IncomeDate" />
+			}
+
+			@foreach (var income in Model.Expenses!)
+			{
+				<input type="hidden" name="ExpenseName" value="@income.ExpenseType" />
+				<input type="hidden" name="ExpenseValue" value="@income.ExpenseValue" />
+				<input type="hidden" name="ExpenseDate" value="@income.ExpenseDate" />
+			}
+
+			<button type="submit" class="btn btn-light">Generate CSV</button>
+		</form>
+	</div>
+
 }
 
 
