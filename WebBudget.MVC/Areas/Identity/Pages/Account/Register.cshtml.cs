@@ -67,11 +67,14 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
         /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public class InputModel
+		[TempData]
+		public string StatusMessage { get; set; }
+
+		/// <summary>
+		///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+		///     directly from your code. This API may change or be removed in future releases.
+		/// </summary>
+		public class InputModel
         {
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -106,6 +109,7 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
         }
 
 
@@ -150,6 +154,8 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
 
 					await SendConfirmationEmail(Input.Email, callbackUrl);
 
+                    StatusMessage = "Confirmation e-mail sent. Please check your e-mail";
+
 					if (_userManager.Options.SignIn.RequireConfirmedEmail)
 					{
 						return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
@@ -166,7 +172,6 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
 				}
 			}
 
-			// If we got this far, something failed, redisplay form
 			return Page();
 		}
 

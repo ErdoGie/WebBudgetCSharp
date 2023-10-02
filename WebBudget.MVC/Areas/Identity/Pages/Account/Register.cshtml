@@ -33,20 +33,52 @@
 					<label asp-for="Input.ConfirmPassword">Confirm Password</label>
 					<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
 				</div>
-				<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary ">Register</button>
+				<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary" >Register</button>
+
 			</form>
 		</div>
 	
 	</div>
 
-
 }
+
+<div class="modal fade" id="verificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content ">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Email Verification</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@Html.Raw(Model.StatusMessage)
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
 }
 
 
+<script>
+	function openVerificationModal() {
+		$('#verificationModal').modal('show');
+	}
 
+	@if (!string.IsNullOrEmpty(Model.StatusMessage))
+	{
+		<text>
+			$(document).ready(function () {
+				openVerificationModal();
+			});
+		</text>
+	}
+</script>
 
 
 
