@@ -88,13 +88,17 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
                 HostSmtp = "smtp.gmail.com",
                 Port = 587,
                 EnableSsl = true,
-                SenderName = "Radosław Gucwa",
+                SenderName = "Radoslaw Gucwa - WebBudget",
                 SenderEmail = "radoslaw.gucwa.programista@gmail.com",
                 SenderEmailPassword = "quzdmkwomsfqfeau"
             });
 
-            var subject = "Reset Password to WebBudget";
-            var body = $"Click the link below to reset your password:<br/><a href=\"{resetLink}\">{resetLink}</a>";
+            var subject = "WebBudget Password Reset";
+            var body = $"Hello there! <br/>" +
+                $"<br/>" +
+                $"Looks like you have forgotten password to <strong>WebBudget</strong> :(.Click the link below to reset your password:<br/><a href=\"{resetLink}\">{resetLink}</a>" +
+                $"<br/><br/> Sincerely," +
+                $"<br/>Radoslaw Gucwa";
 
             await email.Send(subject, body, emailReceiver);
         }

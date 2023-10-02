@@ -182,13 +182,14 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
 				HostSmtp = "smtp.gmail.com",
 				Port = 587,
 				EnableSsl = true,
-				SenderName = "Radosław Gucwa",
+				SenderName = "Radoslaw Gucwa - WebBudget",
 				SenderEmail = "radoslaw.gucwa.programista@gmail.com",
 				SenderEmailPassword = "quzdmkwomsfqfeau"
 			});
 
-			var subject = "Confirm e-mail in WebBudget application";
-			var body = $"Please confirm an e-mail:<br/><a href=\"{callbackUrl}\">{callbackUrl}</a>";
+			var subject = "WebBudget e-mail confirmation";
+			var body = $"Hello there!<br/><br/>Thank you for creating an account in WebBudget App! To confirm an e-mail, please click the link below:<br/><a href=\"{callbackUrl}\">{callbackUrl}</a>" +
+                $"<br/><br/> Sincerely,<br/> Radoslaw Gucwa ";
 
 			await email.Send(subject, body, emailReceiver);
 		}
