@@ -8,32 +8,32 @@ using System.Threading.Tasks;
 
 namespace WebBudget.Application.Balance
 {
-    public class BalanceModel
-    {
-        public IEnumerable<Domain.Entities.WebBudgetIncome>? Incomes { get; set; }
+	public class BalanceModel
+	{
+		public IEnumerable<Domain.Entities.WebBudgetIncome>? Incomes { get; set; }
 
-        public IEnumerable<Domain.Entities.WebBudgetExpense>? Expenses { get; set; }
+		public IEnumerable<Domain.Entities.WebBudgetExpense>? Expenses { get; set; }
 
-        public float TotalIncome { get; set; }
+		public float TotalIncome { get; set; }
 
-        public float TotalExpense { get; set; }
+		public float TotalExpense { get; set; }
 
-        public float Balance { get; set; }
+		public float Balance { get; set; }
 
 
-        public List<ChartData>? IncomeChartData { get; set; }
-        public List<ChartData>? ExpenseChartData { get; set; }
+		public List<ChartData>? IncomeChartData { get; set; }
+		public List<ChartData>? ExpenseChartData { get; set; }
 
-        public List<string>? IncomeName { get; set; }
+		public List<string>? IncomeName { get; set; }
 
-        public List<string>? ExpenseName { get; set; }
+		public List<string>? ExpenseName { get; set; }
 
-        public List<float>? IncomeValue {get;set;}
-        public List<DateTime>? IncomeDate { get; set; }
+		public List<float>? IncomeValue { get; set; }
+		public List<DateTime>? IncomeDate { get; set; }
 
-		public List <float>? ExpenseValue { get; set; }
+		public List<float>? ExpenseValue { get; set; }
 
-		public List <DateTime>? ExpenseDate { get; set; }
+		public List<DateTime>? ExpenseDate { get; set; }
 
 
 		public byte[] GeneratePdf(BalanceModel model)
@@ -42,6 +42,16 @@ namespace WebBudget.Application.Balance
 			MemoryStream memoryStream = new MemoryStream();
 			PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
 			document.Open();
+
+			bool hasIncomes = model.IncomeName?.Any() ?? false;
+
+			bool hasExpenses = model.ExpenseName?.Any() ?? false;
+
+			if (!hasIncomes || !hasExpenses)
+			{
+				return new byte[0];
+			}
+
 
 			PdfPTable incomeTable = new PdfPTable(3);
 
@@ -93,9 +103,9 @@ namespace WebBudget.Application.Balance
 
 			PdfPTable totalsTable = new PdfPTable(3);
 			PdfPCell totalTitleCell = new PdfPCell(new Phrase("Summary"));
-			
+
 			totalTitleCell.Colspan = 3;
-			totalTitleCell.HorizontalAlignment= Element.ALIGN_CENTER;
+			totalTitleCell.HorizontalAlignment = Element.ALIGN_CENTER;
 			totalsTable.AddCell(totalTitleCell);
 
 			totalsTable.AddCell("Total incomes: " + model.TotalIncome.ToString() + " zl");
@@ -119,7 +129,7 @@ namespace WebBudget.Application.Balance
 			csv.AppendLine("Incomes");
 			csv.AppendLine("Category,Value,Date");
 
-			for (int i = 0; i< model.IncomeName?.Count; i++)
+			for (int i = 0; i < model.IncomeName?.Count; i++)
 			{
 				csv.AppendLine($"{model.IncomeName[i]}, {model.IncomeValue![i].ToString("F2")}, {model.IncomeDate?[i].ToString("yyyy-MM-dd")}");
 			}
@@ -127,6 +137,7 @@ namespace WebBudget.Application.Balance
 			csv.AppendLine("");
 			csv.AppendLine("Expenses");
 			csv.AppendLine("Category,Value,Date");
+
 			for (int i = 0; i < model.ExpenseName?.Count; i++)
 			{
 				csv.AppendLine($"{model.ExpenseName[i]}, {model.ExpenseValue![i].ToString("F2")}, {model.ExpenseDate?[i].ToString("yyyy-MM-dd")}");
