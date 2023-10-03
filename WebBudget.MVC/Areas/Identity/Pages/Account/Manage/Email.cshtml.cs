@@ -143,7 +143,7 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
 
 				await SendConfirmationEmail(user.Email, callbackUrl);
 
-				StatusMessage = "Confirmation link to change email sent. Please check your email.";
+				StatusMessage = "Confirmation e-mail has been sent. Please check registration e-mail";
 				return RedirectToPage();
 			}
 			else
@@ -206,8 +206,14 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
 				SenderEmailPassword = "quzdmkwomsfqfeau"
 			});
 
-			var subject = "Confirm e-mail in WebBudget application";
-			var body = $"Please confirm an e-mail:<br/><a href=\"{callbackUrl}\">{callbackUrl}</a>";
+			var subject = "E-mail change confirmation WebBudget";
+			var body = $"Hello there!" +
+				$"<br/>" +
+				$"To change an e-mail, please confirm it by clicking in following link: <br/>" +
+				$"<a href=\"{callbackUrl}\">{callbackUrl}</a>" +
+				$"<br/>" +
+				$"Sincerely," +
+				$"<br/> Radoslaw Gucwa";
 
 			await email.Send(subject, body, emailReceiver);
 		}

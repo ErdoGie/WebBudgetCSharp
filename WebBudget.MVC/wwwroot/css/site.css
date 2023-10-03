@@ -7,18 +7,20 @@ html {
         font-size: 16px;
     }
 }
-h1,h4,h3 {
+
+h1, h4, h3 {
     color: black;
     font-family: 'Victor Mono', monospace;
 }
 
-header{
+header {
     padding-top: 20px;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
+
 .WebBudget {
     font-family: 'Edu SA Beginner', cursive;
 }
@@ -26,7 +28,6 @@ header{
 html {
     position: relative;
     min-height: 100%;
-  
 }
 
 body {
@@ -38,29 +39,25 @@ body {
 }
 
 footer {
-   
-    margin-top:20px;
-    padding:5px;
+    margin-top: 20px;
+    padding: 5px;
     text-align: center;
     background-color: black;
-  
 }
 
 
 .custom-navbar {
-
-    border: none; 
-    background-color: transparent; 
-    box-shadow: none; 
-    
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
 }
 
 .background-container {
     position: relative;
-    height: 70vh; 
+    height: 70vh;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center ;
+    background-position: center;
 }
 
 .centered-container {
@@ -77,13 +74,12 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     max-width: 80%;
     text-align: center;
-    overflow:auto;
-    
+    overflow: auto;
 }
+
 .small-card {
-   
     font-size: 20px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .pager-container {
@@ -93,7 +89,6 @@ footer {
     right: 50%;
     text-align: center;
     padding: 10px;
-
     overflow: auto;
 }
 
@@ -101,8 +96,7 @@ footer {
     position: relative;
     bottom: 0%;
     right: -1.8%;
-   
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
 /*photos*/
@@ -111,31 +105,33 @@ footer {
     width: 40vh;
     margin-bottom: 10px;
 }
-.grid-container {
 
+.grid-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     align-items: center;
-    
 }
 
 .grid-item {
-    flex: 1 0 calc(33.33% - 20px); 
+    flex: 1 0 calc(33.33% - 20px);
     text-align: center;
 }
 
-.pulsating-button{
-    cursor:pointer;
+.pulsating-button {
+    cursor: pointer;
     animation: pulse 1s infinite;
 }
+
 .slideDownAnimation {
     animation: slideDown 1s ease-in-out;
 }
+
 .shake-button {
     animation: shake 1.7s ease infinite;
 }
+
 .spinner {
     display: flex;
     align-items: center;
@@ -153,8 +149,9 @@ footer {
     font-size: 40px;
     color: white;
 }
+
 .modal-backdrop {
-  z-index: -1;
+    z-index: -1;
 }
 
 .warning-button {
@@ -163,7 +160,7 @@ footer {
 }
 
     .warning-button:hover {
-        background-color: #ff6b6b; 
+        background-color: #ff6b6b;
     }
 
     .warning-button .fa-exclamation {
@@ -171,13 +168,52 @@ footer {
         top: 50%;
         left: 100%;
         transform: translate(-50%, -50%);
-        margin-left: 10px; 
+        margin-left: 10px;
     }
 
-.modal_category, .modal_date,.modal_value {
-     color:white;
-     margin-top:4%;
+.modal_category, .modal_date, .modal_value {
+    color: white;
+    margin-top: 4%;
 }
+
+.navbar-nav a {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+    .navbar-nav a::after {
+        content: ' ';
+        position: absolute;
+        left: 8px;
+        bottom: 1%;
+        border-radius: 50px;
+        width: 70px;
+        height: 2px;
+        background-color: #f0975b;
+        transform: scaleX(0);
+        transition: transform.3s;
+        transform-origin: right;
+    }
+
+    .navbar-nav a:hover::after {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+.nav-link {
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+    /* Style the active class, and buttons on mouse-over */
+
+
+
 
 /*animations*/
 @keyframes slideDown {
@@ -233,6 +269,4 @@ footer {
         opacity: 1;
         transform: scale(1);
     }
-    
 }
-

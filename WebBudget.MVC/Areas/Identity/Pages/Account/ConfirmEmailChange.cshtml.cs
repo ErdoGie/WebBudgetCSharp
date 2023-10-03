@@ -68,7 +68,7 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
 			}
 
 			await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Thank you for confirming your email change.";
+            StatusMessage = "Email has been changed successfully :)!";
             return Page();
         }
     }

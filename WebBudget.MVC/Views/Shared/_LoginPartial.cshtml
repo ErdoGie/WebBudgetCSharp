@@ -3,7 +3,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav" id="navDIV">
 	@if (SignInManager.IsSignedIn(User))
 	{
 		<li class="nav-item">
@@ -11,7 +11,7 @@
 		</li>
 
 		<li class="nav-item">
-			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageExpense" title="ManageExpense">Expenses <i class="fa-solid fa-receipt"></i></a>
+			<a id="create" class="nav-link text-dark text-white " asp-area="" asp-controller="WebBudget" asp-action="ManageExpense" title="ManageExpense">Expenses <i class="fa-solid fa-receipt"></i></a>
 		</li>
 		<li class="nav-item">
 			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageIncome" title="ManageIncome"> Incomes <i class="fa-solid fa-money-bill-wave"></i></a>
@@ -97,4 +97,18 @@
 			$("#calculateModal").modal("hide");
 		});
 	});
+
+
+
+
+	document.addEventListener('DOMContentLoaded', (event) => {
+		var header = document.getElementById("navDIV");
+		var btns = header.getElementsByClassName("nav-link");
+		for (var i = 0; i < btns.length; i++) {
+			if (window.location.href.indexOf(btns[i].href) > -1) {
+				btns[i].className += " active";
+			}
+		}
+
 </script>
+
