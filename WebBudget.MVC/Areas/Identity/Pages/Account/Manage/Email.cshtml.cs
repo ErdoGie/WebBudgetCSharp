@@ -153,9 +153,6 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
 				return Page();
 			}
 
-
-			StatusMessage = "Your email is unchanged.";
-			return RedirectToPage();
 		}
 
 		public async Task<IActionResult> OnPostSendVerificationEmailAsync()

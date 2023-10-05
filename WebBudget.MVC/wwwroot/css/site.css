@@ -45,7 +45,19 @@ footer {
     background-color: black;
 }
 
-
+.home_index_div, .unlogged_home {
+    position: absolute;
+    top:85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+    line-height: 2;
+}
 .custom-navbar {
     border: none;
     background-color: transparent;
@@ -180,7 +192,7 @@ footer {
     position: relative;
     display: inline-block;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 15px;
 }
 
     .navbar-nav a::after {
@@ -209,7 +221,10 @@ footer {
     cursor: pointer;
     font-size: 18px;
 }
-
+.nav-item.active {
+    background-color: #342061;
+    border-radius: 20px;
+}
 .iline {
     border-top: 4px dotted;
     width: 20%;
@@ -227,8 +242,9 @@ footer {
     --coin-face: url('https://storage.needpix.com/rsynced_images/bitcoin-106808_1280.jpg');
 }
 
+/*coin*/
 .coin-container {
-    margin-top:20%;
+    margin-top:8%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -242,6 +258,7 @@ footer {
   flex-direction:inherit;
   justify-content: center;
   align-items: center;
+
 }
 
 .coin::before {
@@ -263,129 +280,6 @@ footer {
   animation-name: flip;
 }
 
-@keyframes spin {
-  0% {
-    width: var(--coin-size);
-    box-shadow:
-      0 0 0 var(--side-dark);
-    animation-timing-function: ease-in;
-  }
-  
-  49.999% {
-    width: 0.1rem;
-    box-shadow:
-      0.05rem 0 0 var(--side),
-      0.1rem 0 0 var(--side),
-      0.15rem 0 0 var(--side),
-      0.2rem 0 0 var(--side),
-      0.25rem 0 0 var(--side),
-      0.3rem 0 0 var(--side),
-      0.35rem 0 0 var(--side),
-      0.4rem 0 0 var(--side),
-      0.45rem 0 0 var(--side),
-      0.5rem 0 0 var(--side),
-      0.55rem 0 0 var(--side),
-      0.6rem 0 0 var(--side),
-      0.65rem 0 0 var(--side),
-      0.7rem 0 0 var(--side),
-      0.75rem 0 0 var(--side);
-    transform: translateX(-0.375rem);
-    background-color: var(--lowlight);
-    animation-timing-function: linear;
-  }
-  
-  50.001% {
-    width: 0.1rem;
-    box-shadow:
-      -0.05rem 0 0 var(--side),
-      -0.1rem 0 0 var(--side),
-      -0.15rem 0 0 var(--side),
-      -0.2rem 0 0 var(--side),
-      -0.25rem 0 0 var(--side),
-      -0.3rem 0 0 var(--side),
-      -0.35rem 0 0 var(--side),
-      -0.4rem 0 0 var(--side),
-      -0.45rem 0 0 var(--side),
-      -0.5rem 0 0 var(--side),
-      -0.55rem 0 0 var(--side),
-      -0.6rem 0 0 var(--side),
-      -0.65rem 0 0 var(--side),
-      -0.7rem 0 0 var(--side),
-      -0.75rem 0 0 var(--side);
-    transform: translateX(0.375rem);
-    background-color: var(--lowlight);
-    animation-timing-function: ease-out;
-  }
-  
-  100% {
-    width: var(--coin-size);
-    box-shadow:
-      0 0 0 var(--side-dark);
-  }
-}
-
-@keyframes flip {
-  0% {
-    height: var(--coin-size);
-    box-shadow:
-      0 0 0 var(--side-dark);
-    animation-timing-function: ease-in;
-  }
-  
-  49.999% {
-    height: 0.1rem;
-    box-shadow:
-      0 0.05rem 0 var(--side),
-      0 0.1rem 0 var(--side),
-      0 0.15rem 0 var(--side),
-      0 0.2rem 0 var(--side),
-      0 0.25rem 0 var(--side),
-      0 0.3rem 0 var(--side),
-      0 0.35rem 0 var(--side),
-      0 0.4rem 0 var(--side),
-      0 0.45rem 0 var(--side),
-      0 0.5rem 0 var(--side),
-      0 0.55rem 0 var(--side),
-      0 0.6rem 0 var(--side),
-      0 0.65rem 0 var(--side),
-      0 0.7rem 0 var(--side),
-      0 0.75rem 0 var(--side);
-    transform: translateY(-0.375rem);
-    background-color: var(--lowlight);
-    animation-timing-function: linear;
-  }
-  
-  50.001% {
-    height: 0.1rem;
-    box-shadow:
-      0 -0.05rem 0 var(--side),
-      0 -0.1rem 0 var(--side),
-      0 -0.15rem 0 var(--side),
-      0 -0.2rem 0 var(--side),
-      0 -0.25rem 0 var(--side),
-      0 -0.3rem 0 var(--side),
-      0 -0.35rem 0 var(--side),
-      0 -0.4rem 0 var(--side),
-      0 -0.45rem 0 var(--side),
-      0 -0.5rem 0 var(--side),
-      0 -0.55rem 0 var(--side),
-      0 -0.6rem 0 var(--side),
-      0 -0.65rem 0 var(--side),
-      0 -0.7rem 0 var(--side),
-      0 -0.75rem 0 var(--side);
-    transform: translateY(0.375rem);
-    background-color: var(--lowlight);
-    animation-timing-function: ease-out;
-  }
-  
-  100% {
-    height: var(--coin-size);
-    box-shadow:
-      0 0 0 var(--side-dark);
-  }
-}
-
-
 
 /*animations*/
 @keyframes slideDown {
@@ -402,35 +296,6 @@ footer {
 
 
 
-@keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-
-    10%, 30%, 50%, 70%, 90% {
-        transform: translateX(-10px);
-    }
-
-    20%, 40%, 60%, 80% {
-        transform: translateX(10px);
-    }
-}
-
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.15);
-    }
-
-    100% {
-        transform: scale(1.);
-    }
-}
-
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -440,5 +305,63 @@ footer {
     100% {
         opacity: 1;
         transform: scale(1);
+    }
+}
+
+@keyframes spin {
+    0% {
+        width: var(--coin-size);
+        box-shadow: 0 0 0 var(--side-dark);
+        animation-timing-function: ease-in;
+    }
+
+    49.999% {
+        width: 0.1rem;
+        box-shadow: 0.05rem 0 0 var(--side), 0.1rem 0 0 var(--side), 0.15rem 0 0 var(--side), 0.2rem 0 0 var(--side), 0.25rem 0 0 var(--side), 0.3rem 0 0 var(--side), 0.35rem 0 0 var(--side), 0.4rem 0 0 var(--side), 0.45rem 0 0 var(--side), 0.5rem 0 0 var(--side), 0.55rem 0 0 var(--side), 0.6rem 0 0 var(--side), 0.65rem 0 0 var(--side), 0.7rem 0 0 var(--side), 0.75rem 0 0 var(--side);
+        transform: translateX(-0.375rem);
+        background-color: var(--lowlight);
+        animation-timing-function: linear;
+    }
+
+    50.001% {
+        width: 0.1rem;
+        box-shadow: -0.05rem 0 0 var(--side), -0.1rem 0 0 var(--side), -0.15rem 0 0 var(--side), -0.2rem 0 0 var(--side), -0.25rem 0 0 var(--side), -0.3rem 0 0 var(--side), -0.35rem 0 0 var(--side), -0.4rem 0 0 var(--side), -0.45rem 0 0 var(--side), -0.5rem 0 0 var(--side), -0.55rem 0 0 var(--side), -0.6rem 0 0 var(--side), -0.65rem 0 0 var(--side), -0.7rem 0 0 var(--side), -0.75rem 0 0 var(--side);
+        transform: translateX(0.375rem);
+        background-color: var(--lowlight);
+        animation-timing-function: ease-out;
+    }
+
+    100% {
+        width: var(--coin-size);
+        box-shadow: 0 0 0 var(--side-dark);
+    }
+}
+
+@keyframes flip {
+    0% {
+        height: var(--coin-size);
+        box-shadow: 0 0 0 var(--side-dark);
+        animation-timing-function: ease-in;
+    }
+
+    49.999% {
+        height: 0.1rem;
+        box-shadow: 0 0.05rem 0 var(--side), 0 0.1rem 0 var(--side), 0 0.15rem 0 var(--side), 0 0.2rem 0 var(--side), 0 0.25rem 0 var(--side), 0 0.3rem 0 var(--side), 0 0.35rem 0 var(--side), 0 0.4rem 0 var(--side), 0 0.45rem 0 var(--side), 0 0.5rem 0 var(--side), 0 0.55rem 0 var(--side), 0 0.6rem 0 var(--side), 0 0.65rem 0 var(--side), 0 0.7rem 0 var(--side), 0 0.75rem 0 var(--side);
+        transform: translateY(-0.375rem);
+        background-color: var(--lowlight);
+        animation-timing-function: linear;
+    }
+
+    50.001% {
+        height: 0.1rem;
+        box-shadow: 0 -0.05rem 0 var(--side), 0 -0.1rem 0 var(--side), 0 -0.15rem 0 var(--side), 0 -0.2rem 0 var(--side), 0 -0.25rem 0 var(--side), 0 -0.3rem 0 var(--side), 0 -0.35rem 0 var(--side), 0 -0.4rem 0 var(--side), 0 -0.45rem 0 var(--side), 0 -0.5rem 0 var(--side), 0 -0.55rem 0 var(--side), 0 -0.6rem 0 var(--side), 0 -0.65rem 0 var(--side), 0 -0.7rem 0 var(--side), 0 -0.75rem 0 var(--side);
+        transform: translateY(0.375rem);
+        background-color: var(--lowlight);
+        animation-timing-function: ease-out;
+    }
+
+    100% {
+        height: var(--coin-size);
+        box-shadow: 0 0 0 var(--side-dark);
     }
 }

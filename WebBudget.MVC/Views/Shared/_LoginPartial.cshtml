@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
+
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
@@ -27,7 +28,7 @@
 		</li>
 		<li class="nav-item">
 			<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-				<button id="logout" type="submit" class="nav-link btn btn-link text-dark text-white border-0">Logout  <i class="fa-sharp fa-solid fa-power-off fa-fade"></i></button>
+				<button id="logout" type="submit" class="nav-link btn btn-link text-dark text-white border-0" style="font-size:15px;">Logout  <i class="fa-sharp fa-solid fa-power-off fa-fade"></i></button>
 			</form>
 		</li>
 	}
@@ -50,15 +51,15 @@
 
 <div id="calculateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="calculateModalLabel" aria-hidden="true" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content ">
+		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="calculateModalLabel " style="text-align:center">Choose period of time:</h5>
+				<h5 class="modal-title" id="calculateModalLabel" style="text-align:center">Choose period of time:</h5>
 				<button type="button" class="close" id="cancelButton2" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body" style="text-align:center">
-				<form method="get" asp-action="CalculateBalance">
+				<form method="get" id="calculateForm" asp-action="CalculateBalance">
 					<div class="form-group">
 						<label for="startDate" style="color:white">Beginning Date:</label>
 						<input style="text-align:center" type="date" class="form-control" id="startDate" name="startDate" required max="9999-12-31" />
@@ -71,10 +72,10 @@
 						<button type="submit" class="btn btn-primary">Calculate</button>
 						<button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
 					</div>
+					<button type="button" class="btn btn-info" id="calculateCurrentMonth">Current Month</button>
 
 				</form>
 			</div>
-
 		</div>
 	</div>
 </div>
@@ -87,28 +88,24 @@
 
 		$('#calculateModal').modal('show');
 	}
+
 	$(document).ready(function () {
-		$("#cancelButton").click(function () {
-			$("#calculateModal").modal("hide");
-		});
-	});
-	$(document).ready(function () {
-		$("#cancelButton2").click(function () {
-			$("#calculateModal").modal("hide");
+		$("#cancelButton, #cancelButton2").click(function () {
+			$('#calculateModal').modal('hide');
 		});
 	});
 
+	document.getElementById('calculateCurrentMonth').addEventListener('click', function () {
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1;
+		var startDate = year + '-' + ('0' + month).slice(-2) + '-01';
+		var lastDay = new Date(year, month, 0).getDate();
+		var endDate = year + '-' + ('0' + month).slice(-2) + '-' + lastDay;
 
-
-
-	document.addEventListener('DOMContentLoaded', (event) => {
-		var header = document.getElementById("navDIV");
-		var btns = header.getElementsByClassName("nav-link");
-		for (var i = 0; i < btns.length; i++) {
-			if (window.location.href.indexOf(btns[i].href) > -1) {
-				btns[i].className += " active";
-			}
-		}
-
+		document.getElementById('startDate').value = startDate;
+		document.getElementById('endDate').value = endDate;
+		document.getElementById('calculateForm').submit();
+	});
 </script>
 
