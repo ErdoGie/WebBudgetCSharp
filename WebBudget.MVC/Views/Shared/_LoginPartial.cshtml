@@ -1,9 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
+
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav" id="navDIV">
 	@if (SignInManager.IsSignedIn(User))
 	{
 		<li class="nav-item">
@@ -11,7 +12,7 @@
 		</li>
 
 		<li class="nav-item">
-			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageExpense" title="ManageExpense">Expenses <i class="fa-solid fa-receipt"></i></a>
+			<a id="create" class="nav-link text-dark text-white " asp-area="" asp-controller="WebBudget" asp-action="ManageExpense" title="ManageExpense">Expenses <i class="fa-solid fa-receipt"></i></a>
 		</li>
 		<li class="nav-item">
 			<a id="create" class="nav-link text-dark text-white" asp-area="" asp-controller="WebBudget" asp-action="ManageIncome" title="ManageIncome"> Incomes <i class="fa-solid fa-money-bill-wave"></i></a>
@@ -27,7 +28,7 @@
 		</li>
 		<li class="nav-item">
 			<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-				<button id="logout" type="submit" class="nav-link btn btn-link text-dark text-white border-0">Logout  <i class="fa-sharp fa-solid fa-power-off fa-fade"></i></button>
+				<button id="logout" type="submit" class="nav-link btn btn-link text-dark text-white border-0" style="font-size:15px;">Logout  <i class="fa-sharp fa-solid fa-power-off fa-fade"></i></button>
 			</form>
 		</li>
 	}
@@ -50,31 +51,35 @@
 
 <div id="calculateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="calculateModalLabel" aria-hidden="true" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content ">
+		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="calculateModalLabel " style="text-align:center">Choose period of time:</h5>
+				<h5 class="modal-title" id="calculateModalLabel" style="text-align:center">Choose period of time:</h5>
 				<button type="button" class="close" id="cancelButton2" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
+
 			<div class="modal-body" style="text-align:center">
-				<form method="get" asp-action="CalculateBalance">
+
+				<form method="get" id="calculateForm" asp-action="CalculateBalance">
 					<div class="form-group">
 						<label for="startDate" style="color:white">Beginning Date:</label>
-						<input style="text-align:center" type="date" class="form-control" id="startDate" name="startDate" required />
+						<input style="text-align:center" type="date" class="form-control" id="startDate" name="startDate" required max="9999-12-31" />
 					</div>
 					<div class="form-group">
 						<label for="endDate" style="color:white">End Date:</label>
-						<input style="text-align:center"  type="date" class="form-control" id="endDate" name="endDate" required />
+						<input style="text-align:center" type="date" class="form-control" id="endDate" name="endDate" required max="9999-12-31" />
 					</div>
-					<div class="text-center" style="margin-top: 10%; margin-bottom: 10%">
+					<button type="button" class="btn btn-info" id="calculateCurrentMonth" style="margin-top:20px;">Current Month</button>
+					<button type="button" class="btn btn-info" id="calculatePreviousMonth" style="margin-top:20px;">Previous Month</button>
+
+					<div class="text-center" style="margin-top: 5%; margin-bottom: 5%">
 						<button type="submit" class="btn btn-primary">Calculate</button>
 						<button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
 					</div>
 
 				</form>
 			</div>
-
 		</div>
 	</div>
 </div>
@@ -87,14 +92,44 @@
 
 		$('#calculateModal').modal('show');
 	}
+
 	$(document).ready(function () {
-		$("#cancelButton").click(function () {
-			$("#calculateModal").modal("hide");
+		$("#cancelButton, #cancelButton2").click(function () {
+			$('#calculateModal').modal('hide');
 		});
 	});
-	$(document).ready(function () {
-		$("#cancelButton2").click(function () {
-			$("#calculateModal").modal("hide");
-		});
+
+	document.getElementById('calculateCurrentMonth').addEventListener('click', function () {
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1;
+		var startDate = year + '-' + ('0' + month).slice(-2) + '-01';
+		var lastDay = new Date(year, month, 0).getDate();
+		var endDate = year + '-' + ('0' + month).slice(-2) + '-' + lastDay;
+
+		document.getElementById('startDate').value = startDate;
+		document.getElementById('endDate').value = endDate;
+		document.getElementById('calculateForm').submit();
+	});
+
+	document.getElementById('calculatePreviousMonth').addEventListener('click', function () {
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1; 
+		if (month === 1) {
+			year -= 1;
+			month = 12;
+		}
+		else {
+			month -= 1;  
+		}
+		var startDate = year + '-' + ('0' + month).slice(-2) + '-01';
+		var lastDay = new Date(year, month, 0).getDate();
+		var endDate = year + '-' + ('0' + month).slice(-2) + '-' + lastDay;
+
+		document.getElementById('startDate').value = startDate;
+		document.getElementById('endDate').value = endDate;
+		document.getElementById('calculateForm').submit();
 	});
 </script>
+

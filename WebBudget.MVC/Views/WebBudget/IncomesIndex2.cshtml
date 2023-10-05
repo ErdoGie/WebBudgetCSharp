@@ -66,8 +66,8 @@
 							}
 							else
 							{
-								<select id="IncomeCommand.IncomeType" name="IncomeCommand.IncomeType" class="form-control">
-									<option class="text-muted" selected disabled>No category available. Add some first.</option>
+								<select id="IncomeCommand.IncomeType" name="IncomeCommand.IncomeType" class="form-control" style="text-align:center" required>
+									<option class="text-muted" disabled >No category available. Add some first.</option>
 								</select>
 							}
 							<span class="text-danger" id="categoryValidationMessage"></span>
@@ -76,7 +76,7 @@
 
 					<div class="form-group">
 						<label for="IncomeCommand.IncomeDate" class="control-label" style="color:white; margin-top:4%">Date</label>
-						<input id="IncomeCommand.IncomeDate" style="text-align:center" name="IncomeCommand.IncomeDate" class="form-control" type="date" required />
+						<input id="IncomeCommand.IncomeDate" style="text-align:center" name="IncomeCommand.IncomeDate" class="form-control" type="date" required max="9999-12-31" />
 						<span class="text-danger" id="dateValidationMessage"></span>
 					</div>
 					<div class="form-group">
@@ -124,7 +124,7 @@
 
 					<div class="form-group">
 						<label for="IncomeDate" class="control-label" style="color:white">Date</label>
-						<input id="IncomeDate" style="text-align:center" name="IncomeDate" class="form-control" type="date" required />
+						<input id="IncomeDate" style="text-align:center" name="IncomeDate" class="form-control" type="date" required max="9999-12-31" />
 						<span class="text-danger" id="dateValidationMessage"></span>
 					</div>
 

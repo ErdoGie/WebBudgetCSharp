@@ -266,3 +266,4 @@ valueInput.addEventListener('input', function () {
 		createButton.disabled = false;
 	}
 });
+

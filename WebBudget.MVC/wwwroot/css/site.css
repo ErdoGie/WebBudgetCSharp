@@ -7,18 +7,20 @@ html {
         font-size: 16px;
     }
 }
-h1,h4,h3 {
+
+h1, h4, h3 {
     color: black;
     font-family: 'Victor Mono', monospace;
 }
 
-header{
+header {
     padding-top: 20px;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
+
 .WebBudget {
     font-family: 'Edu SA Beginner', cursive;
 }
@@ -26,7 +28,6 @@ header{
 html {
     position: relative;
     min-height: 100%;
-  
 }
 
 body {
@@ -38,29 +39,37 @@ body {
 }
 
 footer {
-   
-    margin-top:20px;
-    padding:5px;
+    margin-top: 20px;
+    padding: 5px;
     text-align: center;
     background-color: black;
-  
 }
 
-
+.home_index_div, .unlogged_home {
+    position: absolute;
+    top:85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+    line-height: 2;
+}
 .custom-navbar {
-
-    border: none; 
-    background-color: transparent; 
-    box-shadow: none; 
-    
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
 }
 
 .background-container {
     position: relative;
-    height: 70vh; 
+    height: 70vh;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center ;
+    background-position: center;
 }
 
 .centered-container {
@@ -77,13 +86,12 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     max-width: 80%;
     text-align: center;
-    overflow:auto;
-    
+    overflow: auto;
 }
+
 .small-card {
-   
     font-size: 20px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .pager-container {
@@ -93,7 +101,6 @@ footer {
     right: 50%;
     text-align: center;
     padding: 10px;
-
     overflow: auto;
 }
 
@@ -101,8 +108,7 @@ footer {
     position: relative;
     bottom: 0%;
     right: -1.8%;
-   
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
 /*photos*/
@@ -111,31 +117,33 @@ footer {
     width: 40vh;
     margin-bottom: 10px;
 }
-.grid-container {
 
+.grid-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     align-items: center;
-    
 }
 
 .grid-item {
-    flex: 1 0 calc(33.33% - 20px); 
+    flex: 1 0 calc(33.33% - 20px);
     text-align: center;
 }
 
-.pulsating-button{
-    cursor:pointer;
+.pulsating-button {
+    cursor: pointer;
     animation: pulse 1s infinite;
 }
+
 .slideDownAnimation {
     animation: slideDown 1s ease-in-out;
 }
+
 .shake-button {
     animation: shake 1.7s ease infinite;
 }
+
 .spinner {
     display: flex;
     align-items: center;
@@ -153,8 +161,9 @@ footer {
     font-size: 40px;
     color: white;
 }
+
 .modal-backdrop {
-  z-index: -1;
+    z-index: -1;
 }
 
 .warning-button {
@@ -163,7 +172,7 @@ footer {
 }
 
     .warning-button:hover {
-        background-color: #ff6b6b; 
+        background-color: #ff6b6b;
     }
 
     .warning-button .fa-exclamation {
@@ -171,13 +180,106 @@ footer {
         top: 50%;
         left: 100%;
         transform: translate(-50%, -50%);
-        margin-left: 10px; 
+        margin-left: 10px;
     }
 
-.modal_category, .modal_date,.modal_value {
-     color:white;
-     margin-top:4%;
+.modal_category, .modal_date, .modal_value {
+    color: white;
+    margin-top: 4%;
 }
+
+.navbar-nav a {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+    .navbar-nav a::after {
+        content: ' ';
+        position: absolute;
+        left: 8px;
+        bottom: 1%;
+        border-radius: 50px;
+        width: 70px;
+        height: 2px;
+        background-color: #f0975b;
+        transform: scaleX(0);
+        transition: transform.3s;
+        transform-origin: right;
+    }
+
+    .navbar-nav a:hover::after {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+.nav-link {
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.nav-item.active {
+    background-color: #342061;
+    border-radius: 20px;
+}
+.iline {
+    border-top: 4px dotted;
+    width: 20%;
+    position:relative;
+    left: 40%;
+    color:black;
+}
+
+:root {
+    --face: #be9d66;
+    --lowlight: #111;
+    --side: #896c3b;
+    --side-dark: #120e08;
+    --coin-size: 7rem;
+    --coin-face: url('https://storage.needpix.com/rsynced_images/bitcoin-106808_1280.jpg');
+}
+
+/*coin*/
+.coin-container {
+    margin-top:8%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.coin {
+  height: var(--coin-size);
+  width: var(--coin-size);
+  margin: 0.6rem;
+  display: flex;
+  flex-direction:inherit;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.coin::before {
+  content: '';
+  display: block;
+  position: relative;
+  height: var(--coin-size);
+  width: var(--coin-size);
+  border-radius: 50%;
+  background-color: var(--face);
+  animation: spin 1s linear infinite;
+  background-image: var(--coin-face);
+  background-size: 100% 100%;
+  background-position: center;
+  background-blend-mode: overlay;
+}
+
+.coin.flip::before {
+  animation-name: flip;
+}
+
 
 /*animations*/
 @keyframes slideDown {
@@ -194,35 +296,6 @@ footer {
 
 
 
-@keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-
-    10%, 30%, 50%, 70%, 90% {
-        transform: translateX(-10px);
-    }
-
-    20%, 40%, 60%, 80% {
-        transform: translateX(10px);
-    }
-}
-
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.15);
-    }
-
-    100% {
-        transform: scale(1.);
-    }
-}
-
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -233,6 +306,62 @@ footer {
         opacity: 1;
         transform: scale(1);
     }
-    
 }
 
+@keyframes spin {
+    0% {
+        width: var(--coin-size);
+        box-shadow: 0 0 0 var(--side-dark);
+        animation-timing-function: ease-in;
+    }
+
+    49.999% {
+        width: 0.1rem;
+        box-shadow: 0.05rem 0 0 var(--side), 0.1rem 0 0 var(--side), 0.15rem 0 0 var(--side), 0.2rem 0 0 var(--side), 0.25rem 0 0 var(--side), 0.3rem 0 0 var(--side), 0.35rem 0 0 var(--side), 0.4rem 0 0 var(--side), 0.45rem 0 0 var(--side), 0.5rem 0 0 var(--side), 0.55rem 0 0 var(--side), 0.6rem 0 0 var(--side), 0.65rem 0 0 var(--side), 0.7rem 0 0 var(--side), 0.75rem 0 0 var(--side);
+        transform: translateX(-0.375rem);
+        background-color: var(--lowlight);
+        animation-timing-function: linear;
+    }
+
+    50.001% {
+        width: 0.1rem;
+        box-shadow: -0.05rem 0 0 var(--side), -0.1rem 0 0 var(--side), -0.15rem 0 0 var(--side), -0.2rem 0 0 var(--side), -0.25rem 0 0 var(--side), -0.3rem 0 0 var(--side), -0.35rem 0 0 var(--side), -0.4rem 0 0 var(--side), -0.45rem 0 0 var(--side), -0.5rem 0 0 var(--side), -0.55rem 0 0 var(--side), -0.6rem 0 0 var(--side), -0.65rem 0 0 var(--side), -0.7rem 0 0 var(--side), -0.75rem 0 0 var(--side);
+        transform: translateX(0.375rem);
+        background-color: var(--lowlight);
+        animation-timing-function: ease-out;
+    }
+
+    100% {
+        width: var(--coin-size);
+        box-shadow: 0 0 0 var(--side-dark);
+    }
+}
+
+@keyframes flip {
+    0% {
+        height: var(--coin-size);
+        box-shadow: 0 0 0 var(--side-dark);
+        animation-timing-function: ease-in;
+    }
+
+    49.999% {
+        height: 0.1rem;
+        box-shadow: 0 0.05rem 0 var(--side), 0 0.1rem 0 var(--side), 0 0.15rem 0 var(--side), 0 0.2rem 0 var(--side), 0 0.25rem 0 var(--side), 0 0.3rem 0 var(--side), 0 0.35rem 0 var(--side), 0 0.4rem 0 var(--side), 0 0.45rem 0 var(--side), 0 0.5rem 0 var(--side), 0 0.55rem 0 var(--side), 0 0.6rem 0 var(--side), 0 0.65rem 0 var(--side), 0 0.7rem 0 var(--side), 0 0.75rem 0 var(--side);
+        transform: translateY(-0.375rem);
+        background-color: var(--lowlight);
+        animation-timing-function: linear;
+    }
+
+    50.001% {
+        height: 0.1rem;
+        box-shadow: 0 -0.05rem 0 var(--side), 0 -0.1rem 0 var(--side), 0 -0.15rem 0 var(--side), 0 -0.2rem 0 var(--side), 0 -0.25rem 0 var(--side), 0 -0.3rem 0 var(--side), 0 -0.35rem 0 var(--side), 0 -0.4rem 0 var(--side), 0 -0.45rem 0 var(--side), 0 -0.5rem 0 var(--side), 0 -0.55rem 0 var(--side), 0 -0.6rem 0 var(--side), 0 -0.65rem 0 var(--side), 0 -0.7rem 0 var(--side), 0 -0.75rem 0 var(--side);
+        transform: translateY(0.375rem);
+        background-color: var(--lowlight);
+        animation-timing-function: ease-out;
+    }
+
+    100% {
+        height: var(--coin-size);
+        box-shadow: 0 0 0 var(--side-dark);
+    }
+}

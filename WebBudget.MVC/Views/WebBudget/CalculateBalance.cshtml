@@ -82,6 +82,117 @@
 
 	}
 	// SKONCZYC JEZELI JEST PRZYCHOD LUB WYDATEK ELSE IF 
+
+	else if (Model.Expenses!.Count() > 0)
+	{
+		<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
+
+		<div id="balanceContainer" style="visibility:hidden; padding:7%">
+
+			<div class="row justify-content-center">
+
+				<div class="col-md-4" id="balanceContainer1" style="visibility:hidden">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Total Income</h5>
+							<p class="card-text" style="color:green">0 zł </p>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-md-4" id="balanceContainer2" style="visibility:hidden">
+					<div class="card ">
+						<div class="card-body">
+							<h5 class="card-title">Total Expense</h5>
+							<p class="card-text" style="color:red">@Model.TotalExpense zł</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" id="balanceContainer3" style="visibility:hidden">
+					<div class="card">
+						<div class="card-body">
+
+							
+							@if (Model.Balance < 0)
+							{
+								<h5 class="card-title">Balance</h5>
+								<p class="card-text" style="color:red">@Model.Balance zł !</p>
+
+							}
+						
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<div style="text-align: center;visibility:hidden" id="balanceContainer4">
+					<div style="display: inline-block;visibility:hidden" id="balanceContainer6">
+						<h4>Expenses</h4>
+						<canvas id="expenseChart"></canvas>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	}
+
+	else if (Model.Incomes!.Count() > 0)
+	{
+		<div id="balanceMessage" class="alert" style="visibility: hidden;"></div>
+
+		<div id="balanceContainer" style="visibility:hidden; padding:7%">
+
+			<div class="row justify-content-center">
+
+				<div class="col-md-4" id="balanceContainer1" style="visibility:hidden">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Total Income</h5>
+							<p class="card-text" style="color:green">@Model.TotalIncome zł </p>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-md-4" id="balanceContainer2" style="visibility:hidden">
+					<div class="card ">
+						<div class="card-body">
+							<h5 class="card-title">Total Expense</h5>
+							<p class="card-text" style="color:red">0 zł</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" id="balanceContainer3" style="visibility:hidden">
+					<div class="card">
+						<div class="card-body">
+
+
+							@if (Model.Balance > 0)
+							{
+								<h5 class="card-title">Balance</h5>
+								<p class="card-text" style="color:green">@Model.Balance zł! </p>
+
+							}
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<div style="text-align: center;visibility:hidden" id="balanceContainer4">
+					<div style="display: inline-block;visibility:hidden" id="balanceContainer6">
+						<h4>Incomes</h4>
+						<canvas id="incomeChart"></canvas>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	}
+
 	else
 	{
 		
