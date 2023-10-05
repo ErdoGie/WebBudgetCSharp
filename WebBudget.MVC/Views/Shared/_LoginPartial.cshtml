@@ -58,7 +58,9 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
+
 			<div class="modal-body" style="text-align:center">
+
 				<form method="get" id="calculateForm" asp-action="CalculateBalance">
 					<div class="form-group">
 						<label for="startDate" style="color:white">Beginning Date:</label>
@@ -68,11 +70,13 @@
 						<label for="endDate" style="color:white">End Date:</label>
 						<input style="text-align:center" type="date" class="form-control" id="endDate" name="endDate" required max="9999-12-31" />
 					</div>
-					<div class="text-center" style="margin-top: 10%; margin-bottom: 10%">
+					<button type="button" class="btn btn-info" id="calculateCurrentMonth" style="margin-top:20px;">Current Month</button>
+					<button type="button" class="btn btn-info" id="calculatePreviousMonth" style="margin-top:20px;">Previous Month</button>
+
+					<div class="text-center" style="margin-top: 5%; margin-bottom: 5%">
 						<button type="submit" class="btn btn-primary">Calculate</button>
 						<button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
 					</div>
-					<button type="button" class="btn btn-info" id="calculateCurrentMonth">Current Month</button>
 
 				</form>
 			</div>
@@ -99,6 +103,26 @@
 		var today = new Date();
 		var year = today.getFullYear();
 		var month = today.getMonth() + 1;
+		var startDate = year + '-' + ('0' + month).slice(-2) + '-01';
+		var lastDay = new Date(year, month, 0).getDate();
+		var endDate = year + '-' + ('0' + month).slice(-2) + '-' + lastDay;
+
+		document.getElementById('startDate').value = startDate;
+		document.getElementById('endDate').value = endDate;
+		document.getElementById('calculateForm').submit();
+	});
+
+	document.getElementById('calculatePreviousMonth').addEventListener('click', function () {
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1; 
+		if (month === 1) {
+			year -= 1;
+			month = 12;
+		}
+		else {
+			month -= 1;  
+		}
 		var startDate = year + '-' + ('0' + month).slice(-2) + '-01';
 		var lastDay = new Date(year, month, 0).getDate();
 		var endDate = year + '-' + ('0' + month).slice(-2) + '-' + lastDay;
