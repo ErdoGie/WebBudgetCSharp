@@ -1,0 +1,12 @@
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\bin\Release\net7.0\WebBudget.Domain.deps.json
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\bin\Release\net7.0\WebBudget.Domain.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\bin\Release\net7.0\WebBudget.Domain.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\obj\Release\net7.0\WebBudget.Domain.csproj.AssemblyReference.cache
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\obj\Release\net7.0\WebBudget.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\obj\Release\net7.0\WebBudget.Domain.AssemblyInfoInputs.cache
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\obj\Release\net7.0\WebBudget.Domain.AssemblyInfo.cs
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\obj\Release\net7.0\WebBudget.Domain.csproj.CoreCompileInputs.cache
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\obj\Release\net7.0\WebBudget.Domain.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\obj\Release\net7.0\refint\WebBudget.Domain.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\obj\Release\net7.0\WebBudget.Domain.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Domain\obj\Release\net7.0\ref\WebBudget.Domain.dll

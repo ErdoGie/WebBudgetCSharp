@@ -206,9 +206,9 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account.Manage
 			var subject = "E-mail change confirmation WebBudget";
 			var body = $"Hello there!" +
 				$"<br/>" +
-				$"To change an e-mail, please confirm it by clicking in following link: <br/>" +
-				$"<a href=\"{callbackUrl}\">{callbackUrl}</a>" +
-				$"<br/>" +
+				$"To change an e-mail, pleease click the confirmation button below: <br/> <br/>" +
+				$"<a href=\"{callbackUrl}\" style=\"text-decoration: none; padding: 10px 20px; background-color: #4CAF50; color: white; border-radius: 5px; cursor: pointer;\">Change Email</a>" +
+				$"<br/><br/>" +
 				$"Sincerely," +
 				$"<br/> Radoslaw Gucwa";
 

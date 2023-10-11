@@ -193,12 +193,11 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
 			});
 
 			var subject = "WebBudget e-mail confirmation";
-			var body = $"Hello there!<br/><br/>Thank you for creating an account in WebBudget App! To confirm an e-mail, please click the link below:<br/><a href=\"{callbackUrl}\">{callbackUrl}</a>" +
-                $"<br/><br/> Sincerely,<br/> Radoslaw Gucwa ";
+			var body = $"Hello there!<br/><br/>Thank you for creating an account in WebBudget App! To confirm your email, please click the button below:<br/><br/><a href=\"{callbackUrl}\" style=\"text-decoration: none; padding: 10px 20px; background-color: #4CAF50; color: white; border-radius: 5px; cursor: pointer;\">Confirm Email</a>" +
+						$"<br/><br/>Sincerely,<br/>Radoslaw Gucwa";
 
 			await email.Send(subject, body, emailReceiver);
 		}
-
 
 
 		private IdentityUser CreateUser()

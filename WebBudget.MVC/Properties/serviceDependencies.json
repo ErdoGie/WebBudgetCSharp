@@ -1,3 +1,14 @@
 {
-  "dependencies": {}
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:WebBudget",
+      "dynamicId": null
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:WebBudgetAPPDB",
+      "dynamicId": null
+    }
+  }
 }

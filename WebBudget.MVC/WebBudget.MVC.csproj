@@ -4,6 +4,7 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>3620f50e-ae6d-43cb-9df4-a39e8b105d52</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -21,14 +22,14 @@
 	<ItemGroup>
 		<PackageReference Include="iTextSharp" Version="5.5.13.3" />
 		<PackageReference Include="MediatR" Version="11.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.12" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
 		<PackageReference Include="X.PagedList" Version="8.4.7" />
 		<PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.7" />
 

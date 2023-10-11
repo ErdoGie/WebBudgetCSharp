@@ -17,7 +17,7 @@ namespace WebBudget.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -239,7 +239,7 @@ namespace WebBudget.Infrastructure.Migrations
                     b.Property<bool>("IsLimitSet")
                         .HasColumnType("bit");
 
-                    b.Property<float>("Limit")
+                    b.Property<float?>("Limit")
                         .HasColumnType("real");
 
                     b.Property<string>("UserId")

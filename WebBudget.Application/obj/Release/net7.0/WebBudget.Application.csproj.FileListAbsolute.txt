@@ -1,0 +1,17 @@
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\bin\Release\net7.0\Microsoft.Azure.Documents.ServiceInterop.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\bin\Release\net7.0\Cosmos.CRTCompat.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\bin\Release\net7.0\WebBudget.Application.deps.json
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\bin\Release\net7.0\WebBudget.Application.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\bin\Release\net7.0\WebBudget.Application.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\bin\Release\net7.0\WebBudget.Domain.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\bin\Release\net7.0\WebBudget.Domain.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\obj\Release\net7.0\WebBudget.Application.csproj.AssemblyReference.cache
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\obj\Release\net7.0\WebBudget.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\obj\Release\net7.0\WebBudget.Application.AssemblyInfoInputs.cache
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\obj\Release\net7.0\WebBudget.Application.AssemblyInfo.cs
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\obj\Release\net7.0\WebBudget.Application.csproj.CoreCompileInputs.cache
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\obj\Release\net7.0\WebBudget.Application.csproj.CopyComplete
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\obj\Release\net7.0\WebBudget.Application.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\obj\Release\net7.0\refint\WebBudget.Application.dll
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\obj\Release\net7.0\WebBudget.Application.pdb
+C:\Users\HP\Documents\Dokumenty\PRogramowanie\C#\Web_Budget_Project\WebBudget.Application\obj\Release\net7.0\ref\WebBudget.Application.dll

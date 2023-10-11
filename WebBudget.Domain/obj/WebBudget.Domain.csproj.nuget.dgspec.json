@@ -42,7 +42,7 @@
           "dependencies": {
             "Microsoft.Extensions.Identity.Stores": {
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.12, )"
             },
             "X.PagedList": {
               "target": "Package",

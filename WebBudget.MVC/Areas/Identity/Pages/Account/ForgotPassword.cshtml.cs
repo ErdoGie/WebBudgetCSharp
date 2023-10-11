@@ -94,13 +94,12 @@ namespace WebBudget.MVC.Areas.Identity.Pages.Account
             });
 
             var subject = "WebBudget Password Reset";
-            var body = $"Hello there! <br/>" +
-                $"<br/>" +
-                $"Looks like you have forgotten password to <strong>WebBudget</strong> :(.Click the link below to reset your password:<br/><a href=\"{resetLink}\">{resetLink}</a>" +
-                $"<br/><br/> Sincerely," +
-                $"<br/>Radoslaw Gucwa";
+			var body = $"Hello there! <br/><br/>" +
+			 $"Looks like you have forgotten your password for <strong>WebBudget</strong>. Click the button below to reset your password:<br/><br/><a href=\"{resetLink}\" style=\"text-decoration: none; padding: 10px 20px; background-color: #4CAF50; color: white; border-radius: 5px; cursor: pointer;\">Reset Password</a>" +
+			 $"<br/><br/>Sincerely,<br/>Radoslaw Gucwa";
 
-            await email.Send(subject, body, emailReceiver);
+
+			await email.Send(subject, body, emailReceiver);
         }
 
     }
