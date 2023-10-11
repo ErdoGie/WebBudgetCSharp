@@ -403,7 +403,7 @@ namespace WebBudget.MVC.Controllers
 
 			if (existingCategory != null)
 			{
-				ModelState.AddModelError("CreateIncomeCategoryCommand.CategoryName", "Category with this name already exists.");
+				ModelState.AddModelError("CreateIncomeCategoryCommand.CategoryName", "This category already exists.");
 				var viewModel = new IncomeCategoryViewModel
 				{
 					CreateIncomeCategoryCommand = command,
@@ -423,7 +423,45 @@ namespace WebBudget.MVC.Controllers
 		{
 			return View();
 		}
+				// ---------------------------------------- ADD EXPENSE CATEGORY -------------------------------------------------- //
 
+		[HttpPost]
+		[Authorize]
+		public async Task<IActionResult> AddExpenseCategory(CreateExpenseCategoryCommand command)
+		{
+
+			if (!ModelState.IsValid)
+			{
+				return View(command);
+			}
+
+			var categoryName = command.CategoryName;
+			var userId = _userManager.GetUserId(User);
+
+			var expenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
+
+			var existingCategory = expenseCategories.FirstOrDefault(e => e.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+
+			if (existingCategory != null)
+			{
+				ViewBag.ErrorMessage = "Category already exists.";
+				return RedirectToAction(nameof(ShowExpenseCategories1));
+			}
+
+			if (command.Limit == null)
+			{
+				command.Limit = 0;
+			}
+
+			await _mediator.Send(command);
+
+			return RedirectToAction(nameof(ShowExpenseCategories1));
+		}
+
+		public IActionResult AddExpenseCategory()
+		{
+			return View();
+		}
 		// ---------------------------------------- SHOW INCOME CATEGORY -------------------------------------------------- //
 
 		[Authorize]
@@ -462,46 +500,6 @@ namespace WebBudget.MVC.Controllers
 
 			return View(viewModel);
 
-		}
-
-		// ---------------------------------------- ADD EXPENSE CATEGORY -------------------------------------------------- //
-
-		[HttpPost]
-		[Authorize]
-		public async Task<IActionResult> AddExpenseCategory(CreateExpenseCategoryCommand command)
-		{
-
-			if (!ModelState.IsValid)
-			{
-				return View(command);
-			}
-
-			var categoryName = command.CategoryName;
-			var userId = _userManager.GetUserId(User);
-
-			var expenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
-
-			var existingCategory = expenseCategories.FirstOrDefault(e => e.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
-
-			if (existingCategory != null)
-			{
-				ViewBag.ErrorMessage = "Category with this name already exists.";
-				return RedirectToAction(nameof(ShowExpenseCategories1));
-			}
-
-			if (command.Limit == null)
-			{
-				command.Limit = 0;
-			}
-
-			await _mediator.Send(command);
-
-			return RedirectToAction(nameof(ShowExpenseCategories1));
-		}
-
-		public IActionResult AddExpenseCategory()
-		{
-			return View();
 		}
 
 		// ---------------------------------------- MANAGEMENT -------------------------------------------------- //
@@ -579,17 +577,25 @@ namespace WebBudget.MVC.Controllers
 			var expenseCategories = await _webBudgetRepository.GetAllExpenseCategoriesForUser(userId!);
 
 			var existingCategory = expenseCategories.FirstOrDefault(e => e.CategoryName.Equals(newCategoryName, StringComparison.OrdinalIgnoreCase));
-			if (existingCategory != null)
+			if (existingCategory != null && existingCategory.CategoryId != categoryIdToEdit)
 			{
 				ModelState.AddModelError("newCategoryName", "Category with the same name already exists.");
 				ViewBag.CategoryExistsError = true;
 				return RedirectToAction(nameof(ShowExpenseCategories1));
 			}
+
 			if (ModelState.IsValid)
 			{
-				await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName, newLimit);
-
-				await _webBudgetRepository.UpdateExpenseCategoryInExpenses(categoryIdToEdit, newCategoryName);
+				if (newLimit >= 0)
+				{
+					await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName, newLimit);
+					await _webBudgetRepository.UpdateExpenseCategoryInExpenses(categoryIdToEdit, newCategoryName);
+				}
+				else
+				{
+					await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName,default(float));
+					await _webBudgetRepository.UpdateExpenseCategoryInExpenses(categoryIdToEdit, newCategoryName);
+				}
 
 				return RedirectToAction(nameof(ShowExpenseCategories1));
 			}

@@ -567,6 +567,18 @@
 
 			}
 		}
-		
+		function setDefaultExpenseDate() {
+			var today = new Date();
+			var day = today.getDate();
+			var month = today.getMonth() + 1; 
+			var year = today.getFullYear();
+
+			
+			var formattedDate = year + '-' + ('0' + month).slice(-2) + '-' + ('0' + day).slice(-2);
+
+			document.getElementById('ExpenseCommand.ExpenseDate').value = formattedDate;
+		}
+
+		window.onload = setDefaultExpenseDate;
 	</script>
 }
