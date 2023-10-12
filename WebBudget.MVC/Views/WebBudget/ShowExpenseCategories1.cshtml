@@ -11,11 +11,11 @@
 		Create New Category
 	</button>
 
-	<hr />
+	<hr class="hr_line" />
 
-	<p> Example: Petrol, Car, Lovely Taxes</p>
+	<p class="examples"> Example: Petrol, Car, Lovely Taxes</p>
 
-	<hr />
+	<hr class="hr_line" />
 
 	<div class="row">
 
@@ -65,7 +65,11 @@
 					<div class="form-group">
 						<label for="CategoryName" style="color:white">New Category Name</label>
 						<input asp-for="ExpenseCommand.CategoryName" type="text" class="form-control" id="CategoryName" name="CategoryName" placeholder="Example: Petrol" style="margin-bottom:3%" required />
-						<span asp-validation-for="ExpenseCommand.CategoryName" class="text-danger"></span>
+						@if (!string.IsNullOrEmpty(ViewData["CategoryNameError"] as string))
+						{
+							<span class="text-danger">@ViewData["CategoryNameError"]</span>
+						}
+						<br />
 						<label for="Limit" style="color:white">Provide Limit</label>
 						<input asp-for="ExpenseCommand.Limit" type="number" min="1" class="form-control" id="Limit" name="Limit" placeholder="Optionally" />
 

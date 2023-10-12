@@ -280,7 +280,19 @@ footer {
   animation-name: flip;
 }
 
+.hr_line
+{
+    position:relative;
+    left:40%;
+    width:20%;
+    border-top: 3px dotted ;
+    color: purple;
 
+}
+.examples{
+    font-family:Autor One;
+    font-weight:500;
+}
 /*animations*/
 @keyframes slideDown {
     0% {

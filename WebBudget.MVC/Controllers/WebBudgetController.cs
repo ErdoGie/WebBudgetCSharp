@@ -423,7 +423,7 @@ namespace WebBudget.MVC.Controllers
 		{
 			return View();
 		}
-				// ---------------------------------------- ADD EXPENSE CATEGORY -------------------------------------------------- //
+		// ---------------------------------------- ADD EXPENSE CATEGORY -------------------------------------------------- //
 
 		[HttpPost]
 		[Authorize]
@@ -444,8 +444,13 @@ namespace WebBudget.MVC.Controllers
 
 			if (existingCategory != null)
 			{
-				ViewBag.ErrorMessage = "Category already exists.";
-				return RedirectToAction(nameof(ShowExpenseCategories1));
+				ViewData["CategoryNameError"] = "This category already exists.";
+				var viewModel = new ExpenseCategoryViewModel
+				{
+					ExpenseCategories = expenseCategories,
+					ExpenseCommand = command
+				};
+				return View("ShowExpenseCategories1", viewModel);
 			}
 
 			if (command.Limit == null)
@@ -593,7 +598,7 @@ namespace WebBudget.MVC.Controllers
 				}
 				else
 				{
-					await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName,default(float));
+					await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName, default(float));
 					await _webBudgetRepository.UpdateExpenseCategoryInExpenses(categoryIdToEdit, newCategoryName);
 				}
 
