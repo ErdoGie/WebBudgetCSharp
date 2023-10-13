@@ -406,7 +406,7 @@
 				totalExpenseForSelectedCategoryElement.style.color = "gold";
 			} else {
 				remainingLimit = null;
-				totalExpenseForSelectedCategoryElement.textContent = "Something went wrong...";
+				totalExpenseForSelectedCategoryElement.textContent = "Waiting...";
 				totalExpenseForSelectedCategoryElement.style.color = "orange";
 			}
 
@@ -568,7 +568,18 @@
 		}
 
 
+		function updateValueInputAndTotal() {
+			updateValueInput2(); 
+			updateRemainingLimit2(); 
+		}
 
+		document.getElementById('ExpenseCommand.ExpenseValue').addEventListener('input', function () {
+			updateValueInputAndTotal();
+		});
+
+		document.getElementById('ExpenseCommand.ExpenseType').addEventListener('change', function () {
+			updateValueInputAndTotal();
+		});
 
 
 

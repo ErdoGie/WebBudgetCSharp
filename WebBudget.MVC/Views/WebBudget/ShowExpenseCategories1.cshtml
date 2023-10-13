@@ -126,6 +126,12 @@
 						<h6 for="newCategoryName" style="text-align:center; color:#f73131">Changing category will result in changing all categories in your Expenses!</h6>
 						<h6 style="margin-top:3%">Provide new category</h6>
 						<input type="text" class="form-control" id="newCategoryName" name="newCategoryName" required placeholder="Provide new category title" />
+					
+						@if (!string.IsNullOrEmpty(ViewData["CategoryNameError2"] as string))
+						{
+							<span class="text-danger">@ViewData["CategoryNameError2"]</span>
+						}
+						<br />
 						<h6 for="newLimit" style="margin-top:3%"> Change Limit </h6>
 						<input type="number" min="0" class="form-control" id="newLimit" name="newLimit" placeholder="Optionally" />
 						<input type="hidden" id="categoryId" value="" name="categoryIdToEdit" />
