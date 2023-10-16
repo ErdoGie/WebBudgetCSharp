@@ -38,6 +38,10 @@
 								}
 							</span>
 						</p>
+						<p>Limit's month: </p>
+						<p>
+							@category.Date
+						</p>
 						<button type="button" class="btn btn-info edit-btn" data-toggle="modal" data-target="#editCategoryModal" data-category-id="@category.CategoryId">Edit</button>
 						<button type="button" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteCategoryModal" data-category-id="@category.CategoryId">Delete</button>
 					</div>
@@ -73,6 +77,10 @@
 						<label for="Limit" style="color:white">Provide Limit</label>
 						<input asp-for="ExpenseCommand.Limit" type="number" min="1" class="form-control" id="Limit" name="Limit" placeholder="Optionally" />
 
+					</div>
+					<div class="form-group" style="margin-top:4%">
+						<label for="Date" style="color:white">Select Limit's Month and Year</label>
+						<input asp-for="ExpenseCommand.Date" type="month" class="form-control" id="Date" name="Date" max="9999-12" required />
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -126,7 +134,7 @@
 						<h6 for="newCategoryName" style="text-align:center; color:#f73131">Changing category will result in changing all categories in your Expenses!</h6>
 						<h6 style="margin-top:3%">Provide new category</h6>
 						<input type="text" class="form-control" id="newCategoryName" name="newCategoryName" required placeholder="Provide new category title" />
-					
+
 						@if (!string.IsNullOrEmpty(ViewData["CategoryNameError2"] as string))
 						{
 							<span class="text-danger">@ViewData["CategoryNameError2"]</span>
@@ -135,6 +143,10 @@
 						<h6 for="newLimit" style="margin-top:3%"> Change Limit </h6>
 						<input type="number" min="0" class="form-control" id="newLimit" name="newLimit" placeholder="Optionally" />
 						<input type="hidden" id="categoryId" value="" name="categoryIdToEdit" />
+
+						<label for="newDate" style="color:white; margin-top:3%">Change Date</label>
+						<input type="month" class="form-control" id="newDate" name="newDate" max="9999-12" required />
+
 					</div>
 					<div class="modal-footer" style="justify-content:center">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -184,6 +196,7 @@
 			if (categoryIdToEdit) {
 				var newCategoryName = document.getElementById('newCategoryName').value;
 				var newLimit = document.getElementById('newLimit').value;
+				var newDate = document.getElementById('newDate').value;
 				console.log("tutaj numer: " + categoryIdToEdit);
 				document.getElementById('categoryId').value = categoryIdToEdit;
 				editCategory(categoryIdToEdit, newCategoryName, newLimit);
@@ -223,14 +236,14 @@
 			});
 		}
 
-		function editCategory(categoryId, newCategoryName, newLimit) {
+		function editCategory(categoryId, newCategoryName, newLimit, newDate) {
 			fetch(`/WebBudgetController/EditExpenseCategory/${categoryIdToEdit}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Requested-With': 'XMLHttpRequest'
 				},
-				body: JSON.stringify({ categoryId: categoryId, newCategoryName: newCategoryName, newLimit: newLimit })
+				body: JSON.stringify({ categoryId: categoryId, newCategoryName: newCategoryName, newLimit: newLimit, newDate: newDate })
 			}).then(response => {
 				if (response.ok) {
 				}

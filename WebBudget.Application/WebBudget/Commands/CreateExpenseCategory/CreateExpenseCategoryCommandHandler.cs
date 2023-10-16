@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Azure.Documents.SystemFunctions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +35,7 @@ namespace WebBudget.Application.WebBudget.Commands.CreateExpenseCategory
 
 			expenseCategory.CategoryName = request.CategoryName;
 			expenseCategory.Limit = request.Limit;
+			expenseCategory.Date = request.Date;
 
 			if (expenseCategory.Limit > 0)
 			{

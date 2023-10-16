@@ -236,6 +236,9 @@ namespace WebBudget.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsLimitSet")
                         .HasColumnType("bit");
 

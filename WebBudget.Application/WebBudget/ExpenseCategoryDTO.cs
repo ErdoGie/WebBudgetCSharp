@@ -11,5 +11,6 @@ namespace WebBudget.Application.WebBudget
         public string CategoryName { get; set; } = default!;
         public float? Limit { get; set; } = default!;
 
+        public string? Date { get; set; }
     }
 }

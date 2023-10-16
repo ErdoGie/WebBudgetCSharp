@@ -18,6 +18,8 @@ namespace WebBudget.Domain.Entities
 
 		public float? Limit { get; set; }
 
+		public string? Date { get; set; }
+
 		public bool IsLimitSet { get; set; }
 
 		public string UserId { get; set; } = default!;

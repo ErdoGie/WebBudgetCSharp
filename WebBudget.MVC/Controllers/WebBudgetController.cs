@@ -575,7 +575,7 @@ namespace WebBudget.MVC.Controllers
 		// ---------------------------------------- EDIT EXPENSE CATEGORY -------------------------------------------------- //
 
 		[HttpPost]
-		public async Task<IActionResult> EditExpenseCategory(int categoryIdToEdit, string newCategoryName, float newLimit)
+		public async Task<IActionResult> EditExpenseCategory(int categoryIdToEdit, string newCategoryName, float newLimit, string newDate)
 		{
 			var userId = _userManager.GetUserId(User);
 
@@ -593,12 +593,12 @@ namespace WebBudget.MVC.Controllers
 			{
 				if (newLimit >= 0)
 				{
-					await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName, newLimit);
+					await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName, newLimit,newDate);
 					await _webBudgetRepository.UpdateExpenseCategoryInExpenses(categoryIdToEdit, newCategoryName);
 				}
 				else
 				{
-					await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName, default(float));
+					await _webBudgetRepository.EditExpenseCategoryAsync(categoryIdToEdit, newCategoryName, default(float), newDate);
 					await _webBudgetRepository.UpdateExpenseCategoryInExpenses(categoryIdToEdit, newCategoryName);
 				}
 

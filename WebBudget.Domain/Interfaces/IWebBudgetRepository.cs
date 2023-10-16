@@ -43,7 +43,7 @@ namespace WebBudget.Domain.Interfaces
         Task EditIncomeCategoryAsync(int categoryId, string newCategoryName);
         Task UpdateIncomeCategoryInIncomes(int oldCategoryId, string newCategoryName);
 
-		Task EditExpenseCategoryAsync(int categoryId, string newCategoryName, float newLimit);
+		Task EditExpenseCategoryAsync(int categoryId, string newCategoryName, float newLimit, string newDate);
 		Task UpdateExpenseCategoryInExpenses(int oldCategoryId, string newCategoryName);
 
 		Task<IEnumerable<Domain.Entities.WebBudgetIncome>> GetIncomesData(DateTime startDate, DateTime endDate, string userId);
