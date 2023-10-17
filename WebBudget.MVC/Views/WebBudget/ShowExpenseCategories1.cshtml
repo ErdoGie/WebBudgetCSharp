@@ -38,8 +38,8 @@
 								}
 							</span>
 						</p>
-						<p>Limit's month: </p>
-						<p>
+						<p>Limit's period of time: </p>
+						<p style="color:#fffff0">
 							@category.Date
 						</p>
 						<button type="button" class="btn btn-info edit-btn" data-toggle="modal" data-target="#editCategoryModal" data-category-id="@category.CategoryId">Edit</button>
@@ -78,9 +78,8 @@
 						<input asp-for="ExpenseCommand.Limit" type="number" min="1" class="form-control" id="Limit" name="Limit" placeholder="Optionally" />
 
 					</div>
-					<div class="form-group" style="margin-top:4%">
-						<label for="Date" style="color:white">Select Limit's Month and Year</label>
-						<input asp-for="ExpenseCommand.Date" type="month" class="form-control" id="Date" name="Date" max="9999-12" required />
+					<div style="display: none;">
+						<input asp-for="ExpenseCommand.Date" type="hidden" id="Date" name="Date" value="@DateTime.Now.ToString("yyyy-MM")" />
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -144,8 +143,8 @@
 						<input type="number" min="0" class="form-control" id="newLimit" name="newLimit" placeholder="Optionally" />
 						<input type="hidden" id="categoryId" value="" name="categoryIdToEdit" />
 
-						<label for="newDate" style="color:white; margin-top:3%">Change Date</label>
-						<input type="month" class="form-control" id="newDate" name="newDate" max="9999-12" required />
+						
+						<input value="@DateTime.Now.ToString("yyyy-MM")" type="hidden" class="form-control" id="newDate" name="newDate" max="9999-12" required />
 
 					</div>
 					<div class="modal-footer" style="justify-content:center">
